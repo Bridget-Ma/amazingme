@@ -1,0 +1,32 @@
+<md-sidenav-layout [class.m2app-dark]="isDarkTheme">
+
+  <md-sidenav #sidenav mode="side" class="app-sidenav">
+    <md-nav-list>
+      <a md-list-item routerLink="./" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+      <a md-list-item routerLink="./checklist" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">Checklist</a>
+      <a md-list-item routerLink="./story" routerLinkActive="active">Storybook</a>
+      </md-nav-list>
+  </md-sidenav>
+
+
+  <md-toolbar color="primary">
+    <button class="app-icon-button" (click)="sidenav.toggle()">
+      <i class="material-icons app-toolbar-menu">menu</i>
+    </button>
+
+    Angular Material2 Example App
+
+    <span class="app-toolbar-filler"></span>
+ 
+  </md-toolbar>
+
+
+ 
+
+         <h3>My storybook</h3>
+   
+    <router-outlet></router-outlet>
+
+  </md-sidenav-layout>
