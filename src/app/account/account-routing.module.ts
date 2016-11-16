@@ -4,7 +4,9 @@ import { RouterModule } from '@angular/router';
 import { AccountComponent }           from './account.component';
 import { AccountDashboardComponent }  from './account-dashboard.component';
 import { StorybookComponent }    from './storybook.component';
+import { SettingComponent }    from './account-setting.component';
 import { ChecklistCenterComponent }    from './checklist/checklist-center.component';
+
 
 import { AuthGuard }                from '../auth-guard.service';
 
@@ -22,6 +24,7 @@ import { AuthGuard }                from '../auth-guard.service';
             children: [
               { path: 'story', component: StorybookComponent },
               { path: 'checklist', component: ChecklistCenterComponent },
+              { path: 'settings', component: SettingComponent },
               { path: '', component: AccountDashboardComponent }
             ]
           }

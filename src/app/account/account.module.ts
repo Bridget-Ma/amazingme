@@ -7,12 +7,14 @@ import { StorybookComponent }    from './storybook.component';
 //import { StorybookPageComponent }    from './storybook-page.component';
 
 import { ChecklistCenterComponent }    from './checklist/checklist-center.component';
+import { SettingComponent }    from './account-setting.component';
 import { PageService }          from './page.service';
 import { AccountRoutingModule }       from './account-routing.module';
 //import { StorybookRoutingModule }       from './storybook-routing.module';
 
 
 import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 
 
@@ -23,11 +25,13 @@ import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
     AccountRoutingModule,
     MaterialModule,
     //StorybookRoutingModule,
-    PaginationModule
+    PaginationModule,
+    RatingModule
   ],
   declarations: [
     AccountComponent,
     AccountDashboardComponent,
+    SettingComponent,
     StorybookComponent,
    //StorybookPageComponent,
     ChecklistCenterComponent 

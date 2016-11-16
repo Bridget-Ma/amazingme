@@ -1,4 +1,5 @@
 export class Page {
   id: number;
-  img: string
+  img: string;
+  progress: number;
 }
