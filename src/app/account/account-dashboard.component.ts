@@ -11,6 +11,10 @@ import 'rxjs/add/operator/map';
   
     <img src="../../assets/images/homepage.jpg">
   
+  <div style="height: 200px">
+  <br />
+
+  </div>
   
 
    

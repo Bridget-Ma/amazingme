@@ -4,7 +4,7 @@ import { Component, OnInit, HostBinding,
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Milestone }         from './milestones.service';
-import { DialogService }  from '../dialog.service';
+import { DialogService }  from './dialog.service';
 
 @Component({
   template: `

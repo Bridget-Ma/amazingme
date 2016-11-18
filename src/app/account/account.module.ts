@@ -6,16 +6,17 @@ import { AccountDashboardComponent }  from './account-dashboard.component';
 import { StorybookComponent }    from './storybook.component';
 //import { StorybookPageComponent }    from './storybook-page.component';
 
-import { ChecklistCenterComponent }    from './checklist/checklist-center.component';
+import { ChecklistCenterComponent }    from './checklist-center.component';
 import { SettingComponent }    from './account-setting.component';
 import { PageService }          from './page.service';
+import { MilestoneService }          from './milestones.service';
 import { AccountRoutingModule }       from './account-routing.module';
 //import { StorybookRoutingModule }       from './storybook-routing.module';
 
 
 import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
-
+import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 
 
@@ -26,7 +27,8 @@ import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
     MaterialModule,
     //StorybookRoutingModule,
     PaginationModule,
-    RatingModule
+    RatingModule,
+    ModalModule
   ],
   declarations: [
     AccountComponent,
@@ -36,7 +38,7 @@ import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
    //StorybookPageComponent,
     ChecklistCenterComponent 
   ],
-  providers: [ PageService ]
+  providers: [ PageService, MilestoneService ]
 })
 export class AccountModule {}
 

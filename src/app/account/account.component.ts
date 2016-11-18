@@ -9,6 +9,23 @@ import { Component } from '@angular/core';
   // `,
   template:  `
 
+ 
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Child modal</h4>
+      </div>
+      <div class="modal-body">
+        I am a child modal, opened from parent component!
+      </div>
+    </div>
+  </div>
+</div>
 
 <md-sidenav-layout [class.m2app-dark]="isDarkTheme">
 
@@ -50,7 +67,9 @@ import { Component } from '@angular/core';
 </md-toolbar>
 
 <div style="background:white">
-  
+
+ 
+
   <router-outlet></router-outlet>
 </div>
 
@@ -62,6 +81,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AccountComponent {
+
+
+
+
+  
+ 
+  
+
 }
 
 

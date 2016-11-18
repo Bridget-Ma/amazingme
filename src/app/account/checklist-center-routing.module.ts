@@ -8,7 +8,7 @@ import { ChecklistCenterHomeComponent } from './checklist-center-home.component'
 import { MilestoneDetailComponent }     from './milestone-detail.component';
 
 
-import { CanDeactivateGuard }    from '../can-deactivate-guard.service';
+import { CanDeactivateGuard }    from './can-deactivate-guard.service';
 
 import { MilestoneDetailResolve }   from './milestone-detail-resolve.service';
 

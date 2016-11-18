@@ -1,12 +1,8 @@
-import { Component } from '@angular/core';
-
-export class milestone {
-	id: number;
-	name: string;
-}
 
 
-const CHECKLIST: milestone[] = [
+import { Milestone } from './milestone';
+
+export var CHECKLIST: Milestone[] = [
 
 
 {id: 1, name: 'Copies adults and friends (like running when other children run)'},
@@ -39,37 +35,3 @@ const CHECKLIST: milestone[] = [
 {id: 28, name: 'Walks up and down stairs, one foot on each step'},
 
 ];
-
-
-
-@Component({
-  template:  `
-    <h2>&nbsp; Milestone Checklist</h2>
-    <md-list>
-    <md-list-item *ngFor="let milestone of checklist">
-  <span class="badge">{{milestone.id}}</span> &nbsp; &nbsp;  {{milestone.name}}</md-list-item>
-    
-    </md-list>
-
-    <router-outlet></router-outlet>
-  `
-})
-export class ChecklistCenterComponent { 
-
-	//title = 'Milestone list';
-  checklist = CHECKLIST;
-	// milestone: Milestone = {
-	// 	id:1,
-	// 	name: 'milestone 1 '
-	// };
-
-}
-
-
-/*
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-
-
-*/

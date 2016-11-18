@@ -1,3 +1,10 @@
+  
+
+
+
+
+
+
   <div >
     <div class="col-lg-6" align = "center" style=" margin-top: 1px; margin-bottom: : 1px;">
 
@@ -12,12 +19,24 @@
 
         <img src= {{selectedPage.img}} >
 
+
+      </div>
+
+      <div *ngIf="selectedMilestone">
+
+        {{selectedMilestone.name}}
+     
+
       </div>
 
     </div>
 
     <div style=" margin-top: 5px; margin-left: 25px">
-      <div *ngIf="selectedPage"><h3> Milestone {{selectedPage.id}} 
+    
+    
+    
+
+      <div *ngIf="selectedPage"><h3> <button class="btn btn-primary" >Milestone {{selectedPage.id}} </button>
 
        <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
        (onHover)="clickOn($event)" 

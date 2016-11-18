@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { StorybookComponent }    from './storybook.component';
 import { StorybookPageComponent }    from './storybook-page.component';
 import { PageService} from './page.service'
-
+import { MilestoneService} from './milestones.service'
 
 
 import { CanDeactivateGuard }    from '../can-deactivate-guard.service';

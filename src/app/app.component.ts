@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewContainerRef } from '@angular/core';
 
 // import { Hero } from './hero';
 
@@ -135,9 +135,17 @@ import { Component } from '@angular/core';
   //   }
   // `]
 })
+
+
 export class AppComponent {
 
-  
+  //     private viewContainerRef: ViewContainerRef;
+
+  // public constructor(viewContainerRef:ViewContainerRef) {
+  //   // You need this small hack in order to catch application root view container ref
+  //   this.viewContainerRef = viewContainerRef;
+  // }
+
   // title = 'Tour of Heroes';
   // heroes = HEROES;
   // selectedHero: Hero;

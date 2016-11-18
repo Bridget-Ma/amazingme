@@ -24,7 +24,6 @@ Login to Amazing Me
 
 
     
-    
     <div align = "center"> 
    <br />
    <br />

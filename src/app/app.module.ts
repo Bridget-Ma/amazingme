@@ -24,7 +24,7 @@ import { DialogService }        from './dialog.service';
     HomepageRoutingModule,
     LoginRoutingModule,
     AppRoutingModule,
-     AlertModule,
+    AlertModule,
     MaterialModule.forRoot(),
   ],
   declarations: [

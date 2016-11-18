@@ -1,9 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild  } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonsModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { Page } from './page';
 import { PageService } from './page.service';
+
+import { Milestone } from './milestone';
+import { MilestoneService } from './milestones.service';
+import { CHECKLIST } from './checklist';
+
+
+// todo: change to ng2-bootstrap
+import { ModalDirective } from '../../../node_modules/ng2-bootstrap/components/modal/modal.component';
  
 @Component({
 
@@ -12,11 +20,14 @@ import { PageService } from './page.service';
 
 export class StorybookComponent implements OnInit {
   
+  
 
   public totalItems:number = 400;
   public currentPage:number = 1;
   public pages: Page[];
+  public checklist: Milestone[];
   public selectedPage: Page;
+  public selectedMilestone: Milestone;
  
   public maxSize:number = 10;
   public bigTotalItems:number = 310;
@@ -33,21 +44,36 @@ export class StorybookComponent implements OnInit {
     this.pageService.getPage(event.page).then(page => this.onSelect(page));
   };
 
+  
+ 
+
   constructor(
     private router: Router,
-    private pageService: PageService) { }
+    private pageService: PageService,
+    private milestoneService: MilestoneService
+
+    ) { }
 
   getPages(): void {
     this.pageService.getPages().then(pages => this.pages = pages);
   }
+  getMilestones(): void {
+    this.milestoneService.getChecklist().then(checklist => this.checklist = checklist);
+  }
 
   ngOnInit(): void {
     this.getPages();
+    this.getMilestones();
     this.setPage(1);
   }
 
   onSelect(page: Page): void {
     this.selectedPage = page;
+    if(this.selectedPage.milestoneID > 0){
+      this.milestoneService.getMilestone(this.selectedPage.milestoneID).then(milestone => this.selectedMilestone = milestone);
+    }
+    // this.milestoneService.getMilestone(this.selectedPage.milestoneID).then(milestone => this.selectedMilestone = milestone);
+    
     this.rate = page.progress;
     this.overStar = page.progress;
     this.percent = 100 * (page.progress / this.max);
@@ -88,6 +114,18 @@ export class StorybookComponent implements OnInit {
     this.percent = 100 * (value / this.max);
     this.selectedPage.progress = value;
   };
+
+  /*modal*/
+
+  // @ViewChild('childModal') public childModal:ModalDirective;
+ 
+  // public showChildModal():void {
+  //   this.childModal.show();
+  // }
+ 
+  // public hideChildModal():void {
+  //   this.childModal.hide();
+  // }
 
 
 }
