@@ -5,6 +5,8 @@ import { Milestone, MilestoneService } from './milestones.service';
 
 @Component({
   template: `
+
+  
     <ul class="items">
       <li *ngFor="let milestone of checklist"
         [class.selected]="isSelected(milestone)"
@@ -13,38 +15,55 @@ import { Milestone, MilestoneService } from './milestones.service';
       </li>
     </ul>
 
+
+    
+
     <router-outlet></router-outlet>
   `
 })
 export class ChecklistComponent implements OnInit {
-  checklist: Milestone[];
-  public selectedId: number;
 
-  constructor(
-    private service: MilestoneService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) { }
+      
+  
 
-  isSelected(milestone: Milestone) {
-    return milestone.id === this.selectedId;
-  }
+      checklist: Milestone[];
+      public selectedId: number;
 
-  ngOnInit() {
-    this.route.params.forEach((params: Params) => {
-      this.selectedId = params['id'];
-      this.service.getChecklist()
-        .then(checklist => this.checklist = checklist);
-    });
-  }
+      constructor(
+        private service: MilestoneService,
+        private route: ActivatedRoute,
+        private router: Router
+        ) { }
 
-  onSelect(milestone: Milestone) {
-    this.selectedId = milestone.id;
+      isSelected(milestone: Milestone) {
+        return milestone.id === this.selectedId;
+      }
 
-    // Navigate with relative link
-    this.router.navigate([milestone.id], { relativeTo: this.route });
-  }
+      ngOnInit() {
+        this.route.params.forEach((params: Params) => {
+          this.selectedId = params['id'];
+          this.service.getChecklist()
+          .then(checklist => this.checklist = checklist);
+        });
+      }
+
+      onSelect(milestone: Milestone) {
+        this.selectedId = milestone.id;
+
+        // Navigate with relative link
+        this.router.navigate([milestone.id], { relativeTo: this.route });
+      }
+
+
+  
+
 }
+
+
+
+
+
+
 
 
 /*

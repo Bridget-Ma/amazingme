@@ -7,7 +7,7 @@ import { MilestoneService }        from './milestones.service';
 import { ChecklistCenterComponent }     from './checklist-center.component';
 import { ChecklistComponent }       from './checklist.component';
 import { ChecklistCenterHomeComponent } from './checklist-center-home.component';
-import { MilestoneDetailComponent }     from './milestone-detail.component';
+import { MilestoneDetailComponent }     from './checklist-center.component';
 
 import { ChecklistCenterRoutingModule } from './checklist-center-routing.module';
 
@@ -22,10 +22,12 @@ import { ChecklistCenterRoutingModule } from './checklist-center-routing.module'
     ChecklistComponent,
     ChecklistCenterHomeComponent,
     MilestoneDetailComponent
+  
   ],
   providers: [
     MilestoneService
-  ]
+  ],
+
 })
 export class ChecklistCenterModule {}
 

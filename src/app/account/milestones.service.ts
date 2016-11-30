@@ -17,14 +17,6 @@ export class MilestoneService {
   }
 
 
-
-  // getChecklist() { return checklistPromise; }
-
-  // getMilestone(id: number | string) {
-  //   return checklistPromise
-  //     .then(checklist => checklist.find(milestone => milestone.id === +id));
-  // }
-
   getMilestone(id: number): Promise<Milestone> {
       return this.getChecklist()
                  .then(checklist => checklist.find(milestone => milestone.id === id));

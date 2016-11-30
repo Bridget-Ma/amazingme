@@ -1,25 +1,31 @@
-import { Injectable } from '@angular/core';
-/**
- * Async modal dialog service
- * DialogService makes this app easier to test by faking this service.
- * TODO: better modal implementation that doesn't use window.confirm
- */
+import { Observable } from 'rxjs/Rx';
+import { ConfirmDialog } from './dialog.component';
+import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material';
+import { Injectable, ViewContainerRef } from '@angular/core';
+import { Milestone } from './milestone';
+import { MilestoneService } from './milestones.service';
+
 @Injectable()
-export class DialogService {
-  /**
-   * Ask user to confirm an action. `message` explains the action and choices.
-   * Returns promise resolving to `true`=confirm or `false`=cancel
-   */
-  confirm(message?: string) {
-    return new Promise<boolean>(resolve => {
-      return resolve(window.confirm(message || 'Is it OK?'));
-    });
-  };
+export class DialogsService {
+
+    constructor(
+        private dialog: MdDialog,
+        private milestoneService: MilestoneService,  
+        ) { }
+
+    public selectedMilestone: Milestone;
+
+    public confirm(milestone: Milestone, viewContainerRef: ViewContainerRef): Observable<boolean> {
+
+        let dialogRef: MdDialogRef<ConfirmDialog>;
+        let config = new MdDialogConfig();
+        config.viewContainerRef = viewContainerRef;
+
+        dialogRef = this.dialog.open(ConfirmDialog, config);
+
+        dialogRef.componentInstance.milestone = milestone;
+        //dialogRef.componentInstance.message = message;
+
+        return dialogRef.afterClosed();
+    }
 }
-
-
-/*
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/

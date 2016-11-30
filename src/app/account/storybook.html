@@ -5,58 +5,78 @@
 
 
 
-  <div >
-    <div class="col-lg-6" align = "center" style=" margin-top: 1px; margin-bottom: : 1px;">
+<div >
+  <div class="col-lg-6" align = "center" style=" margin-top: 1px; margin-bottom: : 1px;">
 
-      <pagination [totalItems]="bigTotalItems" [(ngModel)]="currentPage" [maxSize]="maxSize" class="pagination-sm"
-      [boundaryLinks]="true" [rotate]="false" (pageChanged)="pageChanged($event)"></pagination>
+    <pagination [totalItems]="bigTotalItems" [(ngModel)]="currentPage" [maxSize]="maxSize" class="pagination-sm"
+    [boundaryLinks]="true" [rotate]="false" (pageChanged)="pageChanged($event)"></pagination>
 
-    </div>
+  </div>
 
-    <div style= "margin-left: 20px">
+  <div style= "margin-left: 20px">
 
-      <div *ngIf="selectedPage">
+    <div *ngIf="selectedPage">
 
-        <img src= {{selectedPage.img}} >
+      <img src= {{selectedPage.img}} >
 
-
-      </div>
-
-      <div *ngIf="selectedMilestone">
-
-        {{selectedMilestone.name}}
-     
-
-      </div>
 
     </div>
 
-    <div style=" margin-top: 5px; margin-left: 25px">
-    
-    
-    
 
-      <div *ngIf="selectedPage"><h3> <button class="btn btn-primary" >Milestone {{selectedPage.id}} </button>
+
+  </div>
+
+  <div style=" margin-top: 5px; margin-left: 25px">
+
+    <!-- <span class="badge" >{{selectedPage.milestoneID}}</span>  -->
+
+
+
+
+
+<!--     <div *ngIf="showMilestone">
+
+        <div  *ngIf="selectedMilestone" (click)="open(selectedMilestone)">
+
+         <span class="badge"  >Milestone {{selectedMilestone.id}}</span>  {{selectedMilestone.name}}
+
+
+
+       </div>
+     </div> -->
+
+     <div *ngIf="showMilestone" >
+
+       <span  *ngIf="selectedMilestone" (click)="open(selectedMilestone)">
+         <span class="badge"  >Milestone {{selectedMilestone.id}}</span>  {{selectedMilestone.name}}
+       </span>
 
        <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
        (onHover)="clickOn($event)" 
-       [titles]="['one','two','three']"> </rating> 
+       [titles]="['one','two','three']"> 
+       </rating> 
        <span class="label"
        [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
-       [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">Confidence Level: {{percent}}%</span>
-       </h3> </div>
+       [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">Confidence Level: {{percent}}%
+       </span>
 
-      <!-- <pre class="card card-block card-header" style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
 
-      <button type="button" class="btn btn-sm btn-danger" (click)="rate = 0"
-      [disabled]="isReadonly">Clear
-    </button>
-    <button type="button" class="btn btn-sm btn-primary"
-    (click)="isReadonly = ! isReadonly">Toggle Readonly
-  </button> -->
-  <hr/>
 
-</div>
+ </div>
+
+
+
+        <!-- <pre class="card card-block card-header" style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
+
+        <button type="button" class="btn btn-sm btn-danger" (click)="rate = 0"
+        [disabled]="isReadonly">Clear
+      </button>
+      <button type="button" class="btn btn-sm btn-primary"
+      (click)="isReadonly = ! isReadonly">Toggle Readonly
+    </button> -->
+    <hr/>
+
+  </div>
 </div>
 
 

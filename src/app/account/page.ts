@@ -1,6 +1,6 @@
 export class Page {
   id: number;
   img: string;
-  progress: number;
+  //progress: number;
   milestoneID: number;
 }
