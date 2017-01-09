@@ -1,7 +1,7 @@
 import { Page } from './page';
 
 export var PAGES: Page[] = [
-  {id: 1, img: '../../assets/images/homepage.jpg', milestoneID: 0},
+  {id: 1, img: '../../assets/images/homepage2.jpg', milestoneID: 0},
   {id: 2, img: '../../assets/images/p1.jpg', milestoneID: 1},
   {id: 3, img: '../../assets/images/p2.jpg', milestoneID: 0},
   {id: 4, img: '../../assets/images/p3.jpg', milestoneID: 2},

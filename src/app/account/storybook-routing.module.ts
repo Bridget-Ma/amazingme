@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 
 import { StorybookComponent }    from './storybook.component';
-import { StorybookPageComponent }    from './storybook-page.component';
+// import { StorybookPageComponent }    from './storybook-page.component';
 import { PageService} from './page.service'
 import { MilestoneService} from './milestones.service'
 
@@ -19,18 +19,16 @@ import { AuthGuard }                from '../auth-guard.service';
         path: '',
         component: StorybookComponent,
         canActivate: [AuthGuard],
-        children: [
-          {
-            // {
-            //   path: ':id',
-            //     component: StoryPageComponent,
-            //     canDeactivate: [CanDeactivateGuard],
-            // }
-            
-              path: '',
-                component: StorybookPageComponent
-            
-          }]
+        // children:[
+        // {
+        //     // {
+        //     //   path: ':id',
+        //     //   component: StoryPageComponent,
+        //     //   canDeactivate: [CanDeactivateGuard],
+        //     // }
+        //       path: '',
+        //       component: StorybookPageComponent           
+        // }]
       }
     ])
   ],
@@ -39,7 +37,6 @@ import { AuthGuard }                from '../auth-guard.service';
   ]
 })
 export class StorybookRoutingModule {}
-
 
 /*
 Copyright 2016 Google Inc. All Rights Reserved.

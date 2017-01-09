@@ -1,7 +1,7 @@
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { MaterialModule } from '@angular/material';
-import {MdDialog, MdDialogRef} from '@angular/material';
+import { MdDialog, MdDialogRef} from '@angular/material';
 import { AccountComponent }           from './account.component';
 import { AccountDashboardComponent }  from './account-dashboard.component';
 import { StorybookComponent }    from './storybook.component';
@@ -16,12 +16,15 @@ import { AccountRoutingModule }       from './account-routing.module';
 //import { MilestoneDetailComponent} from './checklist-center.component';
 //
 import { ConfirmDialog} from './dialog.component';
+import { AchDialog} from './achDialog.component';
 import { DialogsService } from './dialog.service';
+import { achDialogsService } from './achDialog.service';
 
 
 import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { FormsModule }   from '@angular/forms';
 
 // import { PizzaDialog} from './milestone-popup.component';
 // import { PizzaComponent} from './milestone-popup.component'
@@ -36,7 +39,8 @@ import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
     //StorybookRoutingModule,
     PaginationModule,
     RatingModule,
-    ModalModule
+    ModalModule,
+    FormsModule
   ],
   declarations: [
     AccountComponent,
@@ -46,18 +50,22 @@ import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
     //StorybookPageComponent,
     ChecklistCenterComponent,
     //MilestoneDetailComponent,
-    ConfirmDialog
+    ConfirmDialog,
+    AchDialog
   
  
   ],
   entryComponents: [
     //MilestoneDetailComponent,
-    ConfirmDialog
+    ConfirmDialog,
+    AchDialog
   ],
   providers: [ 
   PageService, 
   MilestoneService,
-  DialogsService ]
+  DialogsService,
+  achDialogsService
+  ]
 })
 export class AccountModule {}
 

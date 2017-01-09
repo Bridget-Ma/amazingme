@@ -4,6 +4,7 @@ import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
 import { CHECKLIST } from './checklist';
 import {MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
+import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import {DialogsService} from './dialog.service';
 
@@ -13,20 +14,39 @@ import {DialogsService} from './dialog.service';
   template:  `
     <h2>&nbsp; Milestone Checklist</h2>
 
-    <p>Result from dialog: {{ result }}</p>
 
 
-    <md-list>
-    <md-list-item *ngFor="let milestone of checklist" (click)="openDialog(milestone)">
-  <span class="badge">{{milestone.id}}</span> &nbsp; &nbsp;  {{milestone.name}}</md-list-item>
+ 
+
+   <md-list>
+
+   <md-list-item *ngFor="let milestone of checklist" (click)="openDialog(milestone)">
+   
+  
+<span ><img src={{milestone.icon}} ></span> &nbsp; &nbsp; 
     
+      {{milestone.name}} 
+   &nbsp; &nbsp; 
+
+<span *ngIf="milestone.progress>0">
+     <span class="label"   
+       [ngClass]="{'label-warning': milestone.progress<30, 'label-info': milestone.progress>=30 && milestone.progress<70, 'label-success': milestone.progress>=70}">
+         {{milestone.progress}}%
+     </span>
+     </span>
+
+   
+         <md-divider></md-divider>
+    </md-list-item>
+
+   
     </md-list>
 
     <router-outlet></router-outlet>
   `
 })
 
-
+ 
 
 
 
@@ -51,6 +71,12 @@ export class ChecklistCenterComponent {
   //lastCloseResult: string;
   public selectedMilestone: Milestone;
   public result: any;
+
+
+
+
+
+
 
 
   public setMilestone(Number:number):void {

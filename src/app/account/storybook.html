@@ -7,23 +7,18 @@
 
 <div >
   <div class="col-lg-6" align = "center" style=" margin-top: 1px; margin-bottom: : 1px;">
-
+   
     <pagination [totalItems]="bigTotalItems" [(ngModel)]="currentPage" [maxSize]="maxSize" class="pagination-sm"
     [boundaryLinks]="true" [rotate]="false" (pageChanged)="pageChanged($event)"></pagination>
+  </div>
 
+ 
   </div>
 
   <div style= "margin-left: 20px">
-
     <div *ngIf="selectedPage">
-
       <img src= {{selectedPage.img}} >
-
-
     </div>
-
-
-
   </div>
 
   <div style=" margin-top: 5px; margin-left: 25px">
@@ -31,6 +26,7 @@
     <!-- <span class="badge" >{{selectedPage.milestoneID}}</span>  -->
 
 
+ <h5> Milestone recorded: {{tempReport.numRecord}}</h5>
 
 
 
@@ -45,26 +41,26 @@
        </div>
      </div> -->
 
-     <div *ngIf="showMilestone" >
+ <div *ngIf="showMilestone" >
+     <h5>
 
        <span  *ngIf="selectedMilestone" (click)="open(selectedMilestone)">
-         <span class="badge"  >Milestone {{selectedMilestone.id}}</span>  {{selectedMilestone.name}}
+       <span ><img src={{selectedMilestone.icon}} ></span> &nbsp; &nbsp; 
+      {{selectedMilestone.name}}
        </span>
 
        <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
-       (onHover)="clickOn($event)" 
+       (onHover)="clickOn($event)"  
        [titles]="['one','two','three']"> 
        </rating> 
        <span class="label"
        [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
-       [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">Confidence Level: {{percent}}%
+       [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">
+       Confidence Level: {{percent}}%
+    
        </span>
-
-
-
+       </h5>
  </div>
-
-
 
         <!-- <pre class="card card-block card-header" style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
 
@@ -76,7 +72,6 @@
     </button> -->
     <hr/>
 
-  </div>
+  <div style="height: 20px"></div>
 </div>
-
 

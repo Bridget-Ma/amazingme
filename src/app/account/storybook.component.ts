@@ -9,6 +9,9 @@ import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
 import { CHECKLIST } from './checklist';
 
+import { AchReport } from './report';
+import { Report } from './report';
+
 import { MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
 import { DialogsService} from './dialog.service';
 
@@ -72,6 +75,7 @@ export class StorybookComponent implements OnInit {
     this.getPages();
     this.getMilestones();
     this.setPage(1);
+    this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
   }
 
   onSelect(page: Page): void {
@@ -79,20 +83,20 @@ export class StorybookComponent implements OnInit {
     if(this.selectedPage.milestoneID > 0){
       this.milestoneService.getMilestone(this.selectedPage.milestoneID)
       .then(milestone => this.selectedMilestone = milestone)
-      .then(selectedMilestone => this.rate = selectedMilestone.progress)
-      .then(selectedMilestone => this.overStar = this.selectedMilestone.progress)
-      .then(selectedMilestone => this.percent = 100 * (this.selectedMilestone.progress / this.max));
+      .then(selectedMilestone => this.defineStar(selectedMilestone));
       this.showMilestone = true;
-      
-      
     }
     else{
       this.showMilestone = false;
 
     }
     // this.milestoneService.getMilestone(this.selectedPage.milestoneID).then(milestone => this.selectedMilestone = milestone);
-    
-   
+  }
+
+  defineStar(milestone:Milestone): void {
+    selectedMilestone => this.rate = selectedMilestone.progress/10;
+    selectedMilestone => this.overStar = this.selectedMilestone.progress/10;
+    selectedMilestone => this.percent = this.selectedMilestone.progress;
 
   }
 
@@ -101,8 +105,29 @@ export class StorybookComponent implements OnInit {
    public open(milestone:Milestone) {
     this.dialogsService
       .confirm(milestone, this.viewContainerRef)
-      .subscribe(res => this.result = res);
+      .subscribe(res => this.refreshPage(res));
   }
+
+  public refreshPage(res:any) {
+    if (res == true){
+
+     if(this.selectedPage.milestoneID > 0){
+      this.milestoneService.getMilestone(this.selectedPage.milestoneID)
+      .then(milestone => this.selectedMilestone = milestone)
+      .then(selectedMilestone => this.defineStar(selectedMilestone));
+      
+      this.showMilestone = true;
+     }
+     else{
+      this.showMilestone = false;
+     }
+    }
+
+    this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
+    //this.getReport().then(AchReport => this.tempReport = AchReport);//refresh the report if any change is made
+
+  }
+  
 
 
   // public openDialog(Number:number):void {
@@ -122,7 +147,6 @@ export class StorybookComponent implements OnInit {
   public max:number = 10;
   public rate:number = 0;
   public isReadonly:boolean = false;
- 
   public overStar:number;
   public percent:number;
  
@@ -136,20 +160,67 @@ export class StorybookComponent implements OnInit {
  
   public hoveringOver(value:number):void {
     this.overStar = value;
-    this.percent = 100 * (value / this.max);
+    this.percent = 10 * value ;
   };
  
   public resetStar():void {
-    this.overStar = void 0;
+    this.overStar = 0;
   }
 
   public clickOn(value:number):void {
     this.overStar = value;
     //this.rate = value;
-    this.percent = 100 * (value / this.max);
-    this.selectedMilestone.progress = value;
+    this.percent = 10 * value;
+    this.selectedMilestone.progress = this.percent;
+    this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
   };
 
+
+
+  /*record update*/
+
+
+  public checklistLength: number = 28;
+  //public tempCount = [0,0,0];
+  public tempReport: Report = AchReport;
+
+  public getReport(): Promise<Report> {
+    
+    return Promise.resolve(AchReport);
+  }
+
+  public reportUpdate(report:Report): void {
+    this.countUpdateIteration().then(tempReport => report = tempReport);
+  }
+
+  public countUpdateIteration(): Promise<Report> {
+    this.tempReport = {
+      numRecord: 0,
+      numAchieved: 0,
+      numPhotos: 0
+    };
+
+    for (let index = 0; index < this.checklistLength; index++) {
+      this.milestoneService.getMilestone(index).then(milestone => this.countUpdate(milestone));
+    }
+    
+    return Promise.resolve(this.tempReport);
+    }
+
+  public countUpdate(milestone:Milestone): Promise<Report> {
+    if (milestone.progress > 0 ) {
+        this.tempReport.numRecord += 1;
+      }
+    if (milestone.progress == 10 ) {
+        this.tempReport.numAchieved += 1;
+      }
+    if (milestone.progress > 0 ) {
+        this.tempReport.numPhotos += 1;
+      }
+    return Promise.resolve(this.tempReport);
+  }
+
+  
   /*modal*/
 
   // @ViewChild('childModal') public childModal:ModalDirective;

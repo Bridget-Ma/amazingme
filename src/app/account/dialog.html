@@ -1,0 +1,50 @@
+<h4>Milestone {{ milestone.id }} </h4>
+<h4>{{ milestone.name }}</h4>  
+
+
+
+
+<div>
+     <h5>
+       <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
+       (onHover)="clickOn($event)"  
+       [titles]="['one','two','three']"> 
+       </rating> 
+       <span class="label"
+       [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
+       [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">Confidence Level: {{percent}}%
+       </span>
+    </h5>
+ </div>
+
+
+<div style="color:#979797">
+<p >
+  Milestone details:
+</p>
+</div>
+
+ <md-grid-list cols="2" gutterSize="4px">
+    <md-grid-tile>
+        <p>
+            {{ milestone.detail }}
+        </p>
+    </md-grid-tile>
+    <md-grid-tile>
+        <img  style="width:90%" src={{milestone.img}}>
+    </md-grid-tile>
+</md-grid-list>
+
+
+
+
+
+ <div style="height: 20px"></div>
+        <label>Note: </label>
+        <input type="text"  class="form-control"  [(ngModel)]="milestone.notes" />
+<div style="height: 20px"></div>
+
+<button type="button" md-raised-button 
+(click)="dialogRef.close(true)">Save</button>
+<button type="button" md-button 
+(click)="dialogRef.close()">Cancel</button>

@@ -1,17 +1,32 @@
-import { Component, OnInit }    from '@angular/core';
+import { Component, OnInit ,ViewContainerRef}    from '@angular/core';
 import { ActivatedRoute }       from '@angular/router';
 import { Observable }           from 'rxjs/Observable';
 import { PreloadSelectedModules } from '../selective-preload-strategy';
+
+import { MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
+import { achDialogsService} from './achDialog.service';
+
+import { AchReport } from './report';
+import { Report } from './report';
+
+import { Milestone } from './milestone';
+import { MilestoneService } from './milestones.service';
+import { CHECKLIST } from './checklist';
 
 import 'rxjs/add/operator/map';
 
 @Component({
   template: `
-     
+    
   
-    <img src="../../assets/images/homepage.jpg">
-  
+  <img src="../../assets/images/homepage1.jpg">
   <div style="height: 200px">
+
+  <button type="button" md-raised-button *ngIf="tempReport" 
+    (click)="open(tempReport)">
+    Achievement Report
+  </button>
+
   <br />
 
   </div>
@@ -30,7 +45,10 @@ export class AccountDashboardComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private preloadStrategy: PreloadSelectedModules
+    private preloadStrategy: PreloadSelectedModules,
+    private achDialogsService: achDialogsService,
+    private viewContainerRef: ViewContainerRef,
+    private milestoneService: MilestoneService
   ) {
     this.modules = preloadStrategy.preloadedModules;
   }
@@ -45,7 +63,90 @@ export class AccountDashboardComponent implements OnInit {
     this.token = this.route
       .fragment
       .map(fragment => fragment || 'None');
+
+       this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
   }
+
+
+    /*dialog*/
+
+  public open(report:Report) {
+    this.achDialogsService
+      .confirm(report, this.viewContainerRef)
+      .subscribe(res => this.refreshPage(res));
+  }
+
+  public refreshPage(res:any) {
+     //this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
+    // if (res == true){
+
+  
+    // }
+
+    // this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
+    //this.getReport().then(AchReport => this.tempReport = AchReport);//refresh the report if any change is made
+
+  }
+  
+
+
+  // public openDialog(Number:number):void {
+  //   this.milestoneService.getMilestone(Number).then(milestone => this.open(milestone));
+  // };
+
+ 
+  //public selectedMilestone: Milestone;
+  public result: any;
+
+  /*record update*/
+
+
+  public checklistLength: number = 28;
+  //public tempCount = [0,0,0];
+  public tempReport: Report = AchReport;
+
+  public getReport(): Promise<Report> {
+    
+    return Promise.resolve(AchReport);
+  }
+
+  public reportUpdate(report:Report): void {
+    this.countUpdateIteration().then(tempReport => report = tempReport);
+  }
+
+  public countUpdateIteration(): Promise<Report> {
+    this.tempReport = {
+      numRecord: 0,
+      numAchieved: 0,
+      numPhotos: 0
+    };
+
+    for (let index = 0; index < this.checklistLength; index++) {
+      this.milestoneService.getMilestone(index).then(milestone => this.countUpdate(milestone));
+    }
+    
+    return Promise.resolve(this.tempReport);
+    }
+
+  public countUpdate(milestone:Milestone): Promise<Report> {
+    if (milestone.progress > 0 ) {
+        this.tempReport.numRecord += 1;
+      }
+    if (milestone.progress == 10 ) {
+        this.tempReport.numAchieved += 1;
+      }
+    if (milestone.progress > 0 ) {
+        this.tempReport.numPhotos += 1;
+      }
+    return Promise.resolve(this.tempReport);
+  }
+
+
+
+
+
+
+
 }
 
 

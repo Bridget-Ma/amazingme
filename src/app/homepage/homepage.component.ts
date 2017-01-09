@@ -5,7 +5,9 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
 	template:`
-	<img src="../../assets/images/homepage.jpg">
+
+  
+	<img src="../../assets/images/homepage1.jpg">
 	<div class = "blockdiv" align = center margin = 10em>
 	<br />
 	 <a button md-raised-button  routerLink="/login" routerLinkActive="active">Start Journey</a>
