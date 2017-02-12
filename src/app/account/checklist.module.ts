@@ -5,10 +5,14 @@ import { CommonModule }   from '@angular/common';
 import { MilestoneService }        from './milestones.service';
 
 import { ChecklistCenterComponent }     from './checklist-center.component';
-import { ChecklistComponent }       from './checklist.component';
-import { ChecklistCenterHomeComponent } from './checklist-center-home.component';
-import { MilestoneDetailComponent }     from './checklist-center.component';
+// import { ChecklistComponent }       from './checklist.component';
+// import { ChecklistCenterHomeComponent } from './checklist-center-home.component';
+// import { MilestoneDetailComponent }     from './checklist-center.component';
 
+import { ConfirmDialog} from './dialog.component';
+import { AchDialog} from './achDialog.component';
+import { DialogsService } from './dialog.service';
+import { achDialogsService } from './achDialog.service';
 import { ChecklistCenterRoutingModule } from './checklist-center-routing.module';
 
 @NgModule({
@@ -19,13 +23,15 @@ import { ChecklistCenterRoutingModule } from './checklist-center-routing.module'
   ],
   declarations: [
     ChecklistCenterComponent,
-    ChecklistComponent,
-    ChecklistCenterHomeComponent,
-    MilestoneDetailComponent
+    // ChecklistComponent,
+    // ChecklistCenterHomeComponent,
+    // MilestoneDetailComponent
   
   ],
   providers: [
-    MilestoneService
+    MilestoneService,
+    DialogsService,
+    achDialogsService
   ],
 
 })

@@ -1,5 +1,5 @@
 import { Component,ViewContainerRef } from '@angular/core';
-
+import { AngularFire, FirebaseListObservable,AuthProviders, AuthMethods } from 'angularfire2';
 // import { Hero } from './hero';
 
 
@@ -138,6 +138,27 @@ import { Component,ViewContainerRef } from '@angular/core';
 
 
 export class AppComponent {
+
+  items: FirebaseListObservable<any[]>;
+
+ constructor(public af: AngularFire) {
+    // this.af.auth.subscribe(auth => console.log(auth));
+    // this.items = af.database.list('/items');
+  }
+
+
+  // login() {
+  //   this.af.auth.login({
+  //     provider: AuthProviders.Twitter,
+  //     method: AuthMethods.Popup,
+  //   });
+  // }
+  // overrideLogin() {
+  //   this.af.auth.login({
+  //     provider: AuthProviders.Anonymous,
+  //     method: AuthMethods.Anonymous,
+  //   });
+  // }
 
   //     private viewContainerRef: ViewContainerRef;
 

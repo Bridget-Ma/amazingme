@@ -20,6 +20,9 @@ export class DialogsService {
         let dialogRef: MdDialogRef<ConfirmDialog>;
         let config = new MdDialogConfig();
         config.viewContainerRef = viewContainerRef;
+        config.width = "70%";
+        // config.height = "50%";
+
 
         dialogRef = this.dialog.open(ConfirmDialog, config);
 

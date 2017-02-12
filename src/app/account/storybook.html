@@ -1,23 +1,41 @@
-  
+<!-- <h1>{{ item | async | json }}</h1>
+  <input type="text" #newname placeholder="Name" />
+  <input type="text" #newsize placeholder="Size" />
+  <br />
+  <button (click)="save(newname.value)">Set Name</button>
+  <button (click)="update(newsize.value)">Update Size</button>
+  <button (click)="delete()">Delete</button>   -->
 
 
 
 
 
-
+<!-- <button  md-raised-button *ngIf="tempReport" 
+    (click)="openAch(tempReport)">
+    Achievement Report
+</button>
+ -->
 <div >
   <div class="col-lg-6" align = "center" style=" margin-top: 1px; margin-bottom: : 1px;">
    
     <pagination [totalItems]="bigTotalItems" [(ngModel)]="currentPage" [maxSize]="maxSize" class="pagination-sm"
     [boundaryLinks]="true" [rotate]="false" (pageChanged)="pageChanged($event)"></pagination>
-  </div>
 
- 
   </div>
+  </div>
+  
 
   <div style= "margin-left: 20px">
-    <div *ngIf="selectedPage">
-      <img src= {{selectedPage.img}} >
+    <div *ngIf="page">
+
+     <img src= {{page.img}} >
+
+    <!--  <ul>
+      <li *ngFor="let item of page | async">
+      <img src= {{item.img}} >
+      </li>
+     </ul> -->
+     
     </div>
   </div>
 
@@ -26,7 +44,7 @@
     <!-- <span class="badge" >{{selectedPage.milestoneID}}</span>  -->
 
 
- <h5> Milestone recorded: {{tempReport.numRecord}}</h5>
+<!--  <h5> Milestone recorded: {{tempReport.numRecord}}</h5>   -->
 
 
 
@@ -56,11 +74,14 @@
        <span class="label"
        [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
        [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">
-       Confidence Level: {{percent}}%
+       {{percent}}% complete
     
        </span>
        </h5>
+
  </div>
+
+  
 
         <!-- <pre class="card card-block card-header" style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
 
@@ -72,6 +93,10 @@
     </button> -->
     <hr/>
 
-  <div style="height: 20px"></div>
+<button  md-raised-button *ngIf="tempReport" 
+    (click)="openAch(tempReport)">
+    Achievement Report
+</button>
+
 </div>
 

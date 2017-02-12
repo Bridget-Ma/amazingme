@@ -1,0 +1,41 @@
+<md-toolbar>
+
+Login to Amazing Me
+<span class="app-toolbar-filler">  </span>
+
+
+ 
+
+ <button md-raised-button align = "right" (click)="login()"  >Login</button>
+      <!--  <button md-raised-button align = "right" (click)="overrideLogin()">Login Anonymously</button> -->
+
+ <!-- <button md-raised-button align = "right" (click)="login()" routerLink="/account" >Login</button> -->
+  <!--  <p>
+      
+      <button md-raised-button align = "right" (click)="logout()" ">Logout</buttn>
+    </p> -->
+  
+  
+
+ 
+  </md-toolbar>
+
+
+    
+    <div align = "center"> 
+   <br />
+   <br />
+      <label>Account Name</label>
+      <md-input placeholder="example@amazingme.com" align="end" [(ngModel)]="email" > </md-input>
+      <br />
+      <br />
+      <label>Password</label>
+      <md-input placeholder="password" align="end" [(ngModel)]="password" ></md-input>
+<div style="margin-top: 50px">
+
+     
+</div>
+<!--  <div> {{ (af.auth | async)?.uid }} </div> -->
+
+      
+    </div>

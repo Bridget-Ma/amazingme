@@ -22,16 +22,10 @@ import 'rxjs/add/operator/map';
   <img src="../../assets/images/homepage1.jpg">
   <div style="height: 200px">
 
-  <button type="button" md-raised-button *ngIf="tempReport" 
-    (click)="open(tempReport)">
-    Achievement Report
-  </button>
 
   <br />
 
   </div>
-  
-
    
   `,
 
@@ -64,7 +58,7 @@ export class AccountDashboardComponent implements OnInit {
       .fragment
       .map(fragment => fragment || 'None');
 
-       this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
+       // this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
   }
 
 
@@ -140,11 +134,6 @@ export class AccountDashboardComponent implements OnInit {
       }
     return Promise.resolve(this.tempReport);
   }
-
-
-
-
-
 
 
 }

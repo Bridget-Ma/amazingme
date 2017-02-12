@@ -2,8 +2,9 @@ import { Component, OnInit,ViewContainerRef  } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonsModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { PaginationModule } from 'ng2-bootstrap';
 import { Page } from './page';
-import { PageService } from './page.service';
+// import { PageService } from './page.service';
 
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
@@ -12,11 +13,13 @@ import { CHECKLIST } from './checklist';
 import { AchReport } from './report';
 import { Report } from './report';
 
-import { MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
+// import { MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
 import { DialogsService} from './dialog.service';
+import { achDialogsService} from './achDialog.service';
 
 
-
+import {AngularFire, FirebaseObjectObservable, FirebaseListObservable} from 'angularfire2';
+import {Subject} from 'rxjs/Subject';
 // todo: change to ng2-bootstrap
 //import { ModalDirective } from '../../../node_modules/ng2-bootstrap/components/modal/modal.component';
  
@@ -26,14 +29,24 @@ import { DialogsService} from './dialog.service';
 })
 
 export class StorybookComponent implements OnInit {
+
+  //item: FirebaseObjectObservable<any>;
+  // public pages: FirebaseListObservable<any[]>;
+
   
   
 
   public totalItems:number = 400;
   public currentPage:number = 1;
-  public pages: Page[];
-  public checklist: Milestone[];
+
+  public page: any;
   public selectedPage: Page;
+  public pages: FirebaseListObservable<any[]>;
+  public pageSubject: Subject<any>;
+
+  public checklist: Milestone[];
+  
+  
   public selectedMilestone: Milestone;
   public showMilestone: boolean = true;
  
@@ -41,63 +54,113 @@ export class StorybookComponent implements OnInit {
   public bigTotalItems:number = 310;
   public bigCurrentPage:number = 1;
  
-  public setPage(pageNo:number):void {
-    this.currentPage = pageNo;
-    this.pageService.getPage(pageNo).then(page => this.onSelect(page));
-  };
- 
-  public pageChanged(event:any):void {
-    console.log('Page changed to: ' + event.page);
-    console.log('Number items per page: ' + event.itemsPerPage);
-    this.pageService.getPage(event.page).then(page => this.onSelect(page));
-  };
 
-  
  
+  
 
   constructor(
+    af: AngularFire,
     private router: Router,
-    private pageService: PageService,
+    // private pageService: PageService,
     private dialogsService: DialogsService,
     private milestoneService: MilestoneService,  
-    private viewContainerRef: ViewContainerRef
+    private viewContainerRef: ViewContainerRef,
+    private achDialogsService: achDialogsService,
+    ) {
 
-    ) { }
+    this.pageSubject = new Subject();
+    this.pages = af.database.list('/Pagelist', {
+      query: {
+        orderByChild: 'id',
+        equalTo: this.pageSubject
+      }
+    });
 
-  getPages(): void {
-    this.pageService.getPages().then(pages => this.pages = pages);
-  }
-  getMilestones(): void {
-    this.milestoneService.getChecklist().then(checklist => this.checklist = checklist);
+  
+
+    this.pages.subscribe(queriedItems => {
+      // this.selectedPage = this.page[0]; 
+      
+      // this.page = this.pages.flatMap(list => list).first().map(({id, img, milestoneID}) => ({id, img, milestoneID}));
+      console.log(queriedItems);  
+      // console.log("selectedPage: ", this.pages.flatMap(list => list).first());
+      // this.onSelect(this.pages.flatMap(list => list).first());
+      console.log("selectedPage: ", queriedItems[0]);
+      this.page = queriedItems[0];
+      this.onSelect(queriedItems[0]);
+
+      // console.log("this page is: ", this.page[0]);
+    });
+    
+ 
+    // 
   }
 
   ngOnInit(): void {
-    this.getPages();
+    // this.getPages();
+    
+    // this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
+
     this.getMilestones();
     this.setPage(1);
-    this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
+    this.countUpdateIteration().then(tempReport => this.openAch(tempReport));
   }
 
-  onSelect(page: Page): void {
-    this.selectedPage = page;
-    if(this.selectedPage.milestoneID > 0){
-      this.milestoneService.getMilestone(this.selectedPage.milestoneID)
+  public getMilestones(): void {
+    this.milestoneService.getChecklist().then(checklist => this.checklist = checklist);
+  };
+
+  
+  public setPage(pageNo:number):void {
+    this.currentPage = pageNo;
+    // this.pageSubject.next(pageNo); 
+     this.pageSubject.next(pageNo);
+     console.log("setPage:",pageNo);
+    // console.log("setPage:",this.pageSubject.next(pageNo));
+    // this.pageService.getPage(pageNo).then(page => this.onSelect(page));
+    
+  };
+
+  public pageChanged(event:any):void {
+    console.log('Page changed to: ' + event.page);
+    console.log('Number items per page: ' + event.itemsPerPage);
+    // this.pageService.getPage(event.page).then(page => this.onSelect(page));
+    // this.onSelect(event.page);
+    this.pageSubject.next(event.page);
+
+  };
+  
+  
+
+  
+  
+
+  onSelect(page): void {
+    
+    // this.pageSubject.next(eventPage); 
+    // console.log("onselect:",this.page[0]);
+    this.page = page;
+
+    if(page.milestoneID > 0){
+      this.milestoneService.getMilestone(this.page.milestoneID)
       .then(milestone => this.selectedMilestone = milestone)
       .then(selectedMilestone => this.defineStar(selectedMilestone));
       this.showMilestone = true;
     }
     else{
       this.showMilestone = false;
-
     }
+
+    
+
     // this.milestoneService.getMilestone(this.selectedPage.milestoneID).then(milestone => this.selectedMilestone = milestone);
   }
 
-  defineStar(milestone:Milestone): void {
-    selectedMilestone => this.rate = selectedMilestone.progress/10;
-    selectedMilestone => this.overStar = this.selectedMilestone.progress/10;
-    selectedMilestone => this.percent = this.selectedMilestone.progress;
-
+  public defineStar(milestone:Milestone): void {
+    this.rate = milestone.progress/10;
+    this.overStar = milestone.progress/10;
+    this.percent = milestone.progress;
+    console.log("refresh on true");
   }
 
   /*dialog*/
@@ -107,6 +170,13 @@ export class StorybookComponent implements OnInit {
       .confirm(milestone, this.viewContainerRef)
       .subscribe(res => this.refreshPage(res));
   }
+    public openAch(report:Report) {
+      
+    this.achDialogsService
+      .confirm(report, this.viewContainerRef)
+      .subscribe(res => this.directPage(res));
+  }
+
 
   public refreshPage(res:any) {
     if (res == true){
@@ -115,19 +185,26 @@ export class StorybookComponent implements OnInit {
       this.milestoneService.getMilestone(this.selectedPage.milestoneID)
       .then(milestone => this.selectedMilestone = milestone)
       .then(selectedMilestone => this.defineStar(selectedMilestone));
-      
       this.showMilestone = true;
+      
      }
      else{
       this.showMilestone = false;
      }
     }
-
     this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
     //this.getReport().then(AchReport => this.tempReport = AchReport);//refresh the report if any change is made
-
   }
+  public directPage(res:any) {
+    if (res == true){
+      this.setPage(3);
+    }
+    else {
+      this.setPage(1);
+
+    }
   
+  }
 
 
   // public openDialog(Number:number):void {
@@ -180,7 +257,7 @@ export class StorybookComponent implements OnInit {
   /*record update*/
 
 
-  public checklistLength: number = 28;
+  public checklistLength: number = 34;
   //public tempCount = [0,0,0];
   public tempReport: Report = AchReport;
 
@@ -198,7 +275,7 @@ export class StorybookComponent implements OnInit {
       numRecord: 0,
       numAchieved: 0,
       numPhotos: 0
-    };
+  };
 
     for (let index = 0; index < this.checklistLength; index++) {
       this.milestoneService.getMilestone(index).then(milestone => this.countUpdate(milestone));

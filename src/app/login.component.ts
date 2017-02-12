@@ -1,87 +1,140 @@
 import { Component }        from '@angular/core';
 import { Router,
-         NavigationExtras } from '@angular/router';
+         NavigationExtras,ActivatedRoute, Params } from '@angular/router';
 import { AuthService }      from './auth.service';
+import { AngularFire, FirebaseListObservable,FirebaseObjectObservable,AuthProviders, AuthMethods } from 'angularfire2';
 
 @Component({
-  template: `
- 
-
-
-<md-toolbar>
-
-Login to Amazing Me
-<span class="app-toolbar-filler">  </span>
-    <p>
-      <button md-raised-button align = "right" (click)="login()"  *ngIf="!authService.isLoggedIn">Login</button>
-      <button md-raised-button align = "right" (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
-    </p>
-    <p> {{message}}</p>
-  
-
- 
-  </md-toolbar>
-
-
-    
-    <div align = "center"> 
-   <br />
-   <br />
-      <label>Account Name</label>
-      <md-input placeholder="example@amazingme.com" align="end" [(ngModel)]="User.name" ></md-input>
-      <br />
-      <br />
-      <label>Password</label>
-      <md-input placeholder="password" align="end" [(ngModel)]="User.Password" ></md-input>
-
-      
-    </div>
-
-  
-
-    `,
+  templateUrl:'login.html',
   styleUrls: ['./app.component.css']
-    
 
 })
+
 export class LoginComponent {
-  message: string;
 
-  constructor(public authService: AuthService, public router: Router) {
-    this.setMessage();
+
+  constructor(
+    public af: AngularFire, 
+    public authService: AuthService, 
+    public router: Router) {
+    
+    this.af.auth.subscribe(auth => console.log(auth));
+    this.userList= af.database.list('/userList');
+    // this.items = af.database.list('/items');
   }
 
-  setMessage() {
-    this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
-  }
+   
+   userList: FirebaseListObservable<any>;
+
+   public email:string;
+   public password:string;
+
+
 
   login() {
-    this.message = 'Trying to log in ...';
+    // 
+    this.af.auth.login({
+         email: this.email,
+         password: this.password,
+      }).then(auth => this.addUser(auth));
+      
+      this.authService.login().subscribe(() => {
 
-    this.authService.login().subscribe(() => {
-      this.setMessage();
-      if (this.authService.isLoggedIn) {
-        // Get the redirect URL from our auth service
-        // If no redirect has been set, use the default
-        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/account';
-
-        // Set our navigation extras object
-        // that passes on our global query params and fragment
-        let navigationExtras: NavigationExtras = {
-          preserveQueryParams: true,
-          preserveFragment: true
-        };
-
-        // Redirect the user
-        this.router.navigate([redirect], navigationExtras);
-      }
+      let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'account';
+      // let redirect = 'account';
+      let navigationExtras: NavigationExtras = {
+            preserveQueryParams: true,
+            preserveFragment: true
+          };
+          // Redirect the user
+      this.router.navigate([redirect], navigationExtras);
     });
+      
+
+  
+     
   }
+
+
+/*list*/
+
+
+  public addUser(auth:any) {
+
+    this.userList.push({ userID: auth.uid, userProfile: auth.auth.email, userPhoto: auth.auth.photoURL, time: Date() });
+    // var user = this.auth.uid;
+    // var name, email, photoUrl, uid;
+
+    // if (user != null) {
+    //   name = user.displayName;
+    //   email = user.email;
+    //   photoUrl = user.photoURL;
+    //   uid = user.uid;
+    //   // this.userID = uid;
+      
+    // }
+
+  }
+   
 
   logout() {
-    this.authService.logout();
-    this.setMessage();
+     this.af.auth.logout();
   }
+  
+  // public userID: string;
+
+
+
+  // addItem() {
+
+  //   this.user.push({ userID: this.userID, time: Date() });
+  // }
+  // updateItem(key: string, newText: string) {
+  //   this.user.update(key, { text: newText });
+  // }
+  // deleteItem(key: string) {    
+  //   this.user.remove(key); 
+  // }
+  // deleteEverything() {
+  //   this.user.remove();
+  // }
+  // message: string;
+
+  // constructor(public authService: AuthService, public router: Router) {
+  //   this.setMessage();
+  // }
+
+  // setMessage() {
+  //   this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
+  // }
+
+  // login() {
+  //   this.message = 'Trying to log in ...';
+
+  //   this.authService.login().subscribe(() => {
+  //     this.setMessage();
+  //     if (this.authService.isLoggedIn) {
+  //       // Get the redirect URL from our auth service
+  //       // If no redirect has been set, use the default
+  //       // let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'account';
+
+  //       // Set our navigation extras object
+  //       // that passes on our global query params and fragment
+  //       let navigationExtras: NavigationExtras = {
+  //         preserveQueryParams: true,
+  //         preserveFragment: true
+  //       };
+
+  //       // Redirect the user
+  //       this.router.navigate([redirect], navigationExtras);
+  //     }
+  //   });
+  // }
+
+  // logout() {
+  //   this.authService.logout();
+  //   this.setMessage();
+  // }
 }
 
 

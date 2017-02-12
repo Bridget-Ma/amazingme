@@ -3,7 +3,8 @@ import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
-import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { AngularFireModule,AuthProviders, AuthMethods } from 'angularfire2';
+
 
 
 import { AppComponent }         from './app.component';
@@ -16,15 +17,36 @@ import { HomepageComponent } from './homepage/homepage.component';
 
 import { DialogService }        from './dialog.service';
 
+
+
+
+export const myFirebaseConfig = {
+
+  apiKey: "AIzaSyCleNPTW1m0VsF2V_sSuYJQ1pm5E356Ra8",
+    authDomain: "amazing-me-ac8b6.firebaseapp.com",
+    databaseURL: "https://amazing-me-ac8b6.firebaseio.com",
+    storageBucket: "amazing-me-ac8b6.appspot.com",
+    messagingSenderId: "582459982323"
+ 
+};
+
+const myFirebaseAuthConfig = {
+ 
+      provider: AuthProviders.Password,
+      method: AuthMethods.Password,
+    
+};
+
+
 @NgModule({
   imports: [
+    AngularFireModule.initializeApp(myFirebaseConfig, myFirebaseAuthConfig),
     BrowserModule,
     FormsModule,
     HttpModule,
     HomepageRoutingModule,
     LoginRoutingModule,
     AppRoutingModule,
-    AlertModule,
     MaterialModule.forRoot(),
   ],
   declarations: [

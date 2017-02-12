@@ -21,9 +21,9 @@ import { DialogsService } from './dialog.service';
 import { achDialogsService } from './achDialog.service';
 
 
-import { PaginationModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { RatingModule,ModalModule } from 'ng2-bootstrap';
+import { PaginationModule } from 'ng2-bootstrap';
+
 import { FormsModule }   from '@angular/forms';
 
 // import { PizzaDialog} from './milestone-popup.component';
@@ -37,7 +37,7 @@ import { FormsModule }   from '@angular/forms';
     AccountRoutingModule,
     MaterialModule,
     //StorybookRoutingModule,
-    PaginationModule,
+    PaginationModule.forRoot(),
     RatingModule,
     ModalModule,
     FormsModule

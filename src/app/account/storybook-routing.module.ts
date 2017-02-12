@@ -2,6 +2,7 @@ import { NgModule }     from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 
+
 import { StorybookComponent }    from './storybook.component';
 // import { StorybookPageComponent }    from './storybook-page.component';
 import { PageService} from './page.service'
@@ -10,7 +11,7 @@ import { MilestoneService} from './milestones.service'
 
 import { CanDeactivateGuard }    from '../can-deactivate-guard.service';
 
-import { AuthGuard }                from '../auth-guard.service';
+// import { AuthGuard }                from '../auth-guard.service';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { AuthGuard }                from '../auth-guard.service';
       {
         path: '',
         component: StorybookComponent,
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         // children:[
         // {
         //     // {
@@ -32,9 +33,11 @@ import { AuthGuard }                from '../auth-guard.service';
       }
     ])
   ],
+  
   exports: [
     RouterModule
   ]
+
 })
 export class StorybookRoutingModule {}
 

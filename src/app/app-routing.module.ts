@@ -1,15 +1,29 @@
-import { NgModule }     from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { NgModule }             from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { CanDeactivateGuard } from './can-deactivate-guard.service';
-import { AuthGuard }          from './auth-guard.service';
-import { PreloadSelectedModules } from './selective-preload-strategy';
+// import { ComposeMessageComponent }  from './compose-message.component';
+// import { PageNotFoundComponent }    from './not-found.component';
 
-@NgModule({
-  imports: [
-    RouterModule.forRoot([
-      
-      {
+import { CanDeactivateGuard }       from './can-deactivate-guard.service';
+import { AuthGuard }                from './auth-guard.service';
+import { PreloadSelectedModules }   from './selective-preload-strategy';
+
+
+
+// import { NgModule }     from '@angular/core';
+// import { RouterModule } from '@angular/router';
+
+// import { CanDeactivateGuard } from './can-deactivate-guard.service';
+// import { AuthGuard }          from './auth-guard.service';
+// import { PreloadSelectedModules } from './selective-preload-strategy';
+
+
+
+const appRoutes: Routes = [
+
+
+
+   {
         path: 'account',
         loadChildren: 'app/account/account.module#AccountModule',
         canLoad: [AuthGuard]
@@ -18,23 +32,18 @@ import { PreloadSelectedModules } from './selective-preload-strategy';
       {
         path: '',
         redirectTo: '/homepage',
+     
         //loadChildren: 'app/login.module#LoginModule',
         pathMatch: 'full'
       },
-      // {
-      //   path: 'crisis-center',
-      //   loadChildren: 'app/crisis-center/crisis-center.module#CrisisCenterModule',
-      //   data: {
-      //     preload: true
-      //   }
-      // }
-       // {
-      //   path: 'homepage',
-      //   loadChildren: 'app/homepage/homepage-routing.module#HomepageRoutingModule',
-        
-      // },
-    ],
-    { preloadingStrategy: PreloadSelectedModules })
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { preloadingStrategy: PreloadSelectedModules }
+    )
   ],
   exports: [
     RouterModule
@@ -44,6 +53,49 @@ import { PreloadSelectedModules } from './selective-preload-strategy';
     PreloadSelectedModules
   ]
 })
+
+
+
+// @NgModule({
+//   imports: [
+//     RouterModule.forRoot([
+      
+//       {
+//         path: 'account',
+//         loadChildren: 'app/account/account.module#AccountModule',
+//         // canLoad: [AuthGuard]
+//       },
+
+//       {
+//         path: '',
+//         redirectTo: '/homepage',
+     
+//         //loadChildren: 'app/login.module#LoginModule',
+//         pathMatch: 'full'
+//       },
+//       // {
+//       //   path: 'crisis-center',
+//       //   loadChildren: 'app/crisis-center/crisis-center.module#CrisisCenterModule',
+//       //   data: {
+//       //     preload: true
+//       //   }
+//       // }
+//        // {
+//       //   path: 'homepage',
+//       //   loadChildren: 'app/homepage/homepage-routing.module#HomepageRoutingModule',
+        
+//       // },
+//     ],
+//     { preloadingStrategy: PreloadSelectedModules })
+//   ],
+//   exports: [
+//     RouterModule
+//   ],
+//   providers: [
+//     CanDeactivateGuard,
+//     PreloadSelectedModules
+//   ]
+// })
 export class AppRoutingModule {}
 
 

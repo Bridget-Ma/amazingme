@@ -10,7 +10,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 	<img src="../../assets/images/homepage1.jpg">
 	<div class = "blockdiv" align = center margin = 10em>
 	<br />
-	 <a button md-raised-button  routerLink="/login" routerLinkActive="active">Start Journey</a>
+	 <button md-raised-button style="backgroundcolor:white" routerLink="/login" routerLinkActive="active">Start Journey</button>
 	
 	</div>
 
@@ -18,20 +18,16 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 	 styles: [`
 
     .blockdiv {
-      align = center;
+      align : center;
       position: relative;
       left: 0;
-      vertical-align = center;
+      vertical-align : center;
       background-color: white;
       margin: .5em;
       padding: 3em 3em;
       height: 10em;
       border-radius: 4px;
-    }
-   
-
-
-   
+    } 
   `]
   
 })

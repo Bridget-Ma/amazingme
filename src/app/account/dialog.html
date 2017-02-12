@@ -2,37 +2,47 @@
 <h4>{{ milestone.name }}</h4>  
 
 
-
+ <br />
 
 <div>
+     <h4>I feel that George is ...</h4>
+    
+     
      <h5>
        <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
        (onHover)="clickOn($event)"  
        [titles]="['one','two','three']"> 
        </rating> 
+      
        <span class="label"
        [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
-       [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">Confidence Level: {{percent}}%
-       </span>
-    </h5>
+       [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">  {{percent}}% 
+       </span> 
+       towards this milestone!   </h5>
+
+
+
+    
+ <br />
  </div>
 
 
 <div style="color:#979797">
-<p >
+<p>
   Milestone details:
 </p>
 </div>
 
- <md-grid-list cols="2" gutterSize="4px">
+ <md-grid-list cols="2" gutterSize="4px" rowHeight="200px">
+    <md-grid-tile style="vertical-align: top">
+        <img  style="width:90%" src={{milestone.img}}>
+    </md-grid-tile>
     <md-grid-tile>
-        <p>
+        <p style="vertical-align: top">
             {{ milestone.detail }}
         </p>
     </md-grid-tile>
-    <md-grid-tile>
-        <img  style="width:90%" src={{milestone.img}}>
-    </md-grid-tile>
+    
 </md-grid-list>
 
 
@@ -48,3 +58,17 @@
 (click)="dialogRef.close(true)">Save</button>
 <button type="button" md-button 
 (click)="dialogRef.close()">Cancel</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

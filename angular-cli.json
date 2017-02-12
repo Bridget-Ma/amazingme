@@ -1,7 +1,7 @@
 {
   "project": {
-    "version": "1.0.0-beta.19-3",
-    "name": "angular-material-test"
+    "version": "1.0.0-beta.25.5",
+    "name": "amazing-me"
   },
   "apps": [
     {
@@ -18,10 +18,7 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css",
-        "app-theme.scss",
-       
-        "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+        "styles.css"
       ],
       "scripts": [],
       "environments": {

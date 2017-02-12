@@ -3,26 +3,25 @@ import { Component,ViewContainerRef ,OnInit} from '@angular/core';
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
 import { CHECKLIST } from './checklist';
-import {MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
+
+import { AchReport } from './report';
+import { Report } from './report';
+// import {MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
 import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import {DialogsService} from './dialog.service';
 
 
+
 @Component({
-  selector: 'pizza-component',
+  // selector: 'pizza-component',
   template:  `
-    <h2>&nbsp; Milestone Checklist</h2>
-
-
-
- 
-
+    <h2>&nbsp; Milestone Checklist ({{tempReport.numAchieved}}/34)</h2>
    <md-list>
 
-   <md-list-item *ngFor="let milestone of checklist" (click)="openDialog(milestone)">
+   <md-list-item *ngFor="let milestone of checklist"  (click)="openDialog(milestone)">
    
-  
+
 <span ><img src={{milestone.icon}} ></span> &nbsp; &nbsp; 
     
       {{milestone.name}} 
@@ -31,9 +30,10 @@ import {DialogsService} from './dialog.service';
 <span *ngIf="milestone.progress>0">
      <span class="label"   
        [ngClass]="{'label-warning': milestone.progress<30, 'label-info': milestone.progress>=30 && milestone.progress<70, 'label-success': milestone.progress>=70}">
-         {{milestone.progress}}%
+         {{milestone.progress}}% complete
      </span>
      </span>
+
 
    
          <md-divider></md-divider>
@@ -56,6 +56,7 @@ export class ChecklistCenterComponent {
     private dialogsService: DialogsService,
     private milestoneService: MilestoneService,  
     private viewContainerRef: ViewContainerRef
+
     ) {}
   
   public openDialog(milestone:Milestone) {
@@ -71,10 +72,43 @@ export class ChecklistCenterComponent {
   //lastCloseResult: string;
   public selectedMilestone: Milestone;
   public result: any;
+  public tempReport: Report = AchReport;
+public checklistLength: number = 34;
 
+ public getReport(): Promise<Report> {
+    
+    return Promise.resolve(AchReport);
+  }
+  public reportUpdate(report:Report): void {
+    this.countUpdateIteration().then(tempReport => report = tempReport);
+  }
 
+  public countUpdateIteration(): Promise<Report> {
+    this.tempReport = {
+      numRecord: 0,
+      numAchieved: 0,
+      numPhotos: 0
+    };
 
+    for (let index = 0; index < this.checklistLength; index++) {
+      this.milestoneService.getMilestone(index).then(milestone => this.countUpdate(milestone));
+    }
+    
+    return Promise.resolve(this.tempReport);
+  }
 
+  public countUpdate(milestone:Milestone): Promise<Report> {
+    if (milestone.progress > 0 ) {
+      this.tempReport.numRecord += 1;
+    }
+    if (milestone.progress == 10 ) {
+      this.tempReport.numAchieved += 1;
+    }
+    if (milestone.progress > 0 ) {
+      this.tempReport.numPhotos += 1;
+    }
+    return Promise.resolve(this.tempReport);
+  }
 
 
 
@@ -94,6 +128,12 @@ export class ChecklistCenterComponent {
     
   };
 
+
+ngOnInit(): void {
+ 
+    this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
+    
+  }
 
   // public openDialog(milestone:Milestone) {
   //   let config = new MdDialogConfig();
