@@ -1,4 +1,9 @@
 import { Component, OnInit,ViewContainerRef  } from '@angular/core';
+import { Http, Response }  from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+
 import { Router } from '@angular/router';
 import { ButtonsModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
@@ -18,7 +23,7 @@ import { DialogsService} from './dialog.service';
 import { achDialogsService} from './achDialog.service';
 
 
-import {AngularFire, FirebaseObjectObservable, FirebaseListObservable} from 'angularfire2';
+import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
 import {Subject} from 'rxjs/Subject';
 // todo: change to ng2-bootstrap
 //import { ModalDirective } from '../../../node_modules/ng2-bootstrap/components/modal/modal.component';
@@ -44,10 +49,19 @@ export class StorybookComponent implements OnInit {
   public pages: FirebaseListObservable<any[]>;
   public pageSubject: Subject<any>;
 
-  public checklist: Milestone[];
+  public checklist: FirebaseListObservable<any[]>;
+  public checklistSubject: Subject<any>;
+  public selectedMilestone: any;
+  public milestone: any;
+  public userChecklist: FirebaseListObservable<any[]>;
+
+  public userID: any;
+  public userAccount: FirebaseListObservable<any[]>;
+  public key:any;
+
+  //public userList: FirebaseListObservable<any>;
   
-  
-  public selectedMilestone: Milestone;
+  // public selectedMilestone: Milestone;
   public showMilestone: boolean = true;
  
   public maxSize:number = 10;
@@ -61,13 +75,23 @@ export class StorybookComponent implements OnInit {
   constructor(
     af: AngularFire,
     private router: Router,
+    // private http: Http,
     // private pageService: PageService,
     private dialogsService: DialogsService,
     private milestoneService: MilestoneService,  
     private viewContainerRef: ViewContainerRef,
     private achDialogsService: achDialogsService,
+
     ) {
 
+    af.auth.subscribe(auth => {
+      console.log(auth);
+      this.userID = auth.uid;
+
+    });
+
+
+/*page*/
     this.pageSubject = new Subject();
     this.pages = af.database.list('/Pagelist', {
       query: {
@@ -75,8 +99,6 @@ export class StorybookComponent implements OnInit {
         equalTo: this.pageSubject
       }
     });
-
-  
 
     this.pages.subscribe(queriedItems => {
       // this.selectedPage = this.page[0]; 
@@ -92,25 +114,158 @@ export class StorybookComponent implements OnInit {
       // console.log("this page is: ", this.page[0]);
     });
     
- 
-    // 
+/*checklist*/
+
+    this.userAccount = af.database.list('/userList',{
+      query: {
+        orderByChild: 'userID',
+        equalTo: this.userID
+      }
+    });
+
+    this.userAccount.subscribe(queriedItems => {
+      this.key = queriedItems[0].$key;
+      this.userChecklist = af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/',{
+        query: {
+          orderByChild: 'progress',
+        }
+      });
+
+
+      // var templist1 = af.database.list('/userList/'+this.key+'/Checklist/', {
+      //   query: {
+      //     orderByChild: 'progress',
+      //     equalTo: 0
+      //   }
+      // });
+      // templist1.subscribe(queriedItems => {this.tempReport.numRecord = 34- queriedItems.length});
+
+      // var templist2 = af.database.list('/userList/'+this.key+'/Checklist/', {
+      //   query: {
+      //     orderByChild: 'progress',
+      //     equalTo: 100
+      //   }
+      // });
+      // templist2.subscribe(queriedItems => {this.tempReport.numAchieved = queriedItems.length});
+
+
+      this.checklistSubject = new Subject();
+      this.checklist = af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
+        query: {
+          orderByChild: 'id',
+          equalTo: this.checklistSubject
+        }
+      });
+
+      this.checklist.subscribe(queriedItems => {
+
+        console.log("selectedMilestone: ", queriedItems[0]);
+        this.selectedMilestone = queriedItems[0];
+        this.defineStar(this.selectedMilestone);
+
+        var templist1 = af.database.list('/userList/'+this.key+'/Checklist/', {
+          query: {
+            orderByChild: 'progress',
+            equalTo: 0
+          }
+        });
+        templist1.subscribe(queriedItems => {this.tempReport.numRecord = 34- queriedItems.length});
+
+        var templist2 = af.database.list('/userList/'+this.key+'/Checklist/', {
+          query: {
+            orderByChild: 'progress',
+            equalTo: 100
+          }
+        });
+        templist2.subscribe(queriedItems => {this.tempReport.numAchieved = queriedItems.length});
+
+
+        
+      });
+
+
+   
+
+
+    });
+
+    
+
+
+
+
+
   }
 
+    // var templist1 = af.database.list('/userList', {
+    //     query: {
+    //       orderByChild: 'progress',
+    //       // equalTo: 0
+    //     }
+    //   });
+    // templist1.subscribe(queriedItems => {this.tempReport.numRecord =  queriedItems.length});
+
+    // var templist2 = af.database.list('/userList/'+this.userID+'/Checklist', {
+    //   query: {
+    //     orderByChild: 'progress',
+    //     equalTo: 100
+    //   }
+    // });
+    // templist2.subscribe(queriedItems => {this.tempReport.numAchieved = queriedItems.length});
+
+    // this.userChecklist = af.database.list('/userList/'+this.userID+'/Checklist');
+
+    
+
+  private audioContext: AudioContext;
+  private loadingSample: boolean = false;
+  private audioBuffer: AudioBuffer;
+
   ngOnInit(): void {
+
+        
     // this.getPages();
     
     // this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
 
-    this.getMilestones();
+    // this.getMilestones();
     this.setPage(1);
-    this.countUpdateIteration().then(tempReport => this.openAch(tempReport));
+    // this.countUpdateIteration().then(tempReport => this.openAch(tempReport));
   }
 
-  public getMilestones(): void {
-    this.milestoneService.getChecklist().then(checklist => this.checklist = checklist);
-  };
+  // public getMilestones(): void {
+  //   this.milestoneService.getChecklist().then(checklist => this.checklist = checklist);
+  // };
 
-  
+   
+                    
+  // fetchSample(): Promise<AudioBuffer> {
+
+  //   return this.http.get('../../assets/1.wav').map((res:Response) => res.arrayBuffer()) 
+  //       .then(buffer => {
+  //           return new Promise((resolve, reject) => {
+  //               this.audioContext.decodeAudioData(
+  //                   buffer,
+  //                   resolve,
+  //                   reject
+  //               );
+  //           })
+  //       });
+    
+        
+  // }
+
+  // playSample() {
+  //   let bufferSource = this.audioContext.createBufferSource();
+  //   bufferSource.buffer = this.audioBuffer;
+  //   bufferSource.connect(this.audioContext.destination);
+  //   bufferSource.start(0);
+  // }
+
+  // onClickAudio() {
+  //   this.playSample();
+  // }
+
   public setPage(pageNo:number):void {
     this.currentPage = pageNo;
     // this.pageSubject.next(pageNo); 
@@ -142,9 +297,7 @@ export class StorybookComponent implements OnInit {
     this.page = page;
 
     if(page.milestoneID > 0){
-      this.milestoneService.getMilestone(this.page.milestoneID)
-      .then(milestone => this.selectedMilestone = milestone)
-      .then(selectedMilestone => this.defineStar(selectedMilestone));
+      this.checklistSubject.next(page.milestoneID);
       this.showMilestone = true;
     }
     else{
@@ -156,7 +309,7 @@ export class StorybookComponent implements OnInit {
     // this.milestoneService.getMilestone(this.selectedPage.milestoneID).then(milestone => this.selectedMilestone = milestone);
   }
 
-  public defineStar(milestone:Milestone): void {
+  public defineStar(milestone:any): void {
     this.rate = milestone.progress/10;
     this.overStar = milestone.progress/10;
     this.percent = milestone.progress;
@@ -170,7 +323,8 @@ export class StorybookComponent implements OnInit {
       .confirm(milestone, this.viewContainerRef)
       .subscribe(res => this.refreshPage(res));
   }
-    public openAch(report:Report) {
+
+   public openAch(report:Report) {
       
     this.achDialogsService
       .confirm(report, this.viewContainerRef)
@@ -181,20 +335,31 @@ export class StorybookComponent implements OnInit {
   public refreshPage(res:any) {
     if (res == true){
 
-     if(this.selectedPage.milestoneID > 0){
-      this.milestoneService.getMilestone(this.selectedPage.milestoneID)
-      .then(milestone => this.selectedMilestone = milestone)
-      .then(selectedMilestone => this.defineStar(selectedMilestone));
-      this.showMilestone = true;
+     // if(this.page.milestoneID > 0){
+     //  this.milestoneService.getMilestone(this.selectedPage.milestoneID)
+     //  .then(milestone => this.selectedMilestone = milestone)
+     //  .then(selectedMilestone => this.defineStar(selectedMilestone));
+     //  this.showMilestone = true;
       
-     }
-     else{
+     // }
+     // else{
+     //  this.showMilestone = false;
+     // }
+
+    if(this.page.milestoneID > 0){
+      this.checklistSubject.next(this.page.milestoneID);
+      console.log("refreshpage");
+      this.showMilestone = true;
+      }
+    else{
       this.showMilestone = false;
-     }
+      }
     }
-    this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
+    // this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
     //this.getReport().then(AchReport => this.tempReport = AchReport);//refresh the report if any change is made
   }
+
+
   public directPage(res:any) {
     if (res == true){
       this.setPage(3);
@@ -238,6 +403,7 @@ export class StorybookComponent implements OnInit {
   public hoveringOver(value:number):void {
     this.overStar = value;
     this.percent = 10 * value ;
+    console.log("hoveringOver:",value);
   };
  
   public resetStar():void {
@@ -248,8 +414,15 @@ export class StorybookComponent implements OnInit {
     this.overStar = value;
     //this.rate = value;
     this.percent = 10 * value;
+
+    // const items = af.database.list('/items');
+// to get a key, check the Example app below
+
+    this.userChecklist.update('Milestone'+ this.selectedMilestone.id, { progress: this.percent });
+
     this.selectedMilestone.progress = this.percent;
-    this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
+    this.checklistSubject.next(this.selectedMilestone.id);
+    // this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
   };
 
 
@@ -266,6 +439,9 @@ export class StorybookComponent implements OnInit {
     return Promise.resolve(AchReport);
   }
 
+
+/*
+//Original Report Methods
   public reportUpdate(report:Report): void {
     this.countUpdateIteration().then(tempReport => report = tempReport);
   }
@@ -278,13 +454,16 @@ export class StorybookComponent implements OnInit {
   };
 
     for (let index = 0; index < this.checklistLength; index++) {
-      this.milestoneService.getMilestone(index).then(milestone => this.countUpdate(milestone));
+      
+      this.checklistSubject.next(index);
+
+      // this.milestoneService.getMilestone(index).then(milestone => this.countUpdate(milestone));
     }
     
     return Promise.resolve(this.tempReport);
     }
 
-  public countUpdate(milestone:Milestone): Promise<Report> {
+  public countUpdate(milestone): Promise<Report> {
     if (milestone.progress > 0 ) {
         this.tempReport.numRecord += 1;
       }
@@ -296,6 +475,8 @@ export class StorybookComponent implements OnInit {
       }
     return Promise.resolve(this.tempReport);
   }
+
+*/
 
   
   /*modal*/

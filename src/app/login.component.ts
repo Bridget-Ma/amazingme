@@ -3,6 +3,9 @@ import { Router,
          NavigationExtras,ActivatedRoute, Params } from '@angular/router';
 import { AuthService }      from './auth.service';
 import { AngularFire, FirebaseListObservable,FirebaseObjectObservable,AuthProviders, AuthMethods } from 'angularfire2';
+import {map} from 'rxjs/operator/map';
+
+
 
 @Component({
   templateUrl:'login.html',
@@ -18,26 +21,382 @@ export class LoginComponent {
     public authService: AuthService, 
     public router: Router) {
     
-    this.af.auth.subscribe(auth => console.log(auth));
-    this.userList= af.database.list('/userList');
-    // this.items = af.database.list('/items');
-  }
+    
 
-   
+ 
+
+
+
+    this.userList= af.database.list('/userList');
+
+
+    
+    // this.checklist = af.database.list('/Checklist');
+    // this.checklist.subscribe(queriedItems =>{
+    //   console.log(queriedItems);
+    //   this.checklistflat = queriedItems;
+
+    // });
+    // this.items = af.database.list('/items');
+    };
+
+
+    public userChecklist = 
+
+    {
+
+      "Milestone1" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/1.png",
+        "id" : 1,
+        "img" : "../../assets/images/milestone1.jpg",
+        "name" : "Copies adults and friends (like running when other children run)",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone10" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/10.png",
+        "id" : 10,
+        "img" : "../../assets/images/milestone10.jpg",
+        "name" : "Follows instructions with 2 or 3 steps",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone11" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/11.png",
+        "id" : 11,
+        "img" : "../../assets/images/milestone11.jpg",
+        "name" : "Can name most familiar things",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone12" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/12.png",
+        "id" : 12,
+        "img" : "../../assets/images/milestone12.jpg",
+        "name" : "Understands words like 'in', 'on' and 'under'",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone13" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/13.png",
+        "id" : 13,
+        "img" : "../../assets/images/milestone13.jpg",
+        "name" : "Says first name, age, and sex",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone14" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/14.png",
+        "id" : 14,
+        "img" : "../../assets/images/milestone14.jpg",
+        "name" : "Names a friend",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone15" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/15.png",
+        "id" : 15,
+        "img" : "../../assets/images/milestone15.jpg",
+        "name" : "Says works like 'I', 'me', 'we' and 'you' and some plurals (cars, dogs, cats)",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone16" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/16.png",
+        "id" : 16,
+        "img" : "../../assets/images/milestone16.jpg",
+        "name" : "Talks well enough for strangers to understand most of the time",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone17" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/17.png",
+        "id" : 17,
+        "img" : "../../assets/images/milestone17.jpg",
+        "name" : "Carries on a conversation using 2 to 3 sentences",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone18" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/18.png",
+        "id" : 18,
+        "img" : "../../assets/images/milestone18.jpg",
+        "name" : "Can work toys with buttons, levers, and moving parts",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone19" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/19.png",
+        "id" : 19,
+        "img" : "../../assets/images/milestone19.jpg",
+        "name" : "Plays make-believe with dolls, animals, and people",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone2" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/2.png",
+        "id" : 2,
+        "img" : "../../assets/images/milestone2.jpg",
+        "name" : "Shows affection for friends without prompting",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone20" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/20.png",
+        "id" : 20,
+        "img" : "../../assets/images/milestone20.jpg",
+        "name" : "Does puzzles with 3 or 4 pieces",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone21" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/21.png",
+        "id" : 21,
+        "img" : "../../assets/images/milestone21.jpg",
+        "name" : "Understands what 'two' means",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone22" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/22.png",
+        "id" : 22,
+        "img" : "../../assets/images/milestone22.jpg",
+        "name" : "Copies a circle with a pencil or crayon",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone23" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/23.png",
+        "id" : 23,
+        "img" : "../../assets/images/milestone23.jpg",
+        "name" : "Turns book pages one at a time",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone24" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/24.png",
+        "id" : 24,
+        "img" : "../../assets/images/milestone24.jpg",
+        "name" : "Builds towers of more than 6 blocks",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone25" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/25.png",
+        "id" : 25,
+        "img" : "../../assets/images/milestone25.jpg",
+        "name" : "Screws and unscrews jar lids or turns door handle",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone26" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/26.png",
+        "id" : 26,
+        "img" : "../../assets/images/milestone26.jpg",
+        "name" : "Climbs well",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone27" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/27.png",
+        "id" : 27,
+        "img" : "../../assets/images/milestone27.jpg",
+        "name" : "Runs easily",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone28" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/28.png",
+        "id" : 28,
+        "img" : "../../assets/images/milestone28.jpg",
+        "name" : "Pedals a tricycle (3-wheeled bike)",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone29" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/29.png",
+        "id" : 29,
+        "img" : "../../assets/images/milestone29.jpg",
+        "name" : "Walks up and down stairs, one foot on each step",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone3" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/3.png",
+        "id" : 3,
+        "img" : "../../assets/images/milestone3.jpg",
+        "name" : "Takes turns in games",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone30" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/30.png",
+        "id" : 30,
+        "img" : "../../assets/images/milestone30.jpg",
+        "name" : "Points to show others something interesting (age 18-month milestone)",
+        "notes" : "This is the note for this milestone",
+        "progress" : 100
+      },
+      "Milestone31" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/31.png",
+        "id" : 31,
+        "img" : "../../assets/images/milestone31.jpg",
+        "name" : "Plays well with two or three children in a group (age 4 milestone)",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone32" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/32.png",
+        "id" : 32,
+        "img" : "../../assets/images/milestone32.jpg",
+        "name" : "Practices using safety scissors (age 4 milestone) at school",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone33" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/33.png",
+        "id" : 33,
+        "img" : "../../assets/images/milestone33.jpg",
+        "name" : "Tells a story (age 4 milestone) while pretending to read",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone34" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/34.png",
+        "id" : 34,
+        "img" : "../../assets/images/milestone34.jpg",
+        "name" : "Shows independence (age 2 milestone) by trying to brush his own teeth",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone4" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/4.png",
+        "id" : 4,
+        "img" : "../../assets/images/milestone4.jpg",
+        "name" : "Shows concern for a crying friend",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone5" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/5.png",
+        "id" : 5,
+        "img" : "../../assets/images/milestone5.jpg",
+        "name" : "Understands the idea of 'mine' and 'his' or 'hers'",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone6" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/6.png",
+        "id" : 6,
+        "img" : "../../assets/images/milestone6.jpg",
+        "name" : "Shows a wide range of emotions",
+        "notes" : "This is the note for this milestone",
+        "progress" : 100
+      },
+      "Milestone7" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/7.png",
+        "id" : 7,
+        "img" : "../../assets/images/milestone7.jpg",
+        "name" : "Separates easily  from mom and dad",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone8" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/8.png",
+        "id" : 8,
+        "img" : "../../assets/images/milestone8.jpg",
+        "name" : "May get upset with major changes in routine",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      },
+      "Milestone9" : {
+        "detail" : "Detail explanations here ",
+        "icon" : "../../assets/images/staricons/9.png",
+        "id" : 9,
+        "img" : "../../assets/images/milestone9.jpg",
+        "name" : "Dresses and undresses self ",
+        "notes" : "This is the note for this milestone",
+        "progress" : 0
+      }
+    };
+
    userList: FirebaseListObservable<any>;
+   user: FirebaseListObservable<any[]>;
+   // public user: any;
+   public userAccount: any;
 
    public email:string;
    public password:string;
+   public checklist:FirebaseListObservable<any[]>;
+   public checklistflat :any;
 
 
 
   login() {
+
+
     // 
+
     this.af.auth.login({
          email: this.email,
          password: this.password,
-      }).then(auth => this.addUser(auth));
+      }).then(auth => {
+
+        console.log("This user:",this.af.database.list('/userList', {
+          query: {
+            orderByChild: 'userID',
+            equalTo: auth.uid
+          }
+        }));
+
+        this.user = this.af.database.list('/userList', {
+          query: {
+            orderByChild: 'userID',
+            equalTo: auth.uid
+          }});
+        this.user.subscribe(queriedItems => this.userAccount = queriedItems.length)
+
+        if (this.userAccount == 0 ) {
+
+          this.addUser(auth);
+        }
+      });
       
+
+ 
       this.authService.login().subscribe(() => {
 
       let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'account';
@@ -61,7 +420,9 @@ export class LoginComponent {
 
   public addUser(auth:any) {
 
-    this.userList.push({ userID: auth.uid, userProfile: auth.auth.email, userPhoto: auth.auth.photoURL, time: Date() });
+    
+
+    this.userList.push({  userID: auth.uid, userProfile: auth.auth.email, userPhoto: auth.auth.photoURL, time: Date(), Checklist:this.userChecklist});
     // var user = this.auth.uid;
     // var name, email, photoUrl, uid;
 
