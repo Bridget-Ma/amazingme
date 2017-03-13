@@ -11,4 +11,8 @@ export class Milestone {
   notes: string;
   img: string;
   icon: string;
+  checkbox1: boolean;
+  checkbox2: boolean;
+  checkbox3: boolean;
+  checkbox4: boolean;
 }

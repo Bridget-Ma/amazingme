@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,ViewChild } from '@angular/core';
 
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
@@ -10,7 +10,10 @@ import { Report } from './report';
 import { Router,
          NavigationExtras,ActivatedRoute, Params } from '@angular/router';
 import { AuthService }      from '../auth.service';
-import { AngularFire, FirebaseListObservable,AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, AuthProviders, AuthMethods } from 'angularfire2';
+import {MdSidenav} from "@angular/material";
+
+import { Directive, ElementRef, HostListener, Input , Output, EventEmitter} from '@angular/core';
 
 @Component({
     
@@ -24,12 +27,12 @@ import { AngularFire, FirebaseListObservable,AuthProviders, AuthMethods } from '
  
 
 
-<md-sidenav-layout [class.m2app-dark]="isDarkTheme">
+<md-sidenav-layout [class.m2app-dark]="isDarkTheme" >
 
   <md-sidenav #sidenav mode="side" class="app-sidenav" style="background: #4A90E2;
-  color: black">
+  color: black" >
 
-    <div align = "center"><button  md-raised-button  (click)="sidenav.close()">
+    <div align = "center"><button  md-raised-button  (click)="onCloseSideNav()">
       Back
     </button>
   </div>
@@ -38,30 +41,31 @@ import { AngularFire, FirebaseListObservable,AuthProviders, AuthMethods } from '
   
     <md-divider></md-divider>
     <md-list-item routerLink="./checklist" routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }" (click)="sidenav.close()">Checklist  ({{tempReport.numAchieved}}/34)</md-list-item>
+    [routerLinkActiveOptions]="{ exact: true }" (click)="openChecklist()">Checklist  ({{tempReport.numAchieved}}/34)</md-list-item>
     <md-divider></md-divider>
-    <md-list-item routerLink="./story" routerLinkActive="active" (click)="sidenav.close()">Storybook</md-list-item>
+    <md-list-item routerLink="./story" routerLinkActive="active" (click)="openStory()">Storybook</md-list-item>
     <md-divider></md-divider>
     <md-list-item routerLink="./settings" routerLinkActive="active"
-    [routerLinkActiveOptions]="{exact: true}" (click)="sidenav.close()">Settings</md-list-item>
+    [routerLinkActiveOptions]="{exact: true}" (close)="openSetting()">Settings</md-list-item>
     <md-divider></md-divider>
   </md-nav-list>
 </md-sidenav>
 
 <md-toolbar style="background:white">
 
-  <button  md-raised-button (click)="sidenav.open()">
+  <button  md-raised-button (click)="onOpenSideNav()">
     Menu
   </button>
 
   &nbsp; Amazing Me
 
   <span class="app-toolbar-filler"></span>
-  Hi, Bridget
+  <p>Hi, Bridget </p> 
   <button md-raised-button align = "right" (click)="logout()"  >Logout</button>
 </md-toolbar>
 
 <div style="background:white">
+
 
  
 
@@ -77,17 +81,93 @@ import { AngularFire, FirebaseListObservable,AuthProviders, AuthMethods } from '
 })
 export class AccountComponent {
 
+   public userID: any;
+  public userAccount: FirebaseListObservable<any[]>;
+  public key:any;
+
 
   constructor( 
     private milestoneService: MilestoneService,  
     public af: AngularFire, 
     public authService: AuthService, 
-    public router: Router
+    public router: Router,
+
   ) {
 
+    af.auth.subscribe(auth => {
+      console.log(auth);
+      this.userID = auth.uid;
 
-    this.af.auth.subscribe(auth => console.log(auth));
+    });
+
+       this.userAccount = af.database.list('/userList',{
+      query: {
+        orderByChild: 'userID',
+        equalTo: this.userID
+      }
+    });
+
+    this.userAccount.subscribe(queriedItems => {
+      this.key = queriedItems[0].$key;
+    
+      });
+
+
+    // this.af.auth.subscribe(auth => console.log(auth));
   }
+
+ @ViewChild('sidenav') sidenav: MdSidenav;
+
+ @HostListener('window:resize', ['$event'])
+    onOpenSideNav() {
+        
+        this.sidenav.open();
+        /*Log Navigation*/
+        let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/menuAction');
+        list.push({ time: Date(),action: "openMenu"});
+            
+        
+    }
+
+    onCloseSideNav(){
+      this.sidenav.close();
+       /*Log Navigation*/
+        let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/menuAction');
+        list.push({ time: Date(),action: "closeMenu" });
+
+    }
+
+    openChecklist(){
+      this.sidenav.close();
+       /*Log Navigation*/
+        let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openChecklist');
+        list.push({ time: Date() });
+        let list2 = this.af.database.list('/userList/'+this.key+'/userLogs'+'/menuAction');
+        list.push({ time: Date(),action: "openChecklist" });
+
+    }
+    openStory(){
+    this.sidenav.close();
+     /*Log Navigation*/
+      let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openStory');
+      list.push({ time: Date() });
+       let list2 = this.af.database.list('/userList/'+this.key+'/userLogs'+'/menuAction');
+        list.push({ time: Date(),action: "openStory" });
+
+    }
+    openSetting(){
+    this.sidenav.close();
+     /*Log Navigation*/
+      let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openSetting');
+      list.push({ time: Date() });
+      let list2 = this.af.database.list('/userList/'+this.key+'/userLogs'+'/menuAction');
+        list.push({ time: Date(),action: "openSetting" });
+
+    }
+
+
+
+  
 
   logout() {
      this.af.auth.logout();
@@ -113,12 +193,14 @@ export class AccountComponent {
   public selectedMilestone: Milestone;
   public result: any;
   public tempReport: Report = AchReport;
-public checklistLength: number = 34;
+  public checklistLength: number = 34;
 
- public getReport(): Promise<Report> {
+  public getReport(): Promise<Report> {
     
     return Promise.resolve(AchReport);
   }
+
+
   public reportUpdate(report:Report): void {
     this.countUpdateIteration().then(tempReport => report = tempReport);
   }
@@ -148,6 +230,12 @@ public checklistLength: number = 34;
       this.tempReport.numPhotos += 1;
     }
     return Promise.resolve(this.tempReport);
+  }
+   
+  public sidenavOpen() {
+
+
+
   }
 
 

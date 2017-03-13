@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewContainerRef  } from '@angular/core';
+import { Component,Directive, OnInit,ViewContainerRef, ViewChild, ElementRef, HostListener , Renderer} from '@angular/core';
 import { Http, Response }  from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -23,7 +23,7 @@ import { DialogsService} from './dialog.service';
 import { achDialogsService} from './achDialog.service';
 
 
-import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
+import {AngularFire, FirebaseObjectObservable,FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
 import {Subject} from 'rxjs/Subject';
 // todo: change to ng2-bootstrap
 //import { ModalDirective } from '../../../node_modules/ng2-bootstrap/components/modal/modal.component';
@@ -35,11 +35,8 @@ import {Subject} from 'rxjs/Subject';
 
 export class StorybookComponent implements OnInit {
 
-  //item: FirebaseObjectObservable<any>;
-  // public pages: FirebaseListObservable<any[]>;
+  @ViewChild('myAudio') el:ElementRef;
 
-  
-  
 
   public totalItems:number = 400;
   public currentPage:number = 1;
@@ -68,12 +65,14 @@ export class StorybookComponent implements OnInit {
   public bigTotalItems:number = 310;
   public bigCurrentPage:number = 1;
  
+  public noteUpdate:boolean = false;
 
- 
+  public tempTimeOnPage: Date;
   
 
   constructor(
-    af: AngularFire,
+    public af: AngularFire,
+
     private router: Router,
     // private http: Http,
     // private pageService: PageService,
@@ -81,6 +80,7 @@ export class StorybookComponent implements OnInit {
     private milestoneService: MilestoneService,  
     private viewContainerRef: ViewContainerRef,
     private achDialogsService: achDialogsService,
+    private rd: Renderer
 
     ) {
 
@@ -179,22 +179,9 @@ export class StorybookComponent implements OnInit {
         });
         templist2.subscribe(queriedItems => {this.tempReport.numAchieved = queriedItems.length});
 
-
-        
       });
 
-
-   
-
-
     });
-
-    
-
-
-
-
-
   }
 
     // var templist1 = af.database.list('/userList', {
@@ -215,11 +202,7 @@ export class StorybookComponent implements OnInit {
 
     // this.userChecklist = af.database.list('/userList/'+this.userID+'/Checklist');
 
-    
 
-  private audioContext: AudioContext;
-  private loadingSample: boolean = false;
-  private audioBuffer: AudioBuffer;
 
   ngOnInit(): void {
 
@@ -233,38 +216,6 @@ export class StorybookComponent implements OnInit {
     // this.countUpdateIteration().then(tempReport => this.openAch(tempReport));
   }
 
-  // public getMilestones(): void {
-  //   this.milestoneService.getChecklist().then(checklist => this.checklist = checklist);
-  // };
-
-   
-                    
-  // fetchSample(): Promise<AudioBuffer> {
-
-  //   return this.http.get('../../assets/1.wav').map((res:Response) => res.arrayBuffer()) 
-  //       .then(buffer => {
-  //           return new Promise((resolve, reject) => {
-  //               this.audioContext.decodeAudioData(
-  //                   buffer,
-  //                   resolve,
-  //                   reject
-  //               );
-  //           })
-  //       });
-    
-        
-  // }
-
-  // playSample() {
-  //   let bufferSource = this.audioContext.createBufferSource();
-  //   bufferSource.buffer = this.audioBuffer;
-  //   bufferSource.connect(this.audioContext.destination);
-  //   bufferSource.start(0);
-  // }
-
-  // onClickAudio() {
-  //   this.playSample();
-  // }
 
   public setPage(pageNo:number):void {
     this.currentPage = pageNo;
@@ -279,15 +230,19 @@ export class StorybookComponent implements OnInit {
   public pageChanged(event:any):void {
     console.log('Page changed to: ' + event.page);
     console.log('Number items per page: ' + event.itemsPerPage);
+
     // this.pageService.getPage(event.page).then(page => this.onSelect(page));
     // this.onSelect(event.page);
     this.pageSubject.next(event.page);
 
-  };
-  
-  
+    let list2 = this.af.database.list('/userList/'+this.key+'/userLogs'+'/navigation');
+    list2.push({ time: Date(), page: event.page});
+    // var x = document.getElementById("myAudio").;
+    // this.loadAudio();
+   
 
-  
+
+  };
   
 
   onSelect(page): void {
@@ -298,6 +253,7 @@ export class StorybookComponent implements OnInit {
 
     if(page.milestoneID > 0){
       this.checklistSubject.next(page.milestoneID);
+      // this.selectedMilestone = page.milestoneID;
       this.showMilestone = true;
     }
     else{
@@ -318,10 +274,33 @@ export class StorybookComponent implements OnInit {
 
   /*dialog*/
 
-   public open(milestone:Milestone) {
+   public open(milestone:Milestone, noteUpdate:boolean) {
+
+
     this.dialogsService
       .confirm(milestone, this.viewContainerRef)
-      .subscribe(res => this.refreshPage(res));
+      .subscribe(res => {
+        this.refreshPage(res);
+        this.userChecklist.update('Milestone'+ milestone.id, { progress: milestone.progress });
+        this.userChecklist.update('Milestone'+ milestone.id, { notes: milestone.notes, checkbox1: milestone.checkbox1, checkbox2: milestone.checkbox2,checkbox3: milestone.checkbox3,checkbox4: milestone.checkbox4});
+        /*Log Progress*/
+        let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/recordProgress');
+        list.push({ time: Date(), name: milestone.name, progress: milestone.progress, type: "dialog", location:"story" });
+        
+        if (noteUpdate == true) {
+          console.log("noteUpdated");
+          let list2 = this.af.database.list('/userList/'+this.key+'/userLogs'+'/noteUpdate');
+          list2.push({ time: Date(), name: milestone.name, progress: milestone.progress, updatedNotes: milestone.notes,location: "story"});
+        }
+        
+
+
+      });
+
+
+    let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openDialog');
+    list.push({ name: milestone.name, time: Date(),location: "story"} );
+   
   }
 
    public openAch(report:Report) {
@@ -330,7 +309,6 @@ export class StorybookComponent implements OnInit {
       .confirm(report, this.viewContainerRef)
       .subscribe(res => this.directPage(res));
   }
-
 
   public refreshPage(res:any) {
     if (res == true){
@@ -348,13 +326,17 @@ export class StorybookComponent implements OnInit {
 
     if(this.page.milestoneID > 0){
       this.checklistSubject.next(this.page.milestoneID);
+
       console.log("refreshpage");
       this.showMilestone = true;
       }
     else{
       this.showMilestone = false;
       }
+
+
     }
+
     // this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
     //this.getReport().then(AchReport => this.tempReport = AchReport);//refresh the report if any change is made
   }
@@ -415,14 +397,13 @@ export class StorybookComponent implements OnInit {
     //this.rate = value;
     this.percent = 10 * value;
 
-    // const items = af.database.list('/items');
-// to get a key, check the Example app below
-
+    /*Update Progress*/
     this.userChecklist.update('Milestone'+ this.selectedMilestone.id, { progress: this.percent });
+    /*Log Progress*/
+    let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/recordProgress');
+    list.push({ time: Date(), name: this.selectedMilestone.name, progress: this.percent });
 
-    this.selectedMilestone.progress = this.percent;
-    this.checklistSubject.next(this.selectedMilestone.id);
-    // this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
+    
   };
 
 
@@ -431,7 +412,7 @@ export class StorybookComponent implements OnInit {
 
 
   public checklistLength: number = 34;
-  //public tempCount = [0,0,0];
+
   public tempReport: Report = AchReport;
 
   public getReport(): Promise<Report> {
@@ -440,56 +421,35 @@ export class StorybookComponent implements OnInit {
   }
 
 
-/*
-//Original Report Methods
-  public reportUpdate(report:Report): void {
-    this.countUpdateIteration().then(tempReport => report = tempReport);
-  }
+  // @HostListener('mouseenter') onMouseEnter() {
+  //   this.highlight('yellow');
+  // }
+  // @HostListener('mouseleave') onMouseLeave() {
+  //   this.highlight(null);
+  // }
+  // private audioLoad() {
+  //   this.el.nativeElement.load();
+  // }
 
-  public countUpdateIteration(): Promise<Report> {
-    this.tempReport = {
-      numRecord: 0,
-      numAchieved: 0,
-      numPhotos: 0
-  };
-
-    for (let index = 0; index < this.checklistLength; index++) {
-      
-      this.checklistSubject.next(index);
-
-      // this.milestoneService.getMilestone(index).then(milestone => this.countUpdate(milestone));
-    }
-    
-    return Promise.resolve(this.tempReport);
-    }
-
-  public countUpdate(milestone): Promise<Report> {
-    if (milestone.progress > 0 ) {
-        this.tempReport.numRecord += 1;
-      }
-    if (milestone.progress == 10 ) {
-        this.tempReport.numAchieved += 1;
-      }
-    if (milestone.progress > 0 ) {
-        this.tempReport.numPhotos += 1;
-      }
-    return Promise.resolve(this.tempReport);
-  }
-
-*/
+  // ngAfterViewInit() {
+  //    this.rd.invokeElementMethod(this.el.nativeElement,'load');
+  // }
+ 
+  
 
   
-  /*modal*/
-
-  // @ViewChild('childModal') public childModal:ModalDirective;
- 
-  // public showChildModal():void {
-  //   this.childModal.show();
-  // }
- 
-  // public hideChildModal():void {
-  //   this.childModal.hide();
-  // }
 
 
 }
+
+
+// @Directive({
+//   selector: '[myAudio]'
+// })
+// export class AudioDirective {
+//   constructor(private el: ElementRef) { }
+  
+//   private audioLoad() {
+//     this.el.nativeElement.load();
+//   }
+// }

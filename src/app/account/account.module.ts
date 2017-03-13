@@ -26,6 +26,7 @@ import { PaginationModule } from 'ng2-bootstrap';
 
 import { FormsModule }   from '@angular/forms';
 
+import { TestDirective } from './test.directive';
 // import { PizzaDialog} from './milestone-popup.component';
 // import { PizzaComponent} from './milestone-popup.component'
 
@@ -51,7 +52,8 @@ import { FormsModule }   from '@angular/forms';
     ChecklistCenterComponent,
     //MilestoneDetailComponent,
     ConfirmDialog,
-    AchDialog
+    AchDialog,
+    TestDirective
   
  
   ],

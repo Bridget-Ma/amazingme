@@ -19,7 +19,7 @@
   <div class="col-lg-6" align = "center" style=" margin-top: 1px; margin-bottom: : 1px;">
    
     <pagination [totalItems]="bigTotalItems" [(ngModel)]="currentPage" [maxSize]="maxSize" class="pagination-sm"
-    [boundaryLinks]="true" [rotate]="false" (pageChanged)="pageChanged($event)"></pagination>
+    [boundaryLinks]="true" [rotate]="false" (pageChanged)="pageChanged($event)" ></pagination>
 
   </div>
   </div>
@@ -31,8 +31,19 @@
   <div style= "margin-left: 20px">
     <div *ngIf="page">
 
-     <img src= {{page.img}} >
+     <img src= {{page.img}}>
 
+ <audio id="myAudio" *ngIf="page.audio" autoplay >
+  <source src={{page.audio}} type="audio/wav">
+
+
+</audio>
+
+<button onclick="myAudio.load()">load</button>
+
+<script>
+
+</script>
     <!--  <ul>
       <li *ngFor="let item of page | async">
       <img src= {{item.img}} >
@@ -65,10 +76,10 @@
  <div *ngIf="showMilestone" >
      <h5>
 
-       <span  *ngIf="selectedMilestone" (click)="open(selectedMilestone)">
+       <span  *ngIf="selectedMilestone" (click)="open(selectedMilestone,noteUpdate)">
        <span ><img src={{selectedMilestone.icon}} ></span> &nbsp; &nbsp; 
       {{selectedMilestone.name}}
-       </span>
+       </span> 
 
        <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
        (onHover)="clickOn($event)"  
