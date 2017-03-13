@@ -20,14 +20,17 @@ import { Child } from './people'
    <md-card-title>Child's Profile</md-card-title>
    <br/>
     <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{child.img}}>
-      <md-input style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="child.name" ></md-input>
-   
-  
-      <md-input style = "padding: 10px 0 0 0 " placeholder="Gender" [(ngModel)]="child.gender"></md-input>
+     
+   <md-input-container >
+   <input mdInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="child.name" >
+    <input mdInput style = "padding: 10px 0 0 0 " placeholder="Gender" [(ngModel)]="child.gender">
           
       
-      <md-input style = "padding: 10px 0 0 0" placeholder="Age" [(ngModel)]="child.age"></md-input>
+      <input mdInput style = "padding: 10px 0 0 0" placeholder="Age" [(ngModel)]="child.age">
      
+  </md-input-container>
+  
+      
 
    
 
@@ -43,10 +46,10 @@ import { Child } from './people'
      <md-card-title>Parent's Profile</md-card-title>
      <br/>
       <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{parent.img}}>
-
-      <md-input style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="parent.name"></md-input>
-     <md-input style = "padding: 10px 0 0 0"   placeholder="Email" [(ngModel)]="parent.email"></md-input>
-    
+ <md-input-container >
+      <input mdInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="parent.name">
+     <input mdInput style = "padding: 10px 0 0 0"   placeholder="Email" [(ngModel)]="parent.email">
+    </md-input-container>
   
       
           

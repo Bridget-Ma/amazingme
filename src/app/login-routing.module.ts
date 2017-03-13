@@ -12,7 +12,7 @@ import { AngularFireModule,AuthProviders, AuthMethods } from 'angularfire2';
 
 @NgModule({
   imports: [
-    // MaterialModule,
+    MaterialModule,
     
     RouterModule.forChild([
       { path: 'login', component: LoginComponent }

@@ -26,8 +26,8 @@ import { Directive, ElementRef, HostListener, Input , Output, EventEmitter} from
 
  
 
+<md-sidenav-container >
 
-<md-sidenav-layout [class.m2app-dark]="isDarkTheme" >
 
   <md-sidenav #sidenav mode="side" class="app-sidenav" style="background: #4A90E2;
   color: black" >
@@ -72,7 +72,7 @@ import { Directive, ElementRef, HostListener, Input , Output, EventEmitter} from
   <router-outlet></router-outlet>
 </div>
 
-</md-sidenav-layout>
+</md-sidenav-container>
 
 
   `,
