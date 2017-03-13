@@ -1,7 +1,7 @@
 
 
 import { Milestone } from './milestone';
-import { CHECKLIST } from './checklist';
+// import { CHECKLIST } from './checklist';
 
 
 //let checklistPromise = Promise.resolve(CHECKLIST);
@@ -12,15 +12,15 @@ import { Injectable } from '@angular/core';
 export class MilestoneService {
 
 
-  getChecklist(): Promise<Milestone[]> {
-    return Promise.resolve(CHECKLIST);
-  }
+  // getChecklist(): Promise<Milestone[]> {
+  //   return Promise.resolve(CHECKLIST);
+  // }
 
 
-  getMilestone(id: number): Promise<Milestone> {
-      return this.getChecklist()
-                 .then(checklist => checklist.find(milestone => milestone.id === id));
-    }
+  // getMilestone(id: number): Promise<Milestone> {
+  //     return this.getChecklist()
+  //                .then(checklist => checklist.find(milestone => milestone.id === id));
+  //   }
 }
 
 

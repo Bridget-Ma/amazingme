@@ -11,7 +11,7 @@ import { Report } from './report';
 
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
-import { CHECKLIST } from './checklist';
+// import { CHECKLIST } from './checklist';
 
 import 'rxjs/add/operator/map';
 
@@ -104,36 +104,36 @@ export class AccountDashboardComponent implements OnInit {
     return Promise.resolve(AchReport);
   }
 
-  public reportUpdate(report:Report): void {
-    this.countUpdateIteration().then(tempReport => report = tempReport);
-  }
+  // public reportUpdate(report:Report): void {
+  //   this.countUpdateIteration().then(tempReport => report = tempReport);
+  // }
 
-  public countUpdateIteration(): Promise<Report> {
-    this.tempReport = {
-      numRecord: 0,
-      numAchieved: 0,
-      numPhotos: 0
-    };
+  // public countUpdateIteration(): Promise<Report> {
+  //   this.tempReport = {
+  //     numRecord: 0,
+  //     numAchieved: 0,
+  //     numPhotos: 0
+  //   };
 
-    for (let index = 0; index < this.checklistLength; index++) {
-      this.milestoneService.getMilestone(index).then(milestone => this.countUpdate(milestone));
-    }
+  //   for (let index = 0; index < this.checklistLength; index++) {
+  //     this.milestoneService.getMilestone(index).then(milestone => this.countUpdate(milestone));
+  //   }
     
-    return Promise.resolve(this.tempReport);
-    }
+  //   return Promise.resolve(this.tempReport);
+  //   }
 
-  public countUpdate(milestone:Milestone): Promise<Report> {
-    if (milestone.progress > 0 ) {
-        this.tempReport.numRecord += 1;
-      }
-    if (milestone.progress == 10 ) {
-        this.tempReport.numAchieved += 1;
-      }
-    if (milestone.progress > 0 ) {
-        this.tempReport.numPhotos += 1;
-      }
-    return Promise.resolve(this.tempReport);
-  }
+  // public countUpdate(milestone:Milestone): Promise<Report> {
+  //   if (milestone.progress > 0 ) {
+  //       this.tempReport.numRecord += 1;
+  //     }
+  //   if (milestone.progress == 10 ) {
+  //       this.tempReport.numAchieved += 1;
+  //     }
+  //   if (milestone.progress > 0 ) {
+  //       this.tempReport.numPhotos += 1;
+  //     }
+  //   return Promise.resolve(this.tempReport);
+  // }
 
 
 }

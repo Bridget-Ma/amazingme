@@ -2,7 +2,7 @@ import { Component,ViewContainerRef ,OnInit} from '@angular/core';
 
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
-import { CHECKLIST } from './checklist';
+// import { CHECKLIST } from './checklist';
 
 import { AchReport } from './report';
 import { Report } from './report';
