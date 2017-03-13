@@ -1,10 +1,10 @@
-import { AngularMaterialTestPage } from './app.po';
+import { AmazingMePage } from './app.po';
 
-describe('angular-material-test App', function() {
-  let page: AngularMaterialTestPage;
+describe('amazing-me App', function() {
+  let page: AmazingMePage;
 
   beforeEach(() => {
-    page = new AngularMaterialTestPage();
+    page = new AmazingMePage();
   });
 
   it('should display message saying app works', () => {

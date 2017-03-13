@@ -23,6 +23,10 @@ todo.save(function(err){
     console.log(todo);
 });
 
+// angular.module('myModule',['ngAudio'])
+// .controller("audioDemo",function($scope,ngAudio){
+//     $scope.sound = ngAudio.load("audio/button-3.mp3"); // returns NgAudioObject
+// }) ;
 // var insertDocuments = function(db, callback) {
 //   // Get the documents collection
 //   var collection = db.collection('documents');
