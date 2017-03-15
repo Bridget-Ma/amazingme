@@ -1,0 +1,116 @@
+<!-- <h1>{{ item | async | json }}</h1>
+  <input type="text" #newname placeholder="Name" />
+  <input type="text" #newsize placeholder="Size" />
+  <br />
+  <button (click)="save(newname.value)">Set Name</button>
+  <button (click)="update(newsize.value)">Update Size</button>
+  <button (click)="delete()">Delete</button>   -->
+
+
+
+
+
+<!-- <button  md-raised-button *ngIf="tempReport" 
+    (click)="openAch(tempReport)">
+    Achievement Report
+</button>
+ -->
+<div >
+  <div class="col-lg-6" align = "center" style=" margin-top: 1px; margin-bottom: : 1px;">
+   
+    <pagination [totalItems]="bigTotalItems" [(ngModel)]="currentPage" [maxSize]="maxSize" class="pagination-sm"
+    [boundaryLinks]="true" [rotate]="false" (pageChanged)="pageChanged($event)" ></pagination>
+
+  </div>
+  </div>
+  
+<!-- <audio >
+<source id="source" src="../../assets/1.wav"></source>
+</audio> -->
+
+  <div style= "margin-left: 20px">
+    <div *ngIf="page">
+
+     <img src= {{page.img}}>
+
+ <audio id="myAudio" *ngIf="page.audio" autoplay >
+  <source src={{page.audio}} type="audio/wav">
+
+
+</audio>
+
+<button onclick="myAudio.load()">load</button>
+
+<script>
+
+</script>
+    <!--  <ul>
+      <li *ngFor="let item of page | async">
+      <img src= {{item.img}} >
+      </li>
+     </ul> -->
+     
+    </div>
+  </div>
+
+  <div style=" margin-top: 5px; margin-left: 25px">
+
+    <!-- <span class="badge" >{{selectedPage.milestoneID}}</span>  -->
+
+
+<!--  <h5> Milestone recorded: {{tempReport.numRecord}}</h5>   -->
+
+
+
+<!--     <div *ngIf="showMilestone">
+
+        <div  *ngIf="selectedMilestone" (click)="open(selectedMilestone)">
+
+         <span class="badge"  >Milestone {{selectedMilestone.id}}</span>  {{selectedMilestone.name}}
+
+
+
+       </div>
+     </div> -->
+
+ <div *ngIf="showMilestone" >
+     <h5>
+
+       <span  *ngIf="selectedMilestone" (click)="open(selectedMilestone,noteUpdate)">
+       <span ><img src={{selectedMilestone.icon}} ></span> &nbsp; &nbsp; 
+      {{selectedMilestone.name}}
+       </span> 
+
+       <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
+       (onHover)="clickOn($event)"  
+       [titles]="['one','two','three']"> 
+       </rating> 
+       <span class="label"
+       [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
+       [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">
+       {{percent}}% complete
+    
+       </span>
+       </h5>
+
+ </div>
+
+  
+
+        <!-- <pre class="card card-block card-header" style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
+
+        <button type="button" class="btn btn-sm btn-danger" (click)="rate = 0"
+        [disabled]="isReadonly">Clear
+      </button>
+      <button type="button" class="btn btn-sm btn-primary"
+      (click)="isReadonly = ! isReadonly">Toggle Readonly
+    </button> -->
+    <hr/>
+
+<button  md-raised-button *ngIf="tempReport" 
+    (click)="openAch(tempReport)">
+    Achievement Report
+</button>
+
+</div>
+
