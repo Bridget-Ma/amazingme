@@ -46,14 +46,14 @@
  
  
 
-<section *ngIf="milestone.id == 6">
-          <md-checkbox #checkbox1   [checked]="milestone.checkbox1">Happy</md-checkbox>
+<section *ngIf="milestone.submilestone">
+          <md-checkbox  [checked]="milestone.submilestone.checkbox1.state" [(ngModel)]="milestone.submilestone.checkbox1.state">{{milestone.submilestone.checkbox1.name}}</md-checkbox>
          
-           <md-checkbox #checkbox2  [checked]="milestone.checkbox2">Angry</md-checkbox>
+           <md-checkbox  [checked]="milestone.submilestone.checkbox2.state" [(ngModel)]="milestone.submilestone.checkbox2.state">{{milestone.submilestone.checkbox2.name}}</md-checkbox>
            
-            <md-checkbox #checkbox3  [checked]="milestone.checkbox3">Sad</md-checkbox>
+            <md-checkbox  [checked]="milestone.submilestone.checkbox3.state" [(ngModel)]="milestone.submilestone.checkbox3.state">{{milestone.submilestone.checkbox3.name}}</md-checkbox>
            
-           <md-checkbox #checkbox4  [checked]="milestone.checkbox4">Anxious</md-checkbox>
+           <md-checkbox [checked]="milestone.submilestone.checkbox4.state" [(ngModel)]="milestone.submilestone.checkbox4.state">{{milestone.submilestone.checkbox4.name}}</md-checkbox>
 </section>
 
 
@@ -61,11 +61,11 @@
 </md-card-content>
 
 
-<!-- <md-input-container style="width: 100%">
+<md-input-container style="width: 100%">
       <textarea mdInput placeholder="Notes"  [(ngModel)]="milestone.notes"  (click) = "updateNote()"></textarea>
-</md-input-container> -->
+</md-input-container>
        
-         <input mdInput style = "width: 100%" placeholder="Notes"  [(ngModel)]="milestone.notes"  (click) = "updateNote()">
+        <!--  <input mdInput style = "width: 100%" placeholder="Notes"  [(ngModel)]="milestone.notes"  (click) = "updateNote()"> -->
        <!--  <input type="text"  class="form-control"  [(ngModel)]="milestone.notes"  (click) = "updateNote()" /> -->
 
 

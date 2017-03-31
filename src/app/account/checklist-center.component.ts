@@ -18,7 +18,7 @@ import {Subject} from 'rxjs/Subject';
 @Component({
   // selector: 'pizza-component',
   template:  `
-    <h2>&nbsp; Milestone Checklist ({{tempReport.numAchieved}}/34)</h2>
+    <h2>&nbsp; Milestone Checklist </h2>
    <md-list>
 
    <md-list-item *ngFor="let item of checklist | async"  (click)="openDialog(item,noteUpdate)">
@@ -38,7 +38,7 @@ import {Subject} from 'rxjs/Subject';
 
 
    
-         <md-divider></md-divider>
+        
     </md-list-item>
 
    
@@ -144,8 +144,10 @@ public openDialog(milestone:Milestone, noteUpdate:boolean) {
       .confirm(milestone, this.viewContainerRef)
       .subscribe(res => {
         this.result = res;
-        this.userChecklist.update('Milestone'+ milestone.id, { progress: milestone.progress });
-        this.userChecklist.update('Milestone'+ milestone.id, { notes: milestone.notes });
+        this.userChecklist.update('Milestone'+ milestone.id, { progress: milestone.progress,notes: milestone.notes, 
+          submilestone: {checkbox1: {state:milestone.submilestone.checkbox1.state,name:milestone.submilestone.checkbox1.name},checkbox2: {state:milestone.submilestone.checkbox2.state,name:milestone.submilestone.checkbox2.name},
+          checkbox3: {state:milestone.submilestone.checkbox3.state,name:milestone.submilestone.checkbox3.name},checkbox4: {state:milestone.submilestone.checkbox4.state,name:milestone.submilestone.checkbox4.name} }});
+        
 
          let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/recordProgress');
         list.push({ time: Date(), name: milestone.name, progress: milestone.progress, type: "dialog", location:"checklist" });

@@ -41,7 +41,7 @@ import { Directive, ElementRef, HostListener, Input , Output, EventEmitter} from
   
     <md-divider></md-divider>
     <md-list-item routerLink="./checklist" routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }" (click)="openChecklist()">Checklist  ({{tempReport.numAchieved}}/34)</md-list-item>
+    [routerLinkActiveOptions]="{ exact: true }" (click)="openChecklist()">Checklist</md-list-item>
     <md-divider></md-divider>
     <md-list-item routerLink="./story" routerLinkActive="active" (click)="openStory()">Storybook</md-list-item>
     <md-divider></md-divider>

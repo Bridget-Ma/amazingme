@@ -281,8 +281,11 @@ export class StorybookComponent implements OnInit {
       .confirm(milestone, this.viewContainerRef)
       .subscribe(res => {
         this.refreshPage(res);
-        this.userChecklist.update('Milestone'+ milestone.id, { progress: milestone.progress });
-        this.userChecklist.update('Milestone'+ milestone.id, { notes: milestone.notes, checkbox1: milestone.checkbox1, checkbox2: milestone.checkbox2,checkbox3: milestone.checkbox3,checkbox4: milestone.checkbox4});
+        this.userChecklist.update('Milestone'+ milestone.id, { progress: milestone.progress,notes: milestone.notes, 
+          submilestone: {checkbox1: {state:milestone.submilestone.checkbox1.state,name:milestone.submilestone.checkbox1.name},checkbox2: {state:milestone.submilestone.checkbox2.state,name:milestone.submilestone.checkbox2.name},
+          checkbox3: {state:milestone.submilestone.checkbox3.state,name:milestone.submilestone.checkbox3.name},checkbox4: {state:milestone.submilestone.checkbox4.state,name:milestone.submilestone.checkbox4.name} }});
+        
+       
         /*Log Progress*/
         let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/recordProgress');
         list.push({ time: Date(), name: milestone.name, progress: milestone.progress, type: "dialog", location:"story" });
