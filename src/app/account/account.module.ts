@@ -31,6 +31,7 @@ import { TestDirective } from './test.directive';
 // import { PizzaComponent} from './milestone-popup.component'
 
 
+import {ShareButtonsModule} from "ng2-sharebuttons";
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { TestDirective } from './test.directive';
     PaginationModule.forRoot(),
     RatingModule,
     ModalModule,
-    FormsModule
+    FormsModule,
+    ShareButtonsModule
   ],
   declarations: [
     AccountComponent,
@@ -54,8 +56,6 @@ import { TestDirective } from './test.directive';
     ConfirmDialog,
     AchDialog,
     TestDirective
-  
- 
   ],
   entryComponents: [
     //MilestoneDetailComponent,

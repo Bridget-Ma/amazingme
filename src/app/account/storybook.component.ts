@@ -25,6 +25,9 @@ import { achDialogsService} from './achDialog.service';
 
 import {AngularFire, FirebaseObjectObservable,FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
 import {Subject} from 'rxjs/Subject';
+
+import { CeiboShare } from 'ng2-social-share';
+import {ShareButtonsModule} from "ng2-sharebuttons";
 // todo: change to ng2-bootstrap
 //import { ModalDirective } from '../../../node_modules/ng2-bootstrap/components/modal/modal.component';
  
@@ -423,6 +426,8 @@ export class StorybookComponent implements OnInit {
     return Promise.resolve(AchReport);
   }
 
+public linkToShare = 'https://bridget-ma.com';
+// public imageUrl = 'https://avatars2.githubusercontent.com/u/10674541?v=3&s=200';
 
   // @HostListener('mouseenter') onMouseEnter() {
   //   this.highlight('yellow');
@@ -444,6 +449,7 @@ export class StorybookComponent implements OnInit {
 
 
 }
+
 
 
 // @Directive({
