@@ -26,11 +26,16 @@ import { achDialogsService} from './achDialog.service';
 import {AngularFire, FirebaseObjectObservable,FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
 import {Subject} from 'rxjs/Subject';
 
-import { CeiboShare } from 'ng2-social-share';
+// import { CeiboShare } from 'ng2-social-share';
 import {ShareButtonsModule} from "ng2-sharebuttons";
 // todo: change to ng2-bootstrap
-//import { ModalDirective } from '../../../node_modules/ng2-bootstrap/components/modal/modal.component';
- 
+import * as jsPDF from 'jspdf';
+
+import { Parent } from './people';
+import { Child } from './people'
+
+
+
 @Component({
 
   templateUrl: './storybook.html'
@@ -134,6 +139,35 @@ export class StorybookComponent implements OnInit {
         }
       });
 
+     var child = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
+      query: {
+        orderByChild: 'type',
+        equalTo: "child"
+       }
+     });
+      var parent = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
+      query: {
+        orderByChild: 'type',
+        equalTo: "parent"
+       }
+     });
+
+
+    child.subscribe(queriedItems => {
+      this.childInfo = queriedItems[0];
+
+    });
+    parent.subscribe(queriedItems => {
+      this.parentInfo = queriedItems[0];
+
+    });
+
+
+   
+
+
+
+
 
       // var templist1 = af.database.list('/userList/'+this.key+'/Checklist/', {
       //   query: {
@@ -187,6 +221,37 @@ export class StorybookComponent implements OnInit {
     });
   }
 
+
+  public queryChecklist()  {
+    this.userAccount = this.af.database.list('/userList',{
+      query: {
+        orderByChild: 'userID',
+        equalTo: this.userID
+      }
+    });
+
+    this.userAccount.subscribe(queriedItems => {
+      this.key = queriedItems[0].$key;
+      var templist1 = this.af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
+      query: {
+        orderByChild: 'progress',
+        equalTo: 0
+      }
+    });
+    templist1.subscribe(queriedItems => {this.tempReport.numRecord = 34- queriedItems.length});
+
+    var templist2 = this.af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
+      query: {
+        orderByChild: 'progress',
+        equalTo: 100
+      }
+    });
+    templist2.subscribe(queriedItems => {this.tempReport.numAchieved = queriedItems.length});
+
+      
+    });
+  }
+
     // var templist1 = af.database.list('/userList', {
     //     query: {
     //       orderByChild: 'progress',
@@ -216,7 +281,9 @@ export class StorybookComponent implements OnInit {
 
     // this.getMilestones();
     this.setPage(1);
-    // this.countUpdateIteration().then(tempReport => this.openAch(tempReport));
+    this.queryChecklist();
+    this.openAch(this.tempReport);
+   
   }
 
 
@@ -279,15 +346,19 @@ export class StorybookComponent implements OnInit {
 
    public open(milestone:Milestone, noteUpdate:boolean) {
 
-
+    var day = new Date();
     this.dialogsService
       .confirm(milestone, this.viewContainerRef)
       .subscribe(res => {
         this.refreshPage(res);
-        this.userChecklist.update('Milestone'+ milestone.id, { progress: milestone.progress,notes: milestone.notes, 
-          submilestone: {checkbox1: {state:milestone.submilestone.checkbox1.state,name:milestone.submilestone.checkbox1.name},checkbox2: {state:milestone.submilestone.checkbox2.state,name:milestone.submilestone.checkbox2.name},
-          checkbox3: {state:milestone.submilestone.checkbox3.state,name:milestone.submilestone.checkbox3.name},checkbox4: {state:milestone.submilestone.checkbox4.state,name:milestone.submilestone.checkbox4.name} }});
-        
+        this.userChecklist.update('Milestone'+ milestone.id, { progress: milestone.progress,notes: milestone.notes,
+        lastUpdate: day.toDateString()});
+        if(milestone.submilestone.checkbox1) {
+           this.userChecklist.update('Milestone'+milestone.id, {submilestone: {checkbox1: {state:milestone.submilestone.checkbox1.state,name:milestone.submilestone.checkbox1.name},checkbox2: {state:milestone.submilestone.checkbox2.state,name:milestone.submilestone.checkbox2.name},
+          checkbox3: {state:milestone.submilestone.checkbox3.state,name:milestone.submilestone.checkbox3.name},checkbox4: {state:milestone.submilestone.checkbox4.state,name:milestone.submilestone.checkbox4.name}}});
+        }
+       
+       
        
         /*Log Progress*/
         let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/recordProgress');
@@ -298,6 +369,9 @@ export class StorybookComponent implements OnInit {
           let list2 = this.af.database.list('/userList/'+this.key+'/userLogs'+'/noteUpdate');
           list2.push({ time: Date(), name: milestone.name, progress: milestone.progress, updatedNotes: milestone.notes,location: "story"});
         }
+      // this.userChecklist.update('Milestone'+ this.selectedMilestone.id, { progress: this.percent });
+    
+     
         
 
 
@@ -309,6 +383,16 @@ export class StorybookComponent implements OnInit {
    
   }
 
+
+    public openShare(milestone:Milestone) {
+    this.dialogsService
+      .shareConfirm(milestone, this.parentInfo,this.childInfo,this.viewContainerRef)
+      .subscribe(res => {
+        this.refreshPage(res);
+      });
+   
+  }
+
    public openAch(report:Report) {
       
     this.achDialogsService
@@ -316,19 +400,78 @@ export class StorybookComponent implements OnInit {
       .subscribe(res => this.directPage(res));
   }
 
+  public () {
+
+  this.af.auth.subscribe(auth => {
+     console.log(auth);
+     this.userID = auth.uid;
+
+   });
+
+
+   this.userAccount = this.af.database.list('/userList',{
+     query: {
+       orderByChild: 'userID',
+       equalTo: this.userID
+     }
+   });
+
+   this.userAccount.subscribe(queriedItems => {
+     this.key = queriedItems[0].$key;
+     var child= this.af.database.list('/userList/'+queriedItems[0].$key+'/account/child',{
+     query: {
+       orderByChild: 'name',
+      
+     }
+   });
+     child.subscribe(queriedItems => {
+     this.childInfo = queriedItems[0];
+     console.log( queriedItems[0].name);
+
+   });
+
+     var parent = this.af.database.list('/userList/'+queriedItems[0].$key+'/account/parent',{
+     query: {
+       orderByChild: 'name',
+      
+     }
+   });
+      parent.subscribe(queriedItems => {
+     this.parentInfo = queriedItems[0];
+          console.log(queriedItems[0].name);
+
+   })
+
+
+   
+
+   });
+
+   
+
+
+ }
+
+
+
+  // public openShare(milestone:Milestone) {
+
+  //    this.dialogsService
+  //     .shareConfirm(milestone, this.viewContainerRef)
+  //     .subscribe(res => {});
+
+  // }
+
+  
+// public child : FirebaseListObservable<any[]>;
+// public parent : FirebaseListObservable<any[]>;
+public childInfo: any;
+public parentInfo:any;
+
   public refreshPage(res:any) {
     if (res == true){
 
-     // if(this.page.milestoneID > 0){
-     //  this.milestoneService.getMilestone(this.selectedPage.milestoneID)
-     //  .then(milestone => this.selectedMilestone = milestone)
-     //  .then(selectedMilestone => this.defineStar(selectedMilestone));
-     //  this.showMilestone = true;
-      
-     // }
-     // else{
-     //  this.showMilestone = false;
-     // }
+
 
     if(this.page.milestoneID > 0){
       this.checklistSubject.next(this.page.milestoneID);
@@ -399,15 +542,17 @@ export class StorybookComponent implements OnInit {
   }
 
   public clickOn(value:number):void {
+    var day = new Date();
     this.overStar = value;
     //this.rate = value;
     this.percent = 10 * value;
 
     /*Update Progress*/
-    this.userChecklist.update('Milestone'+ this.selectedMilestone.id, { progress: this.percent });
+    this.userChecklist.update('Milestone'+ this.selectedMilestone.id, { progress: this.percent ,lastUpdate: day.toDateString()});
     /*Log Progress*/
     let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/recordProgress');
     list.push({ time: Date(), name: this.selectedMilestone.name, progress: this.percent });
+
 
     
   };
@@ -444,12 +589,7 @@ public linkToShare = 'https://bridget-ma.com';
   // }
  
   
-
-  
-
-
 }
-
 
 
 // @Directive({

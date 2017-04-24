@@ -16,6 +16,7 @@ import { AccountRoutingModule }       from './account-routing.module';
 //import { MilestoneDetailComponent} from './checklist-center.component';
 //
 import { ConfirmDialog} from './dialog.component';
+import { shareConfirmDialog} from './shareDialog.component';
 import { AchDialog} from './achDialog.component';
 import { DialogsService } from './dialog.service';
 import { achDialogsService } from './achDialog.service';
@@ -27,6 +28,7 @@ import { PaginationModule } from 'ng2-bootstrap';
 import { FormsModule }   from '@angular/forms';
 
 import { TestDirective } from './test.directive';
+import {ShareModule} from 'ng2share/share.module'
 // import { PizzaDialog} from './milestone-popup.component';
 // import { PizzaComponent} from './milestone-popup.component'
 
@@ -43,7 +45,8 @@ import {ShareButtonsModule} from "ng2-sharebuttons";
     RatingModule,
     ModalModule,
     FormsModule,
-    ShareButtonsModule
+    ShareButtonsModule,
+    ShareModule
   ],
   declarations: [
     AccountComponent,
@@ -54,12 +57,14 @@ import {ShareButtonsModule} from "ng2-sharebuttons";
     ChecklistCenterComponent,
     //MilestoneDetailComponent,
     ConfirmDialog,
+    shareConfirmDialog,
     AchDialog,
     TestDirective
   ],
   entryComponents: [
     //MilestoneDetailComponent,
     ConfirmDialog,
+    shareConfirmDialog,
     AchDialog
   ],
   providers: [ 

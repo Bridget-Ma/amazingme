@@ -4,17 +4,23 @@ import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import {MdCheckbox} from '@angular/material'
+import { Injectable, ViewContainerRef } from '@angular/core';
 import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
 import {Subject} from 'rxjs/Subject';
+import { DialogsService} from './dialog.service';
+
 @Component({
     // selector: 'confirm-dialog',
     templateUrl: './dialog.html',
 
 })
+
 export class ConfirmDialog{
 
     // public title: string;
     // public message: string;
+
+      
   public milestone: any;
   public af:AngularFire;
   public key:any;
@@ -53,10 +59,9 @@ export class ConfirmDialog{
     // list.push({ time: Date(), name: this.selectedMilestone.name });
 
   };
-@ViewChild('checkbox1') checkbox1: MdCheckbox;
-@ViewChild('checkbox2') checkbox2: MdCheckbox;
-@ViewChild('checkbox3') checkbox3: MdCheckbox;
-@ViewChild('checkbox4') checkbox4: MdCheckbox;
+
+  
+
 
   // public onCheckboxChange1(checkbox:MdCheckbox) {
    
@@ -132,11 +137,23 @@ export class ConfirmDialog{
 
   }
 
+  // public openShare(milestone:Milestone) {
+
+  //    this.dialogsService
+  //     .shareConfirm(milestone, this.viewContainerRef)
+  //     .subscribe(res => {});
+
+  // }
+
+  
 
     //public rate: number = this.milestone.progress*10;
  //<img md-card-lg-image style="margin:5px 25px 10px 0px" src={{milestone.img}}>
   constructor(
     public dialogRef: MdDialogRef<ConfirmDialog>,
+    // private dialogsService: DialogsService,
+    // private milestoneService: MilestoneService,  
+    // private viewContainerRef: ViewContainerRef,
 
     // public af: AngularFire,
     ) {

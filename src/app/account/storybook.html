@@ -73,6 +73,11 @@
        </div>
      </div> -->
 
+     
+     <button  md-raised-button *ngIf="selectedMilestone" 
+    (click)=openShare(selectedMilestone)>share
+</button>
+
  <div *ngIf="showMilestone" >
      <h5>
 
@@ -85,7 +90,7 @@
        (onHover)="clickOn($event)"  
        [titles]="['one','two','three']"> 
        </rating> 
-       <span class="label"
+       <span class="label" 
        [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
        [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">
        {{percent}}% complete
@@ -117,6 +122,16 @@
     (click)="openAch(tempReport)">
     Achievement Report
 </button>
+
+<!-- 
+<share-container
+                        direction="horizontal"
+                        addedText="your creation"
+                        [expandable]="true"
+                        [textEnabled]="true"
+                        [platforms]="['reddit','twitter','facebook','mail']">
+    </share-container> -->
+
 
 </div>
 

@@ -1,0 +1,65 @@
+<md-card style="width: 450px;" >
+
+
+ <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{parentInfo.img}}>
+<md-card-subtitle>{{ parentInfo.name }} wants to share {{ childInfo.name }}'s milestone with you</md-card-subtitle>
+  <md-card-title>
+ {{ childInfo.name }}  is {{milestone.progress}} % towards this milestone!
+</md-card-title>
+<md-card-subtitle> # {{milestone.id}}   {{ milestone.name }} </md-card-subtitle>
+
+
+  <md-card-content>
+
+  Notes: {{milestone.notes}}
+
+
+  </md-card-content>
+  <md-card-content *ngIf="milestone.submilestone">
+   <p *ngIf="milestone.submilestone.checkbox1.status == true">
+   {{milestone.submilestone.checkbox1.name}}
+   </p>
+    <p *ngIf="milestone.submilestone.checkbox2.status == true">
+   {{milestone.submilestone.checkbox2.name}}
+   </p>
+    <p *ngIf="milestone.submilestone.checkbox3.status == true">
+   {{milestone.submilestone.checkbox3.name}}
+   </p>
+    <p *ngIf="milestone.submilestone.checkbox4.status == true">
+   {{milestone.submilestone.checkbox4.name}}
+   </p>
+         
+</md-card-content>
+
+  <a target="_blank" href="http://{{milestone.link}}"  *ngIf = "milestone.video == true"  >click to watch video clip</a>
+
+  <img md-card-image  *ngIf = "milestone.video != true"  src={{milestone.img}} style="margin-top: 5px">
+<p *ngIf = "milestone.video == true">  {{ milestone.detail }} </p>
+ 
+ 
+
+<md-card-actions>
+<share-container
+                        direction="horizontal"
+                        addedText="this achievement"
+                        [expandable]="false"
+                        [textEnabled]="false"
+                        [platforms]="['twitter','facebook','mail']" (click)="dialogRef.close(true)">
+    </share-container>
+   
+    <button md-button (click)="dialogRef.close()">CANCEL</button>
+
+
+  </md-card-actions>
+</md-card>
+
+
+
+
+
+
+
+
+
+
+
