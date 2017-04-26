@@ -3,7 +3,7 @@ import { Component, Input,ViewChild} from '@angular/core';
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import {MdCheckbox} from '@angular/material'
+// import {MdCheckbox} from '@angular/material'
 import { Injectable, ViewContainerRef } from '@angular/core';
 import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
 import {Subject} from 'rxjs/Subject';

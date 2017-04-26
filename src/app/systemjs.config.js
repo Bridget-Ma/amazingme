@@ -9,7 +9,9 @@
     '@angular':                   'node_modules/@angular',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'rxjs':                       'node_modules/rxjs',
-    "jspdf": "node_modules/jspdf/dist/jspdf.min.js"
+    "jspdf": "node_modules/jspdf/dist/jspdf.min.js",
+    '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
+
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {

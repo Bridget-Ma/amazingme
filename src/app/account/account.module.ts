@@ -1,6 +1,6 @@
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
-import { MaterialModule } from '@angular/material';
+// import { MaterialModule } from '@angular/material';
 import { MdDialog, MdDialogRef} from '@angular/material';
 import { AccountComponent }           from './account.component';
 import { AccountDashboardComponent }  from './account-dashboard.component';
@@ -15,6 +15,7 @@ import { AccountRoutingModule }       from './account-routing.module';
 //import { StorybookRoutingModule }       from './storybook-routing.module';
 //import { MilestoneDetailComponent} from './checklist-center.component';
 //
+import { MaterialModule } from '@angular/material';
 import { ConfirmDialog} from './dialog.component';
 import { shareConfirmDialog} from './shareDialog.component';
 import { AchDialog} from './achDialog.component';
@@ -39,14 +40,15 @@ import {ShareButtonsModule} from "ng2-sharebuttons";
   imports: [
     CommonModule,
     AccountRoutingModule,
-    MaterialModule,
+    // MaterialModule,
     //StorybookRoutingModule,
     PaginationModule.forRoot(),
     RatingModule,
     ModalModule,
     FormsModule,
     ShareButtonsModule,
-    ShareModule
+    ShareModule,
+    MaterialModule
   ],
   declarations: [
     AccountComponent,
@@ -60,6 +62,7 @@ import {ShareButtonsModule} from "ng2-sharebuttons";
     shareConfirmDialog,
     AchDialog,
     TestDirective
+
   ],
   entryComponents: [
     //MilestoneDetailComponent,

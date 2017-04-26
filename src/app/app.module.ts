@@ -5,7 +5,7 @@ import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { AngularFireModule,AuthProviders, AuthMethods } from 'angularfire2';
 // import {HTTP_PROVIDERS} from 'angular2/http';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent }         from './app.component';
 import { AppRoutingModule }     from './app-routing.module';
@@ -17,19 +17,9 @@ import { HomepageComponent } from './homepage/homepage.component';
 
 import { DialogService }        from './dialog.service';
 
+import {MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardModule, MdDialogModule, MdSidenavModule} from '@angular/material';
 
-
-// import {SearchFactory} from '../services/SearchFactory';
-// import {PlaylistService} from '../services/PlaylistService';
-// import {SoundCloudSearch} from '../services/SoundCloudSearch';
-// import {SoundCloudPlayer} from '../services/SoundCloudPlayer';
-// import {SoundManagerSoundPlayer} from '../services/SoundManagerSoundPlayer';
-// import {SoundManager} from '../services/SoundManager';
-// import {PlayerCmp} from '../player/Player';
-// import {TabListCmp} from '../tabList/TabList';
-// import {LocalStorage} from '../services/LocalStorage';
-
-
+import 'hammerjs';
 
 
 export const myFirebaseConfig = {
@@ -59,7 +49,9 @@ const myFirebaseAuthConfig = {
     HomepageRoutingModule,
     LoginRoutingModule,
     AppRoutingModule,
-    MaterialModule.forRoot(),
+    MaterialModule,
+    MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardModule, MdDialogModule, MdSidenavModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,

@@ -1,7 +1,7 @@
 import { NgModule }       from '@angular/core';
 import { RouterModule }   from '@angular/router';
 import { AuthGuard }      from './auth-guard.service';
-import { MaterialModule } from '@angular/material';
+
 import { AuthService }    from './auth.service';
 import { LoginComponent } from './login.component';
 import { AngularFireModule,AuthProviders, AuthMethods } from 'angularfire2';
@@ -12,7 +12,7 @@ import { AngularFireModule,AuthProviders, AuthMethods } from 'angularfire2';
 
 @NgModule({
   imports: [
-    MaterialModule,
+    
     
     RouterModule.forChild([
       { path: 'login', component: LoginComponent }
