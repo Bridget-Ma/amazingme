@@ -4,19 +4,54 @@ import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import {MdCheckbox} from '@angular/material'
+import { Injectable, ViewContainerRef } from '@angular/core';
+<<<<<<< HEAD
+<<<<<<< HEAD
+import { AngularFireModule} from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+=======
+=======
+>>>>>>> origin/master
 import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
+>>>>>>> origin/master
 import {Subject} from 'rxjs/Subject';
+import { DialogsService} from './dialog.service';
+
 @Component({
     // selector: 'confirm-dialog',
     templateUrl: './dialog.html',
 
 })
+
 export class ConfirmDialog{
 
     // public title: string;
     // public message: string;
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+  autoTicks = false;
+  tickInterval = 1;
+  disabled = false;
+  invert = false;
+  max2 = 100
+
+  min = 0;
+  showTicks = true;
+  step = 10;
+  thumbLabel = false;
+  public value: number = 0;
+  vertical = false;
+
+=======
+>>>>>>> origin/master
+=======
+>>>>>>> origin/master
+      
   public milestone: any;
-  public af:AngularFire;
+  public af:AngularFireDatabase;
   public key:any;
   public noteUpdate: boolean = false;
 
@@ -41,10 +76,10 @@ export class ConfirmDialog{
     this.overStar = 0;
   }
 
-  public clickOn(value:number):void {
+  public slideOn(value:number):void {
     this.overStar = value;
     //this.rate = value;
-    this.percent = 10 * value;
+    this.percent = value;
     this.milestone.progress = this.percent;
      /*Update Progress*/
     // this.userChecklist.update('Milestone'+ this.selectedMilestone.id, { progress: this.percent });
@@ -53,10 +88,9 @@ export class ConfirmDialog{
     // list.push({ time: Date(), name: this.selectedMilestone.name });
 
   };
-@ViewChild('checkbox1') checkbox1: MdCheckbox;
-@ViewChild('checkbox2') checkbox2: MdCheckbox;
-@ViewChild('checkbox3') checkbox3: MdCheckbox;
-@ViewChild('checkbox4') checkbox4: MdCheckbox;
+
+  
+
 
   // public onCheckboxChange1(checkbox:MdCheckbox) {
    
@@ -124,6 +158,7 @@ export class ConfirmDialog{
       this.rate = this.milestone.progress/10;
       this.overStar = this.milestone.progress/10;
       this.percent = this.milestone.progress;
+      this.value = this.milestone.progress;
   }
 
   ngOnInit(): void {
@@ -132,11 +167,23 @@ export class ConfirmDialog{
 
   }
 
+  // public openShare(milestone:Milestone) {
+
+  //    this.dialogsService
+  //     .shareConfirm(milestone, this.viewContainerRef)
+  //     .subscribe(res => {});
+
+  // }
+
+  
 
     //public rate: number = this.milestone.progress*10;
  //<img md-card-lg-image style="margin:5px 25px 10px 0px" src={{milestone.img}}>
   constructor(
     public dialogRef: MdDialogRef<ConfirmDialog>,
+    // private dialogsService: DialogsService,
+    // private milestoneService: MilestoneService,  
+    // private viewContainerRef: ViewContainerRef,
 
     // public af: AngularFire,
     ) {

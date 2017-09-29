@@ -1,6 +1,9 @@
 import { Component,ViewContainerRef } from '@angular/core';
-import { AngularFire, FirebaseListObservable,AuthProviders, AuthMethods } from 'angularfire2';
 
+
+import {AngularFireModule} from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+// import { AngularFireAuth } from 'angularfire2/auth';
 
 
 
@@ -19,7 +22,7 @@ export class AppComponent {
 
   items: FirebaseListObservable<any[]>;
 
- constructor(public af: AngularFire) {
+ constructor(public af: AngularFireDatabase) {
   
   }
 

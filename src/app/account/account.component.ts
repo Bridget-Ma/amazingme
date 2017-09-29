@@ -10,7 +10,10 @@ import { Report } from './report';
 import { Router,
          NavigationExtras,ActivatedRoute, Params } from '@angular/router';
 import { AuthService }      from '../auth.service';
-import { AngularFire, FirebaseListObservable, AuthProviders, AuthMethods } from 'angularfire2';
+import {AngularFireModule} from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+
 import {MdSidenav} from "@angular/material";
 
 import { Directive, ElementRef, HostListener, Input , Output, EventEmitter} from '@angular/core';
@@ -29,39 +32,35 @@ import { Directive, ElementRef, HostListener, Input , Output, EventEmitter} from
 <md-sidenav-container >
 
 
-  <md-sidenav #sidenav mode="side" class="app-sidenav" style="background: #4A90E2;
+  <md-sidenav #sidenav mode="side" class="app-sidenav" style="background: #EEEEEE;
   color: black" >
 
-    <div align = "center"><button  md-raised-button  (click)="onCloseSideNav()">
-      Back
-    </button>
+    <div align = "right" style="padding-top:5px"><button  md-icon-button  (click)="onCloseSideNav()"><i class="material-icons" >close</i></button>
   </div>
 
   <md-nav-list >
   
     <md-divider></md-divider>
     <md-list-item routerLink="./checklist" routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }" (click)="openChecklist()">Checklist  ({{tempReport.numAchieved}}/34)</md-list-item>
+    [routerLinkActiveOptions]="{ exact: true }" (click)="openChecklist()">Checklist</md-list-item>
     <md-divider></md-divider>
     <md-list-item routerLink="./story" routerLinkActive="active" (click)="openStory()">Storybook</md-list-item>
     <md-divider></md-divider>
     <md-list-item routerLink="./settings" routerLinkActive="active"
-    [routerLinkActiveOptions]="{exact: true}" (close)="openSetting()">Settings</md-list-item>
+    [routerLinkActiveOptions]="{exact: true}" (click)="openSetting()">Settings</md-list-item>
     <md-divider></md-divider>
   </md-nav-list>
 </md-sidenav>
 
-<md-toolbar style="background:white">
+<md-toolbar style="background:#4A90E2; color:#FFFFFF">
 
-  <button  md-raised-button (click)="onOpenSideNav()">
-    Menu
-  </button>
+  <button  md-icon-button (click)="onOpenSideNav()"><i class="material-icons" style="color:#FFFFFF">menu</i></button>
 
   &nbsp; Amazing Me
 
   <span class="app-toolbar-filler"></span>
-  <p>Hi, Bridget </p> 
-  <button md-raised-button align = "right" (click)="logout()"  >Logout</button>
+ 
+  <button md-button align = "right" style="margin-left:10px" (click)="logout()"  >Logout</button>
 </md-toolbar>
 
 <div style="background:white">
@@ -88,27 +87,25 @@ export class AccountComponent {
 
   constructor( 
     private milestoneService: MilestoneService,  
-    public af: AngularFire, 
+    public af: AngularFireDatabase, 
     public authService: AuthService, 
     public router: Router,
+    public afAuth: AngularFireAuth
 
   ) {
 
-    af.auth.subscribe(auth => {
-      console.log(auth);
-      this.userID = auth.uid;
+   console.log(this.afAuth.auth);
+      this.userID = this.afAuth.auth.currentUser.uid;
 
-    });
-
-       this.userAccount = af.database.list('/userList',{
+        this.userAccount = af.list('/userList',{
       query: {
         orderByChild: 'userID',
-        equalTo: this.userID
+        equalTo: this.afAuth.auth.currentUser.uid
       }
     });
-
     this.userAccount.subscribe(queriedItems => {
       this.key = queriedItems[0].$key;
+       console.log("Here1:",this.key);
     
       });
 
@@ -123,7 +120,8 @@ export class AccountComponent {
         
         this.sidenav.open();
         /*Log Navigation*/
-        let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/menuAction');
+        console.log("Here1:",this.key);
+        let list = this.af.list('/userList/'+this.key+'/userLogs'+'/menuAction');
         list.push({ time: Date(),action: "openMenu"});
             
         
@@ -132,7 +130,7 @@ export class AccountComponent {
     onCloseSideNav(){
       this.sidenav.close();
        /*Log Navigation*/
-        let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/menuAction');
+        let list = this.af.list('/userList/'+this.key+'/userLogs'+'/menuAction');
         list.push({ time: Date(),action: "closeMenu" });
 
     }
@@ -140,28 +138,30 @@ export class AccountComponent {
     openChecklist(){
       this.sidenav.close();
        /*Log Navigation*/
-        let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openChecklist');
+        let list = this.af.list('/userList/'+this.key+'/userLogs'+'/openChecklist');
         list.push({ time: Date() });
-        let list2 = this.af.database.list('/userList/'+this.key+'/userLogs'+'/menuAction');
-        list.push({ time: Date(),action: "openChecklist" });
+        let list2 = this.af.list('/userList/'+this.key+'/userLogs'+'/menuAction');
+        list2.push({ time: Date(),action: "openChecklist" });
 
     }
     openStory(){
     this.sidenav.close();
+     console.log("Here1:",this.key);
      /*Log Navigation*/
-      let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openStory');
+      let list = this.af.list('/userList/'+this.key+'/userLogs'+'/openStory');
+
       list.push({ time: Date() });
-       let list2 = this.af.database.list('/userList/'+this.key+'/userLogs'+'/menuAction');
-        list.push({ time: Date(),action: "openStory" });
+       let list2 = this.af.list('/userList/'+this.key+'/userLogs'+'/menuAction');
+        list2.push({ time: Date(),action: "openStory" });
 
     }
     openSetting(){
     this.sidenav.close();
      /*Log Navigation*/
-      let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openSetting');
+      let list = this.af.list('/userList/'+this.key+'/userLogs'+'/openSetting');
       list.push({ time: Date() });
-      let list2 = this.af.database.list('/userList/'+this.key+'/userLogs'+'/menuAction');
-        list.push({ time: Date(),action: "openSetting" });
+      let list2 = this.af.list('/userList/'+this.key+'/userLogs'+'/menuAction');
+        list2.push({ time: Date(),action: "openSetting" });
 
     }
 
@@ -170,7 +170,7 @@ export class AccountComponent {
   
 
   logout() {
-     this.af.auth.logout();
+     this.afAuth.auth.signOut();
      this.authService.logout()
 
     let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'login';
@@ -236,6 +236,7 @@ export class AccountComponent {
 
 
 ngOnInit(): void {
+    this.sidenav.open();
  
     // this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
     

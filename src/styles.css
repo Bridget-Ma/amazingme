@@ -1,2 +1,17 @@
+<<<<<<< HEAD
+ /*You can add global styles to this file, and also import other style files */
+/*@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';*/
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+=======
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@font-face {
+	font-family: 'FontAwesome';
+	src: url("./assets/fonts/font-awesome-4.7.0/fonts/fontawesome-webfont.eot");
+<<<<<<< HEAD
+}
+>>>>>>> origin/master
+=======
+}
+>>>>>>> origin/master

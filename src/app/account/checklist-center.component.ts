@@ -7,18 +7,47 @@ import { MilestoneService } from './milestones.service';
 import { AchReport } from './report';
 import { Report } from './report';
 // import {MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
-import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { RatingModule } from 'ngx-bootstrap';
 
 import {DialogsService} from './dialog.service';
 
-import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
-import {Subject} from 'rxjs/Subject';
 
+
+import { AngularFireModule} from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+
+
+import {Subject} from 'rxjs/Subject';
+import 'rxjs/add/operator/take'
+
+import * as jsPDF from 'jspdf';
 
 @Component({
   // selector: 'pizza-component',
   template:  `
-    <h2>&nbsp; Milestone Checklist ({{tempReport.numAchieved}}/34)</h2>
+
+    <h2>&nbsp; Milestone Checklist </h2> 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<div style= "margin-left: 20px"><button  md-raised-button 
+    (click)="download()">
+    Download Report
+</button>
+</div>
+=======
+=======
+>>>>>>> origin/master
+<button  md-raised-button 
+    (click)="download()">
+    download
+</button>
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
+>>>>>>> origin/master
+
    <md-list>
 
    <md-list-item *ngFor="let item of checklist | async"  (click)="openDialog(item,noteUpdate)">
@@ -32,13 +61,13 @@ import {Subject} from 'rxjs/Subject';
 <span *ngIf="item.progress>0">
      <span class="label"   
        [ngClass]="{'label-warning': item.progress<30, 'label-info': item.progress>=30 && item.progress<70, 'label-success': item.progress>=70}">
-         {{item.progress}}% complete
+         {{item.progress}}% confidence level
      </span>
      </span>
 
 
    
-         <md-divider></md-divider>
+        
     </md-list-item>
 
    
@@ -58,7 +87,8 @@ export class ChecklistCenterComponent {
  constructor(
    
   
-    public af: AngularFire,
+    public af: AngularFireDatabase,
+    public afAuth: AngularFireAuth,
     // private router: Router,
     // private http: Http,
     // private pageService: PageService,
@@ -69,29 +99,33 @@ export class ChecklistCenterComponent {
 
     ) {
 
-    af.auth.subscribe(auth => {
-      console.log(auth);
-      this.userID = auth.uid;
-
-    });
+      console.log(this.afAuth.auth);
+      this.userID = this.afAuth.auth.currentUser.uid;
 
 
- this.userAccount = af.database.list('/userList',{
+
+ this.userAccount = af.list('/userList',{
       query: {
         orderByChild: 'userID',
-        equalTo: this.userID
+        equalTo: this.afAuth.auth.currentUser.uid
       }
     });
 
+
+
+
+
+     
+
     this.userAccount.subscribe(queriedItems => {
       this.key = queriedItems[0].$key;
-      this.userChecklist = af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/',{
+      this.userChecklist = af.list('/userList/'+queriedItems[0].$key+'/Checklist/',{
         query: {
           orderByChild: 'progress',
         }
       });
 
-       this.checklist = af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
+       this.checklist = af.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
         query: {
           orderByChild: 'id'
          
@@ -100,20 +134,45 @@ export class ChecklistCenterComponent {
 
 
       this.checklistSubject = new Subject();
-      this.checklistitem = af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
+      this.checklistitem = af.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
         query: {
           orderByChild: 'id',
           equalTo: this.checklistSubject
         }
       });
 
+      var child = af.list('/userList/'+queriedItems[0].$key+'/account',{
+      query: {
+        orderByChild: 'type',
+        equalTo: "child"
+       }
+     });
+      var parent = af.list('/userList/'+queriedItems[0].$key+'/account',{
+      query: {
+        orderByChild: 'type',
+        equalTo: "parent"
+       }
+     });
+
+
+    child.subscribe(queriedItems => {
+      this.childInfo = queriedItems[0];
+
+    });
+    parent.subscribe(queriedItems => {
+      this.parentInfo = queriedItems[0];
+
+    });
+
       this.checklistitem.subscribe(queriedItems => {
+
+        // this.generateReport();
 
         console.log("selectedMilestone: ", queriedItems[0]);
         this.selectedMilestone = queriedItems[0];
         // this.defineStar(this.selectedMilestone);
 
-        var templist1 = af.database.list('/userList/'+this.key+'/Checklist/', {
+        var templist1 = af.list('/userList/'+this.key+'/Checklist/', {
           query: {
             orderByChild: 'progress',
             equalTo: 0
@@ -121,7 +180,7 @@ export class ChecklistCenterComponent {
         });
         templist1.subscribe(queriedItems => {this.tempReport.numRecord = 34- queriedItems.length});
 
-        var templist2 = af.database.list('/userList/'+this.key+'/Checklist/', {
+        var templist2 = af.list('/userList/'+this.key+'/Checklist/', {
           query: {
             orderByChild: 'progress',
             equalTo: 100
@@ -130,6 +189,8 @@ export class ChecklistCenterComponent {
         templist2.subscribe(queriedItems => {this.tempReport.numAchieved = queriedItems.length});
 
       });
+
+
 
     });
 
@@ -140,25 +201,55 @@ export class ChecklistCenterComponent {
   }
 
 public openDialog(milestone:Milestone, noteUpdate:boolean) {
+   var day = new Date();
     this.dialogsService
       .confirm(milestone, this.viewContainerRef)
       .subscribe(res => {
         this.result = res;
-        this.userChecklist.update('Milestone'+ milestone.id, { progress: milestone.progress });
-        this.userChecklist.update('Milestone'+ milestone.id, { notes: milestone.notes });
+        this.userChecklist.update('Milestone'+ milestone.id, { progress: milestone.progress,notes: milestone.notes, 
+          lastUpdate: day.toDateString() });
+<<<<<<< HEAD
+<<<<<<< HEAD
+        // if(milestone.submilestone.checkbox1) {
+        //    this.userChecklist.update('Milestone'+milestone.id, {submilestone: {checkbox1: {state:milestone.submilestone.checkbox1.state,name:milestone.submilestone.checkbox1.name},checkbox2: {state:milestone.submilestone.checkbox2.state,name:milestone.submilestone.checkbox2.name},
+        //   checkbox3: {state:milestone.submilestone.checkbox3.state,name:milestone.submilestone.checkbox3.name},checkbox4: {state:milestone.submilestone.checkbox4.state,name:milestone.submilestone.checkbox4.name}}});
+        // }
+       
+
+         let list = this.af.list('/userList/'+this.key+'/userLogs'+'/recordProgress');
+=======
+=======
+>>>>>>> origin/master
+        if(milestone.submilestone.checkbox1) {
+           this.userChecklist.update('Milestone'+milestone.id, {submilestone: {checkbox1: {state:milestone.submilestone.checkbox1.state,name:milestone.submilestone.checkbox1.name},checkbox2: {state:milestone.submilestone.checkbox2.state,name:milestone.submilestone.checkbox2.name},
+          checkbox3: {state:milestone.submilestone.checkbox3.state,name:milestone.submilestone.checkbox3.name},checkbox4: {state:milestone.submilestone.checkbox4.state,name:milestone.submilestone.checkbox4.name}}});
+        }
+       
 
          let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/recordProgress');
+>>>>>>> origin/master
         list.push({ time: Date(), name: milestone.name, progress: milestone.progress, type: "dialog", location:"checklist" });
         
         if (noteUpdate == true) {
           console.log("noteUpdated");
-          let list2 = this.af.database.list('/userList/'+this.key+'/userLogs'+'/noteUpdate');
+          let list2 = this.af.list('/userList/'+this.key+'/userLogs'+'/noteUpdate');
           list2.push({ time: Date(), name: milestone.name, progress: milestone.progress, updatedNotes: milestone.notes,location: "checklist"});
         }
       });
 
+     
+
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+       let list = this.af.list('/userList/'+this.key+'/userLogs'+'/openDialog');
+=======
        let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openDialog');
-        list.push({ name: milestone.name, time: Date(),location: "checklist"} );
+>>>>>>> origin/master
+=======
+       let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openDialog');
+>>>>>>> origin/master
+        list.push({ name: milestone.name, time: Date() ,location: "checklist"} );
   }
 
 
@@ -182,6 +273,18 @@ public openDialog(milestone:Milestone, noteUpdate:boolean) {
   public userAccount: FirebaseListObservable<any[]>;
   public key:any;
 
+  public achievedArray: Array<any>;
+  public progressingArray: Array<any>;
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+  public childInfo: any;
+  public parentInfo:any;
+
+=======
+>>>>>>> origin/master
+=======
+>>>>>>> origin/master
 
  public getReport(): Promise<Report> {
     
@@ -239,9 +342,96 @@ public openDialog(milestone:Milestone, noteUpdate:boolean) {
     
   };
 
+  // public key = new Promise((resolve, reject) => {
+
+  //   this.userAccount = this.af.database.list('/userList',{
+  //     query: {
+  //       orderByChild: 'userID',
+  //       equalTo: this.userID
+  //     }
+  //   });
+  //   this.userAccount.subscribe(queriedItems => {
+  //     this.key = queriedItems[0].$key;
+  //     resolve(queriedItems[0].$key);
+  //     console.log("key",queriedItems[0].$key);
+  //   })
+  // });
+
+
+public queryChecklist()  {
+
+  const key1 = new Promise((resolve, reject) => {
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+    this.userAccount = this.af.list('/userList',{
+=======
+    this.userAccount = this.af.database.list('/userList',{
+>>>>>>> origin/master
+=======
+    this.userAccount = this.af.database.list('/userList',{
+>>>>>>> origin/master
+      query: {
+        orderByChild: 'userID',
+        equalTo: this.userID
+      }
+    });
+    this.userAccount.subscribe(queriedItems => {
+      this.key = queriedItems[0].$key;
+      resolve(queriedItems[0].$key);
+      console.log("key",queriedItems[0].$key);
+    })
+  });
+
+
+
+    key1.then((res) =>{
+      console.log("keywhenquery",res);
+  
+<<<<<<< HEAD
+<<<<<<< HEAD
+    var templist1 = this.af.list('/userList/'+res+'/Checklist/', {
+=======
+    var templist1 = this.af.database.list('/userList/'+res+'/Checklist/', {
+>>>>>>> origin/master
+=======
+    var templist1 = this.af.database.list('/userList/'+res+'/Checklist/', {
+>>>>>>> origin/master
+      query: {
+        orderByChild: 'progress',
+        equalTo: 0
+      }
+    });
+    templist1.subscribe(queriedItems => {this.tempReport.numRecord = 34- queriedItems.length});
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+    var templist2 = this.af.list('/userList/'+res+'/Checklist/', {
+=======
+    var templist2 = this.af.database.list('/userList/'+res+'/Checklist/', {
+>>>>>>> origin/master
+=======
+    var templist2 = this.af.database.list('/userList/'+res+'/Checklist/', {
+>>>>>>> origin/master
+      query: {
+        orderByChild: 'progress',
+        equalTo: 100
+      }
+    });
+    templist2.subscribe(queriedItems => {this.tempReport.numAchieved = queriedItems.length});
+
+      
+    });
+
+
+
+    
+    
+  }
 
 ngOnInit(): void {
- 
+   this.queryChecklist();
+   this.generateReport();
     // this.getReport().then(AchReport => this.reportUpdate(AchReport)); 
     
   }
@@ -260,16 +450,355 @@ ngOnInit(): void {
 //
   
   
-  
-  
+  public generateReport() {
 
-  
+    const key1 = new Promise((resolve, reject) => {
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    this.userAccount = this.af.list('/userList',{
+=======
+    this.userAccount = this.af.database.list('/userList',{
+>>>>>>> origin/master
+=======
+    this.userAccount = this.af.database.list('/userList',{
+>>>>>>> origin/master
+      query: {
+        orderByChild: 'userID',
+        equalTo: this.userID
+      }
+    });
+    this.userAccount.subscribe(queriedItems => {
+      this.key = queriedItems[0].$key;
+      resolve(queriedItems[0].$key);
+      console.log("keyGR",queriedItems[0].$key);
+    })
+  });
+<<<<<<< HEAD
+
+    // key1.then((res) =>{
+
+    //   console.log("generate Report");
+
+    // var templist1 = this.af.database.list('/userList/'+res+'/Checklist/', {
+    //   query: {
+    //     orderByChild: 'progress',
+    //     equalTo: 0
+        
+    //   }
+    // });
+    // templist1.subscribe(queriedItems => {
+    //   this.tempReport.numRecord = 34-queriedItems.length;
+    //   for (var i = this.tempReport.numAchieved; i <this.tempReport.numRecord; i++) {
+    //     this.progressingArray[i] = (i+1).toString() + queriedItems[i].name;
+    //     console.log("progressing",i);
+    //   }
+    // });
+
+    // var templist2 = this.af.database.list('/userList/'+res+'/Checklist/', {
+    //   query: {
+    //     orderByChild: 'progress',
+    //     equalTo: 100
+    //   }
+    // });
+    // templist2.subscribe(queriedItems => {
+    //   this.tempReport.numAchieved = queriedItems.length;
+    //   for (var i = 0; i <queriedItems.length; i++) {
+    //     this.progressingArray[i] = (i+1).toString() + queriedItems[i].name;
+    //   }
+    // });
+      
+    // });
+    
+
+    
+  }
+
+  public generatePDF() {
+
+    var array:any[];
+
+    var met = 45;
+    var inProgress = met+ 10;
+    
+
+
+    const key1 = new Promise((resolve, reject) => {
+
+<<<<<<< HEAD
+      this.userAccount = this.af.list('/userList',{
+=======
+      this.userAccount = this.af.database.list('/userList',{
+>>>>>>> origin/master
+        query: {
+          orderByChild: 'userID',
+          equalTo: this.userID
+        }
+      });
+      this.userAccount.subscribe(queriedItems => {
+        this.key = queriedItems[0].$key;
+        resolve(queriedItems[0].$key);
+        console.log("key",queriedItems[0].$key);
+      })
+    });
+
+    key1.then((res) =>{
+
+<<<<<<< HEAD
+      var templist1 = this.af.list('/userList/'+res+'/Checklist/', {
+=======
+      var templist1 = this.af.database.list('/userList/'+res+'/Checklist/', {
+>>>>>>> origin/master
+        query: {
+          orderByChild: 'progress',
+          limitToLast:34
+
+        }
+<<<<<<< HEAD
+      }).take(1);
+
+      templist1.subscribe(queriedItems => {
+        var doc = new jsPDF();   
+        var date = new Date();
+        doc.setFontSize(15);
+        doc.text(20, 20, 'Milestone summary ' +' | ' + date.toDateString());
+        doc.line(20, 25, 200, 25);
+
+
+        doc.setFontSize(16);
+        doc.setFontType('italic');
+        doc.text(20, 35, this.childInfo.name + ' has progressed in '+ this.tempReport.numRecord +' milestones!');
+=======
+      });
+      templist1.subscribe(queriedItems => {
+        var doc = new jsPDF();   
+        doc.setFontSize(16);
+        doc.text(20, 20, 'Milestone summary  4/7/2017');
+        doc.line(20, 25, 200, 25);
+
+        doc.setFontSize(16);
+        doc.text(20, 35, 'George has progress in '+ this.tempReport.numRecord +'milestones!');
+>>>>>>> origin/master
+
+       
+        // doc.text(20, 55, 'Milestones acchieved:');
+        // doc.line(20, 57, 60, 57);
+        doc.setFontSize(12);
+        for (var i = queriedItems.length-1; i >0; i--) {
+          if (queriedItems[i].progress>0) {
+<<<<<<< HEAD
+          var string1 = '#'+(queriedItems[i]).id +'  '+ queriedItems[i].name;
+          var string2 = "Confidence Level: "+ ' '+ (queriedItems[i].progress).toString() +'%' +' | '+queriedItems[i].lastUpdate;
+          doc.setFont('helvetica');
+          doc.setFontType('bold');
+          doc.text(20, met, string1);
+     
+          doc.setFontType('normal');
+          doc.text(28, met+6, string2);
+          console.log("progressing",string1);
+          met +=16;
+          }
+        }
+        console.log("a pdf is generated");
+        doc.save('Test.pdf');
+      });
+=======
+>>>>>>> origin/master
+
+    // key1.then((res) =>{
+
+    //   console.log("generate Report");
+
+    // var templist1 = this.af.database.list('/userList/'+res+'/Checklist/', {
+    //   query: {
+    //     orderByChild: 'progress',
+    //     equalTo: 0
+        
+    //   }
+    // });
+    // templist1.subscribe(queriedItems => {
+    //   this.tempReport.numRecord = 34-queriedItems.length;
+    //   for (var i = this.tempReport.numAchieved; i <this.tempReport.numRecord; i++) {
+    //     this.progressingArray[i] = (i+1).toString() + queriedItems[i].name;
+    //     console.log("progressing",i);
+    //   }
+    // });
+
+    // var templist2 = this.af.database.list('/userList/'+res+'/Checklist/', {
+    //   query: {
+    //     orderByChild: 'progress',
+    //     equalTo: 100
+    //   }
+    // });
+    // templist2.subscribe(queriedItems => {
+    //   this.tempReport.numAchieved = queriedItems.length;
+    //   for (var i = 0; i <queriedItems.length; i++) {
+    //     this.progressingArray[i] = (i+1).toString() + queriedItems[i].name;
+    //   }
+    // });
+      
+    // });
+    
+
+    
+  }
+
+  public generatePDF() {
+
+    var array:any[];
+
+    var met = 45;
+    var inProgress = met+ 10;
+    
+
+
+    const key1 = new Promise((resolve, reject) => {
+
+      this.userAccount = this.af.database.list('/userList',{
+        query: {
+          orderByChild: 'userID',
+          equalTo: this.userID
+        }
+      });
+      this.userAccount.subscribe(queriedItems => {
+        this.key = queriedItems[0].$key;
+        resolve(queriedItems[0].$key);
+        console.log("key",queriedItems[0].$key);
+      })
+    });
+
+    key1.then((res) =>{
+
+      var templist1 = this.af.database.list('/userList/'+res+'/Checklist/', {
+        query: {
+          orderByChild: 'progress',
+          limitToLast:34
+
+        }
+      });
+      templist1.subscribe(queriedItems => {
+        var doc = new jsPDF();   
+        doc.setFontSize(16);
+        doc.text(20, 20, 'Milestone summary  4/7/2017');
+        doc.line(20, 25, 200, 25);
+
+        doc.setFontSize(16);
+        doc.text(20, 35, 'George has progress in '+ this.tempReport.numRecord +'milestones!');
+
+       
+        // doc.text(20, 55, 'Milestones acchieved:');
+        // doc.line(20, 57, 60, 57);
+        doc.setFontSize(12);
+        for (var i = queriedItems.length-1; i >0; i--) {
+          if (queriedItems[i].progress>0) {
+          var string1 = '#'+(queriedItems[i]).id +'  '+ queriedItems[i].name ;
+          var string2 = "Confidence Level: "+ ' '+ (queriedItems[i].progress).toString() +'%' +'  '+queriedItems[i].lastUpdate;
+          
+
+
+          doc.text(20, met, string1);
+          
+          doc.text(30, met+7, string2);
+          console.log("progressing",string1);
+          met +=20;
+          }
+        }
+        doc.save('Test.pdf');
+      });
+
+    });
+
+
+
+
+    
+
+
+
+    // inProgress = met+10;
+    // doc.setFontSize(16);
+    // doc.text(20, inProgress, 'In process milestones:');
+    // doc.line(20, inProgress+3, 60, inProgress+3);
+
+    // doc.setFontSize(12);
+    // for (var i = this.tempReport.numAchieved; i <this.tempReport.numRecord; i++) {
+      //   doc.text(20, inProgress+6, array[i]);
+      //   inProgress +=5;
+      // }
+
+    }
+
+
+  public download() {
+
+    
+        this.generatePDF();
+
+
+=======
+          var string1 = '#'+(queriedItems[i]).id +'  '+ queriedItems[i].name ;
+          var string2 = "Confidence Level: "+ ' '+ (queriedItems[i].progress).toString() +'%' +'  '+queriedItems[i].lastUpdate;
+          
+
+
+          doc.text(20, met, string1);
+          
+          doc.text(30, met+7, string2);
+          console.log("progressing",string1);
+          met +=20;
+          }
+        }
+        doc.save('Test.pdf');
+      });
+
+>>>>>>> origin/master
+    });
+
+
+
+
+    
+
+
+
+    // inProgress = met+10;
+    // doc.setFontSize(16);
+    // doc.text(20, inProgress, 'In process milestones:');
+    // doc.line(20, inProgress+3, 60, inProgress+3);
+
+    // doc.setFontSize(12);
+    // for (var i = this.tempReport.numAchieved; i <this.tempReport.numRecord; i++) {
+      //   doc.text(20, inProgress+6, array[i]);
+      //   inProgress +=5;
+      // }
+
+    }
+
+
+  public download() {
+
+    
+        this.generatePDF();
+<<<<<<< HEAD
+
+
+  }
+
+=======
 
    
-}
+
+
+
+
+  }
+
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
+>>>>>>> origin/master
   
-  
+  }
 
 // @Component({
 //   selector: 'pizza-dialog',

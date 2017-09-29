@@ -25,7 +25,7 @@ import { AuthGuard }                from '../auth-guard.service';
               { path: 'story', component: StorybookComponent },
               { path: 'checklist', component: ChecklistCenterComponent },
               { path: 'settings', component: SettingComponent },
-              { path: '', component: AccountDashboardComponent }
+              { path: '', component: SettingComponent }
             ]
           }
         ]

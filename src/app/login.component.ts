@@ -2,8 +2,15 @@ import { Component }        from '@angular/core';
 import { Router,
          NavigationExtras,ActivatedRoute, Params } from '@angular/router';
 import { AuthService }      from './auth.service';
-import { AngularFire, FirebaseListObservable,FirebaseObjectObservable,AuthProviders, AuthMethods } from 'angularfire2';
+
+import { AngularFireModule} from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+
 import {map} from 'rxjs/operator/map';
+import { Observable } from 'rxjs/Observable';
+
 
 
 
@@ -15,37 +22,26 @@ import {map} from 'rxjs/operator/map';
 
 export class LoginComponent {
 
+  
+
 
   constructor(
-    public af: AngularFire, 
+    public af: AngularFireDatabase, 
     public authService: AuthService, 
-    public router: Router) {
-    
-    
+    public router: Router,
+    public afAuth: AngularFireAuth,
+    ) {
 
- 
-
-
-
-    this.userList= af.database.list('/userList');
-
-
+    this.userList= af.list('/userList');
+    // this.user = afAuth.auth.currentUser;
 
     
-    // this.checklist = af.database.list('/Checklist');
-    // this.checklist.subscribe(queriedItems =>{
-    //   console.log(queriedItems);
-    //   this.checklistflat = queriedItems;
-
-    // });
-    // this.items = af.database.list('/items');
     };
 
 
     public userChecklist = 
 
     {
-
       "Milestone1" : {
         "detail" : "Children copying their friends.",
         "icon" : "../../assets/images/staricons/1.png",
@@ -55,6 +51,24 @@ export class LoginComponent {
         "notes" : "This is the note for this milestone",
         "progress" : 0,
         "video" : false,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "Copy adults",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Copy friends",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "Copy behaviors",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Copy conversations",
+                "state" : false
+            }
+        }
       },
       "Milestone10" : {
         "detail" : "In this video, a little boy follows instructions with 2 steps",
@@ -66,28 +80,82 @@ export class LoginComponent {
         "notes" : "This is the note for this milestone",
         "progress" : 0,
         "video" : true,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "1 step",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "2 steps",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "3 steps",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "4 steps or more",
+                "state" : false
+            }
+        }
       },
       "Milestone11" : {
         "detail" : "This little boy is able to name many familiar things.",
-        "link" : "https://www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_can-name-most-familiar-things.mp4",
+        "link" : "www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_can-name-most-familiar-things.mp4",
         "icon" : "../../assets/images/staricons/11.png",
         "video" : true,
         "id" : 11,
         "img" : "../../assets/images/milestone11.jpg",
         "name" : "Can name most familiar things",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "Food",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Furniture",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "Body parts",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Toys",
+                "state" : false
+            }
+        }
       },
       "Milestone12" : {
         "detail" : "In this video, a little girl displays her understanding of in, on, and under.",
-        "link" : "https://www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_understands-words-like-in-on-and-under.mp4",
+        "link" : "www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_understands-words-like-in-on-and-under.mp4",
         "icon" : "../../assets/images/staricons/12.png",
         "video" : true,
         "id" : 12,
         "img" : "../../assets/images/milestone12.jpg",
         "name" : "Understands words like 'in', 'on' and 'under'",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "In",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "On",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "Under",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "In front/ behind",
+                "state" : false
+            }
+        }
       },
       "Milestone13" : {
         "detail" : "Detail explanations here ",
@@ -98,10 +166,28 @@ export class LoginComponent {
         "notes" : "This is the note for this milestone",
         "progress" : 0,
         "video" : false,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "First name",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Age",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "Sex",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Other",
+                "state" : false
+            }
+        }
       },
       "Milestone14" : {
         "detail" : "By naming a friend, this little boy is displaying a 3-year language/communication milestone.",
-        "link" : "http://www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_names-a-friend.mp4",
+        "link" : "www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_names-a-friend.mp4",
         "icon" : "../../assets/images/staricons/14.png",
         "video" : true,
         "id" : 14,
@@ -112,18 +198,36 @@ export class LoginComponent {
       },
       "Milestone15" : {
         "detail" : "In the first video clip, the little boy uses 'I'. In the second clip, a little boy uses the plural, 'wheels. Using words like these is a 3-year language/communication milestones.",
-        "link" : "http://www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_says-words-like-i-me-we-and-you-and-some-plurals.mp4",
+        "link" : "www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_says-words-like-i-me-we-and-you-and-some-plurals.mp4",
         "icon" : "../../assets/images/staricons/15.png",
         "video" : true,
         "id" : 15,
         "img" : "../../assets/images/milestone15.jpg",
         "name" : "Says works like 'I', 'me', 'we' and 'you' and some plurals (cars, dogs, cats)",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "'I/Me'",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "'We'",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "'You'",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Plurals",
+                "state" : false
+            }
+        }
       },
       "Milestone16" : {
         "detail" : "This video shows how a 3 year-old talks well enough for strangers to understand most of the time.",
-        "link" : "http://www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_talks-well-enough-for-strangers-to-understand-most-of-the-time.mp4",
+        "link" : "www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_talks-well-enough-for-strangers-to-understand-most-of-the-time.mp4",
         "icon" : "../../assets/images/staricons/16.png",
         "video" : true,
         "id" : 16,
@@ -134,14 +238,32 @@ export class LoginComponent {
       },
       "Milestone17" : {
         "detail" : "This video shows how a 3 year-old carries on a conversation using 2 to 3 sentences.",
-        "link" : "http://www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_carries-on-a-conversation-using-2-to-3-sentences.mp4",
+        "link" : "www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/language/3-years_carries-on-a-conversation-using-2-to-3-sentences.mp4",
         "icon" : "../../assets/images/staricons/17.png",
         "video" : true,
         "id" : 17,
         "img" : "../../assets/images/milestone17.jpg",
         "name" : "Carries on a conversation using 2 to 3 sentences",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "2 sentences",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "3 sentences",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "4 sentences",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "5 or more sentences",
+                "state" : false
+            }
+        }
       },
       "Milestone18" : {
         "detail" : "This little boy is playing with the toy by pressing the buttons that make it work. ",
@@ -151,7 +273,25 @@ export class LoginComponent {
         "img" : "../../assets/images/milestone18.jpg",
         "name" : "Can work toys with buttons, levers, and moving parts",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "Buttons",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Levers",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "Moving parts",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Other",
+                "state" : false
+            }
+        }
       },
       "Milestone19" : {
         "detail" : "This image shows a little boy pretending to doctor on a woman. ",
@@ -161,7 +301,25 @@ export class LoginComponent {
         "img" : "../../assets/images/milestone19.jpg",
         "name" : "Plays make-believe with dolls, animals, and people",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "Dolls",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Animals",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "People",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Other",
+                "state" : false
+            }
+        }
       },
       "Milestone2" : {
         "detail" : "The little girl in this photo is hugging her friend. ",
@@ -179,13 +337,31 @@ export class LoginComponent {
         "video" : false,
         "id" : 20,
         "img" : "../../assets/images/milestone20.jpg",
-        "name" : "Does p20uzzles with 3 or 4 pieces",
+        "name" : "Does puzzles with 3 or 4 pieces",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "2 pieces",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "3 pieces",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "4 pieces",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "5 pieces",
+                "state" : false
+            }
+        }
       },
       "Milestone21" : {
         "detail" : "By  showing his understanding of 'two, this little boy is displaying a 3-year cognitive (learning, thinking, problem-solving) milestone.",
-        "link" : "http://www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/cognitive/3-years_understand-what-two-means.mp4",
+        "link" : "www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/cognitive/3-years_understand-what-two-means.mp4",
         "icon" : "../../assets/images/staricons/21.png",
         "video" : true,
         "id" : 21,
@@ -222,7 +398,26 @@ export class LoginComponent {
         "img" : "../../assets/images/milestone24.jpg",
         "name" : "Builds towers of more than 6 blocks",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+         "submilestone" : {
+             "checkbox1" : {
+                "name" : "4 blocks",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "5 blocks",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "6 blocks",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "More than 6 blocks",
+                "state" : false
+            }
+        }
+
       },
       "Milestone25" : {
         "detail" : "By screwing and unscrewing this jar lid, this little girl is showing a 3-year cognitive (learning, thinking, problem-solving) milestone.",
@@ -232,7 +427,25 @@ export class LoginComponent {
         "img" : "../../assets/images/milestone25.jpg",
         "name" : "Screws and unscrews jar lids or turns door handle",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+             "checkbox1" : {
+                "name" : "Screw jar lids",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Unscrew jar lids",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "Turn door handle",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Other",
+                "state" : false
+            }
+        }
       },
       "Milestone26" : {
         "detail" : "This little girl easily climbed up this structure.",
@@ -246,7 +459,7 @@ export class LoginComponent {
       },
       "Milestone27" : {
         "detail" : "The children in this video are able to run easily",
-        "link" : "http://www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/movement/3-years_runs-easily.mp4",
+        "link" : "www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/3years/movement/3-years_runs-easily.mp4",
         "icon" : "../../assets/images/staricons/27.png",
         "video" : true,
         "id" : 27,
@@ -273,7 +486,26 @@ export class LoginComponent {
         "img" : "../../assets/images/milestone29.jpg",
         "name" : "Walks up and down stairs, one foot on each step",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+            "checkbox1" : {
+                "name" : "Walk up stairs",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Walk down stairs",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "One foot on each step",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Walk on/down stairs with help",
+                "state" : false
+            }
+        }
+
       },
       "Milestone3" : {
         "detail" : "These children are taking turns with the basketball",
@@ -297,14 +529,32 @@ export class LoginComponent {
       },
       "Milestone31" : {
         "detail" : "This girl would rather play with her friends than play alone, a 4-year social/emotional milestone.",
-        "link" :"http://www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/4years/social/4-years_would-rather-play-with-other-children-than-by-herself.mp4",
+        "link" :"www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/4years/social/4-years_would-rather-play-with-other-children-than-by-herself.mp4",
         "icon" : "../../assets/images/staricons/31.png",
         "video" : true,
         "id" : 31,
         "img" : "../../assets/images/milestone31.jpg",
         "name" : "Plays well with two or three children in a group (age 4 milestone)",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+         "submilestone" : {
+            "checkbox1" : {
+                "name" : "Two",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Three",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "Four",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Five",
+                "state" : false
+            }
+        }
       },
       "Milestone32" : {
         "detail" : "This little girl is cutting - snipping - with scissors, a 4-year cognitive (learning, thinking, problem-solving) milestone.",
@@ -318,14 +568,16 @@ export class LoginComponent {
       },
       "Milestone33" : {
         "detail" : "In this video, a little girl tells a story, a 4-year language/communication milestone. ",
-        "link" : "http://www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/4years/language/4-years_tells-stories.mp4",
+        "link" : "www.cdc.gov/ncbddd/actearly/milestones/photolibrary/videos/4years/language/4-years_tells-stories.mp4",
         "icon" : "../../assets/images/staricons/33.png",
         "video" : true,
         "id" : 33,
         "img" : "../../assets/images/milestone33.jpg",
         "name" : "Tells a story (age 4 milestone) while pretending to read",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        
+        
       },
       "Milestone34" : {
         "detail" : "Detail explanations here ",
@@ -355,7 +607,25 @@ export class LoginComponent {
         "img" : "../../assets/images/milestone5.jpg",
         "name" : "Understands the idea of 'mine' and 'his' or 'hers'",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+         "submilestone" : {
+            "checkbox1" : {
+                "name" : "'Mine'",
+                "state" : "false"
+            },
+             "checkbox2" : {
+                "name" : "His",
+                "state" : "false"
+            },
+             "checkbox3" : {
+                "name" : "Hers",
+                "state" : "false"
+            },
+             "checkbox4" : {
+                "name" : "Theirs",
+                "state" : "false"
+            }
+        }
       },
       "Milestone6" : {
         "detail" : "The little girl is being 'loving' toward her friend",
@@ -365,7 +635,25 @@ export class LoginComponent {
         "img" : "../../assets/images/milestone6.jpg",
         "name" : "Shows a wide range of emotions",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+            "checkbox1" : {
+                "name" : "Happy",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Angry",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "Sad",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Anxious",
+                "state" : false
+            }
+        }
       },
       "Milestone7" : {
         "detail" : "The little boy in this picture is separating easily as he says goodbye to his dad",
@@ -385,7 +673,25 @@ export class LoginComponent {
         "img" : "../../assets/images/milestone8.jpg",
         "name" : "May get upset with major changes in routine",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+            "checkbox1" : {
+                "name" : "Waking",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Sleeping",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "Eating",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Playing",
+                "state" : false
+            }
+        }
       },
       "Milestone9" : {
         "detail" : "In this image, a little boy is putting on his shirt.",
@@ -395,7 +701,25 @@ export class LoginComponent {
         "img" : "../../assets/images/milestone9.jpg",
         "name" : "Dresses and undresses self ",
         "notes" : "This is the note for this milestone",
-        "progress" : 0
+        "progress" : 0,
+        "submilestone" : {
+            "checkbox1" : {
+                "name" : "Tops",
+                "state" : false
+            },
+             "checkbox2" : {
+                "name" : "Bottoms",
+                "state" : false
+            },
+             "checkbox3" : {
+                "name" : "Socks",
+                "state" : false
+            },
+             "checkbox4" : {
+                "name" : "Shoes",
+                "state" : false
+            }
+        }
       }
     };
 
@@ -446,16 +770,16 @@ export class LoginComponent {
 
     public account =  {
         "child" : {
-          "age" : "3.51",
-          "gender" : "male",
-          "img" : "../../assets/images/childprofile.jpg",
-          "name" : "Nick",
+          "age" : "",
+          "gender" : "",
+          "img" : "../../assets/images/defaultprofile.jpg",
+          "name" : "",
           "type" : "child"
         },
         "parent" : {
-          "email" : "yiranma94@gmail.com",
-          "img" : "../../assets/images/parentprofile.jpg",
-          "name" : "Bridget",
+          "email" : "",
+          "img" : "../../assets/images/defaultprofile.jpg",
+          "name" : "",
           "type" : "parent"
         }
       };
@@ -464,80 +788,110 @@ export class LoginComponent {
    userList: FirebaseListObservable<any>;
    LoginObject: FirebaseListObservable<any>;
    user: FirebaseListObservable<any[]>;
+   // user: firebase.User;
+
+
    // public user: any;
    public userAccount: any;
 
-   public email:string;
-   public password:string;
+   public email:string = "yiranma@gatech.edu";
+   public password:string = "123456";
    public checklist:FirebaseListObservable<any[]>;
    public checklistflat :any;
-   public key:any
+   public key:any;
+   public cred = firebase.auth.EmailAuthProvider.credential(
+    this.email,
+    this.password
+   );
 
 
 
   login() {
 
+    // this.af.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
-    // 
+    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(auth => {
 
-    this.af.auth.login({
-         email: this.email,
-         password: this.password,
-      }).then(auth => {
-
-        // console.log("This user:",this.af.database.list('/userList', {
-        //   query: {
-        //     orderByChild: 'userID',
-        //     equalTo: auth.uid
-        //   }
-        // }));
-
-        this.user = this.af.database.list('/userList', {
+      this.user = this.af.list('/userList', {
           query: {
             orderByChild: 'userID',
-            equalTo: auth.uid
+            equalTo: this.afAuth.auth.currentUser.uid
           }});
 
         this.user.subscribe(queriedItems => {
           this.userAccount = queriedItems.length;
-          console.log("this user account: ", this.userAccount);
+          console.log("this user account: ", queriedItems.length);
          
           if (this.userAccount == 0 ) {
-            this.addUser(auth);
+            this.addUser(this.afAuth.auth.currentUser);
           }
           else {
             this.key = queriedItems[0].$key;
-            
+
             
           }
-         
-
           
         });
 
-       
-
-      });
-      
-
- 
       this.authService.login().subscribe(() => {
+        this.updateUser(this.key);
+        console.log("updateUser,", this.key);
 
-      this.updateUser(this.key);
-
-      let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'account';
-      // let redirect = 'account';
-      let navigationExtras: NavigationExtras = {
-            preserveQueryParams: true,
-            preserveFragment: true
-          };
-          // Redirect the user
-      this.router.navigate([redirect], navigationExtras);
+        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'account';
+        // let redirect = 'account';
+        let navigationExtras: NavigationExtras = {
+              preserveQueryParams: true,
+              preserveFragment: true
+            };
+            // Redirect the user
+        this.router.navigate([redirect], navigationExtras);
+      });
     });
-      
+  }
 
-  
-     
+
+
+  login2() {
+
+    // this.af.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+
+    this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password).then(auth => {
+
+      this.user = this.af.list('/userList', {
+          query: {
+            orderByChild: 'userID',
+            equalTo: this.afAuth.auth.currentUser.uid
+          }});
+
+        this.user.subscribe(queriedItems => {
+          this.userAccount = queriedItems.length;
+          console.log("this user account: ", queriedItems.length);
+         
+          if (this.userAccount == 0 ) {
+            this.addUser(this.afAuth.auth.currentUser);
+          }
+          else {
+            this.key = queriedItems[0].$key;
+
+            
+          }
+          
+        });
+
+      this.authService.login().subscribe(() => {
+        this.updateUser(this.key);
+        console.log("updateUser,", this.key);
+
+        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'account';
+        // let redirect = 'account';
+        let navigationExtras: NavigationExtras = {
+              preserveQueryParams: true,
+              preserveFragment: true
+            };
+            // Redirect the user
+        this.router.navigate([redirect], navigationExtras);
+      });
+    });
   }
 
 
@@ -547,7 +901,7 @@ export class LoginComponent {
   public addUser(auth:any) {
 
     this.userList.push({  
-      userID: auth.uid, userProfile: auth.auth.email, userPhoto: auth.auth.photoURL, time: Date(), 
+      userID: this.afAuth.auth.currentUser.uid, userProfile: this.afAuth.auth.currentUser.email, userPhoto: this.afAuth.auth.currentUser.photoURL, time: Date(), 
       Checklist:this.userChecklist, 
       userReport: this.userReport,
       userLogs: this.userLogs,
@@ -558,7 +912,7 @@ export class LoginComponent {
   }
   public updateUser(key) {
 
-    this.LoginObject = this.af.database.list('/userList/'+this.key+'/userLogs'+'/Login');
+    this.LoginObject = this.af.list('/userList/'+this.key+'/userLogs'+'/Login');
     
     this.userList.update( key, { time: Date() });
     // let logObject = this.af.database.object('/userList/'+key+'/userLogs');
@@ -570,63 +924,14 @@ export class LoginComponent {
    
 
   logout() {
-     this.af.auth.logout();
+     this.afAuth.auth.signOut();
   }
   
   // public userID: string;
 
 
 
-  // addItem() {
 
-  //   this.user.push({ userID: this.userID, time: Date() });
-  // }
-  // updateItem(key: string, newText: string) {
-  //   this.user.update(key, { text: newText });
-  // }
-  // deleteItem(key: string) {    
-  //   this.user.remove(key); 
-  // }
-  // deleteEverything() {
-  //   this.user.remove();
-  // }
-  // message: string;
-
-  // constructor(public authService: AuthService, public router: Router) {
-  //   this.setMessage();
-  // }
-
-  // setMessage() {
-  //   this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
-  // }
-
-  // login() {
-  //   this.message = 'Trying to log in ...';
-
-  //   this.authService.login().subscribe(() => {
-  //     this.setMessage();
-  //     if (this.authService.isLoggedIn) {
-  //       // Get the redirect URL from our auth service
-  //       // If no redirect has been set, use the default
-  //       // let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'account';
-
-  //       // Set our navigation extras object
-  //       // that passes on our global query params and fragment
-  //       let navigationExtras: NavigationExtras = {
-  //         preserveQueryParams: true,
-  //         preserveFragment: true
-  //       };
-
-  //       // Redirect the user
-  //       this.router.navigate([redirect], navigationExtras);
-  //     }
-  //   });
-  // }
-
-  // logout() {
-  //   this.authService.logout();
-  //   this.setMessage();
-  // }
 }
 
 

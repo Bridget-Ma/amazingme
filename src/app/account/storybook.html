@@ -1,101 +1,182 @@
-<!-- <h1>{{ item | async | json }}</h1>
-  <input type="text" #newname placeholder="Name" />
-  <input type="text" #newsize placeholder="Size" />
-  <br />
-  <button (click)="save(newname.value)">Set Name</button>
-  <button (click)="update(newsize.value)">Update Size</button>
-  <button (click)="delete()">Delete</button>   -->
 
+<div style="height: 800px">
+<!-- <div style="display: inline-flex; width: 77%">
+  <div class="col-lg-6" align = "left" style=" margin-top: 1px; margin-bottom: 1px;">
 
-
-
-
-<!-- <button  md-raised-button *ngIf="tempReport" 
-    (click)="openAch(tempReport)">
-    Achievement Report
-</button>
- -->
-<div >
-  <div class="col-lg-6" align = "center" style=" margin-top: 1px; margin-bottom: : 1px;">
-   
     <pagination [totalItems]="bigTotalItems" [(ngModel)]="currentPage" [maxSize]="maxSize" class="pagination-sm"
     [boundaryLinks]="true" [rotate]="false" (pageChanged)="pageChanged($event)" ></pagination>
+  </div>
+</div> -->
 
-  </div>
-  </div>
-  
 <!-- <audio >
 <source id="source" src="../../assets/1.wav"></source>
 </audio> -->
-
-  <div style= "margin-left: 20px">
-    <div *ngIf="page">
-
-     <img src= {{page.img}}>
-
- <audio id="myAudio" *ngIf="page.audio" autoplay >
-  <source src={{page.audio}} type="audio/wav">
+<div *ngIf="page" style="   margin-top: 15px; margin-right: 5px  "  align="right"  >
 
 
-</audio>
+      <audio id="myAudio" *ngIf="page.audio" autoplay="true" preload="true"><source src={{page.audio}} type="audio/wav"></audio>
 
-<button onclick="myAudio.load()">load</button>
+      <button md-mini-fab *ngIf="page.audio" onclick="myAudio.load()" style="margin-right: 10px"><md-icon>refresh</md-icon></button>
+     
+       <button md-mini-fab *ngIf="page.audio" onclick="document.getElementById('myAudio').play()" style="margin-right: 10px"><md-icon>play_arrow</md-icon></button> 
+        <button md-mini-fab *ngIf="page.audio" onclick="document.getElementById('myAudio').pause()" style="margin-right: 20px"><md-icon>pause</md-icon></button> 
+      
+     <!--  <button  md-mini-fab *ngIf="page.milestoneID != 0" (click)=openShare(selectedMilestone) style="margin-right: 10px"><md-icon>share</md-icon></button> -->
 
-<script>
+  </div>
 
-</script>
+<div  align="center" style="margin-top: 10px; margin-bottom: 10px">
+
+  <div *ngIf="page">
+    <div style="height: 450px">
+      <img src= {{page.img}} width="700px">
+    </div>
+
+ 
+</div>
+
+<pager [totalItems]="bigTotalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"  itemsPerPage="10"><button md-button></button></pager>
+
+<!-- 
+<md-paginator [length]="pageSize"
+              [pageSize]="pageItem"
+              [(ngModel)]="currentPage"
+              (page)="pageEvent = $event">
+</md-paginator> -->
+
+
+
+<!-- <script>
+
+</script> -->
     <!--  <ul>
       <li *ngFor="let item of page | async">
       <img src= {{item.img}} >
       </li>
-     </ul> -->
+    </ul> -->
+
+</div>
+<div *ngIf="selectedMilestone">
+<md-card *ngIf="selectedMilestone" style="display: inline-flex; margin-left: 30px;  margin-top: 5px; width: 90%"  (click)="open(selectedMilestone,noteUpdate)">
+ 
+  <!-- <span style="display: inline-flex; width: 90%">Milestone Moment:  </span>    -->
+
+   <!-- <span class="label" style="margin-left: 15px; vertical-align: middle;"
+     [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
+     [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">
+     {{percent}}% confident
+
+   </span> -->
+
+
+      
+     <span *ngIf="selectedMilestone" style="display: inline-flex; width: 90%;" >
+
+     <span style="vertical-align: middle; font-weight: 700">
+
+   
+ Milestone Moment: &nbsp; &nbsp; </span> <span style="vertical-align: middle;">{{selectedMilestone.name}}    </span>
+
+<!--     <md-slider 
+        [disabled]="disabled"
+        [invert]="invert"
+        [max]="max2"
+        [min]="min"
+        [step]="step"
+        [thumb-label]="thumbLabel"
+        [vertical]="vertical"
+        [(ngModel)]="value"
+        [tick-interval]="tickInterval"
+        (slideend) = "slideOn(value)"
+        
+        style = "width: 200px; " >
+    </md-slider> -->
+
+  </span>
+
+  <span class="label" style="display: inline-flex; margin-right: 0px;vertical-align: middle;" align="right"
+     [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
+     [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">
+     {{percent}}% confident
+
+   </span>
+
+</md-card>
+
+  <span  style="display: inline-flex; width: 5%; margin-right: 0px;padding: 10px" align="right">
+  <button  md-mini-fab  (click)=openShare(selectedMilestone) style="margin-right: 10px"><md-icon>share</md-icon></button></span>
+</div>
+<!-- <div style=" margin-top: 25px; margin-left: 25px; margin-top: 40px">
+
+</div> -->
+
+<!-- <div *ngIf="page" style="display:  inline-grid; width: 10%; vertical-align:middle; margin-right: 10px"  align="left"  >
+ <div style="display: inline-flex;" >
+
+      <audio id="myAudio" *ngIf="page.audio" autoplay><source src={{page.audio}} type="audio/wav"></audio>
+      <button md-mini-fab *ngIf="page.audio" onclick="myAudio.load()" style="margin-right: 10px"><md-icon>play_arrow</md-icon></button>
+      <button  md-mini-fab *ngIf="page.milestoneID != 0" (click)=openShare(selectedMilestone) style="margin-right: 10px"><md-icon>share</md-icon></button>
+      </div>
+  </div> -->
+
+  
+
+
+<<<<<<< HEAD
+   <!-- <div *ngIf="showMilestone" style="display: inline-flex; width: 85%; margin-left: 20px">
+=======
      
-    </div>
-  </div>
+     <button  md-raised-button *ngIf="selectedMilestone" 
+    (click)=openShare(selectedMilestone)>share
+</button>
 
-  <div style=" margin-top: 5px; margin-left: 25px">
-
-    <!-- <span class="badge" >{{selectedPage.milestoneID}}</span>  -->
-
-
-<!--  <h5> Milestone recorded: {{tempReport.numRecord}}</h5>   -->
-
-
-
-<!--     <div *ngIf="showMilestone">
-
-        <div  *ngIf="selectedMilestone" (click)="open(selectedMilestone)">
-
-         <span class="badge"  >Milestone {{selectedMilestone.id}}</span>  {{selectedMilestone.name}}
-
-
-
-       </div>
-     </div> -->
+     
+     <button  md-raised-button *ngIf="selectedMilestone" 
+    (click)=openShare(selectedMilestone)>share
+</button>
 
  <div *ngIf="showMilestone" >
+>>>>>>> origin/master
      <h5>
 
        <span  *ngIf="selectedMilestone" (click)="open(selectedMilestone,noteUpdate)">
-       <span ><img src={{selectedMilestone.icon}} ></span> &nbsp; &nbsp; 
-      {{selectedMilestone.name}}
+         <span ><img src={{selectedMilestone.icon}} ></span> &nbsp; &nbsp; 
+         {{selectedMilestone.name}}
        </span> 
 
        <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
        (onHover)="clickOn($event)"  
        [titles]="['one','two','three']"> 
+<<<<<<< HEAD
+     </rating> 
+     <span class="label" 
+     [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
+     [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">
+     {{percent}}% confident
+=======
        </rating> 
-       <span class="label"
+       <span class="label" 
        [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
        [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">
        {{percent}}% complete
     
        </span>
        </h5>
+>>>>>>> origin/master
 
+   </span>
+ </h5>
+
+</div> -->
+<!-- <div *ngIf="page" style="display: inline-flex; width: 10%; margin-right: 0px" align="right">
+
+ <button  md-mini-fab *ngIf="page.milestoneID != 0" (click)=openShare(selectedMilestone) style="margin-right: 10px"><md-icon>share</md-icon></button>
  </div>
+ -->
+ 
+  <!-- </div> -->
 
-  
+
 
         <!-- <pre class="card card-block card-header" style="margin:15px 0;">Rate: <b>{{rate}}</b> - Readonly is: <i>{{isReadonly}}</i> - Hovering over: <b>{{overStar || "none"}}</b></pre>
 
@@ -105,12 +186,46 @@
       <button type="button" class="btn btn-sm btn-primary"
       (click)="isReadonly = ! isReadonly">Toggle Readonly
     </button> -->
-    <hr/>
+<<<<<<< HEAD
 
+<!-- <button ceiboShare  [facebook]="{u: repoUrl}">Facebook</button>
+   <button ceiboShare  [linkedIn]="{url:repoUrl}">Linkedin</button>
+   <button ceiboShare  [googlePlus]="{url:repoUrl}">Google Plus</button>
+ -->
+
+ <!-- <share-buttons [url]="linkToShare"></share-buttons> -->
+=======
+    <hr/>
+<!-- <button ceiboShare  [facebook]="{u: repoUrl}">Facebook</button>
+   <button ceiboShare  [linkedIn]="{url:repoUrl}">Linkedin</button>
+   <button ceiboShare  [googlePlus]="{url:repoUrl}">Google Plus</button>
+ -->
+
+  <!-- <share-buttons [url]="linkToShare"></share-buttons> -->
+  
 <button  md-raised-button *ngIf="tempReport" 
     (click)="openAch(tempReport)">
     Achievement Report
 </button>
 
+<!-- 
+<share-container
+                        direction="horizontal"
+                        addedText="your creation"
+                        [expandable]="true"
+                        [textEnabled]="true"
+                        [platforms]="['reddit','twitter','facebook','mail']">
+    </share-container> -->
+
+
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
+>>>>>>> origin/master
 </div>
+                 
+                     <hr/>
+
+                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+
 

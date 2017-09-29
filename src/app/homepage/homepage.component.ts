@@ -6,28 +6,19 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 @Component({
 	template:`
 
-  
-	<img src="../../assets/images/homepage1.jpg">
-	<div class = "blockdiv" align = center margin = 10em>
+  <div align = "center" style = "margin-top:20px;background-color: #ffffff; height: 700px" >
+	<img src="../../assets/homepage.jpg" width= "95%">
+
+
 	<br />
+  <div style="margin-top: 60px">
 	 <button md-raised-button style="backgroundcolor:white" routerLink="/login" routerLinkActive="active">Start Journey</button>
-	
+	</div>
 	</div>
 
 	`,
 	 styles: [`
 
-    .blockdiv {
-      align : center;
-      position: relative;
-      left: 0;
-      vertical-align : center;
-      background-color: white;
-      margin: .5em;
-      padding: 3em 3em;
-      height: 10em;
-      border-radius: 4px;
-    } 
   `]
   
 })

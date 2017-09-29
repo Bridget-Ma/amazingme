@@ -1,0 +1,118 @@
+<div style = "padding: 10px 20px" *ngIf="child">
+
+
+
+   <md-card class="app-input-section" >
+  
+   <md-card-title>Child's Profile</md-card-title>
+   <br/>
+    <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{child.img}}>
+     
+<md-input-container >
+   <input mdInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="child.name" >
+   </md-input-container >
+
+          
+
+      <md-select placeholder="Gender" [(ngModel)]="child.gender" name="gender">
+    <md-option *ngFor="let gender of genders" [value]="gender.value">
+      {{gender.viewValue}}
+    </md-option>
+      </md-select>
+
+
+
+      <md-select placeholder="Age" [(ngModel)]="child.age" name="gender">
+    <md-option *ngFor="let age of ages" [value]="age.value">
+      {{age.value}}
+    </md-option>
+      </md-select>
+ 
+
+  
+
+    </md-card>
+    </div> 
+
+
+
+<div style = "padding: 10px 20px" *ngIf="parent" >
+
+     <md-card  class="app-input-section">
+   
+     <md-card-title>Parent's Profile</md-card-title>
+     <br/>
+      <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{parent.img}}>
+ <md-input-container >
+      <input mdInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="parent.name">
+          </md-input-container>
+          <md-input-container >
+     <input mdInput style = "padding: 10px 0 0 0"   placeholder="Email" [(ngModel)]="parent.email">
+     </md-input-container >
+
+  
+      
+          
+         
+
+    </md-card>
+</div>
+
+
+<div style = "padding: 10px 20px" >
+
+
+  <p>Reading mode</p>
+
+   
+  <md-button-toggle-group #group="mdButtonToggleGroup" >
+  <md-button-toggle value="on" checked>
+    On
+  </md-button-toggle>
+  <md-button-toggle value="off">
+    Off
+  </md-button-toggle>
+  
+</md-button-toggle-group>
+
+</div>
+
+<div style = "padding: 10px 20px" >
+
+
+ <p> Reading voice </p>
+
+   
+  <md-button-toggle-group #group="mdButtonToggleGroup" >
+  <md-button-toggle value="male">
+   Male
+  </md-button-toggle>
+  <md-button-toggle value="female" checked>
+    Female
+  </md-button-toggle>
+  
+</md-button-toggle-group>
+
+</div>
+<!-- 
+<md-card >
+  <md-card-content>
+
+    <section>
+      <md-slide-toggle
+          [color]="color" 
+          [disabled]="disabled">
+        Reading Mode
+      </md-slide-toggle>
+    </section>
+  </md-card-content>
+</md-card> -->
+
+<div align = "right" style="margin-right: 20px;margin-top: 10px"><button type="button" md-raised-button 
+(click)="save()">Save</button>
+</div>
+
+<div style="height: 200px">
+  <br />
+
+  </div>

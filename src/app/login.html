@@ -1,47 +1,58 @@
-<md-toolbar>
+<!-- <md-toolbar>
 
-Login to Amazing Me
+Amazing Me
 <span class="app-toolbar-filler">  </span>
-
-
- 
-
- <button md-raised-button align = "right" (click)="login()"  >Login</button>
-      <!--  <button md-raised-button align = "right" (click)="overrideLogin()">Login Anonymously</button> -->
-
- <!-- <button md-raised-button align = "right" (click)="login()" routerLink="/account" >Login</button> -->
-  <!--  <p>
-      
-      <button md-raised-button align = "right" (click)="logout()" ">Logout</buttn>
-    </p> -->
-  
-  
+</md-toolbar> -->
 
  
-  </md-toolbar>
 
+
+<!-- <div align = "center" >
+  <img src="../../assets/homepage.jpg" width="95%">
+ </div> -->
+
+
+  
+
+
+<!-- <div style="background-color: #DCDCDC"> -->
 
     
-    <div align = "center"> 
-   <br />
-   <br />
-      <label>Account Name</label>
-       <md-input-container >
-    <input mdInput placeholder="example@amazingme.com" align="end" [(ngModel)]="email" >
-  </md-input-container>
-     
-      <br />
-      <br />
-      <label>Password</label>
-         <md-input-container >
-    <input mdInput placeholder="password" align="end" [(ngModel)]="password" >
-  </md-input-container>
-     
-<div style="margin-top: 50px">
+<md-card style="margin-left:30%; margin-right:30%; margin-top: 15%"> 
+<md-card-title style="margin-bottom: 20px; margin-left: 5%">My Amazing-Me
+</md-card-title>
 
-     
-</div>
-<!--  <div> {{ (af.auth | async)?.uid }} </div> -->
+<!-- <div style="width: 45%; display: inline-block;"> -->
 
-      
-    </div>
+<!-- <label>Account Name</label> -->
+<div align="center" >
+<md-input-container style="width: 90%">
+<input mdInput placeholder="email" align="end" [(ngModel)]="email" >
+</md-input-container>
+     
+  
+     <!--  <label>Password</label> -->
+
+         <md-input-container style="width: 90%">
+    <input mdInput placeholder="password"  [(ngModel)]="password" >
+
+  </md-input-container>
+
+<button md-raised-button color="primary" (click)="login2()" style="margin: 10px; width: 90%" >Sign in with Email</button>
+<hr>
+
+<button md-raised-button color="accent" (click)="login()" style="margin: 10px; width: 90%" >Sign in with Google</button>
+  <!-- </div> -->
+  </div>
+
+
+</md-card>
+
+<!-- </div> -->
+     
+
+  
+ 
+
+
+

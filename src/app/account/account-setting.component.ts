@@ -1,14 +1,24 @@
 import { Component, OnInit, Input }    from '@angular/core';
-import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
+
+import { AngularFireModule} from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+
 import {Subject} from 'rxjs/Subject';
 
 import { Parent } from './people';
 import { Child } from './people'
+import {MdSnackBar} from '@angular/material';
 //import { ParentService } from './parent.service';
 //import { PageService } from './page.service';
 
 @Component ({
 
+<<<<<<< HEAD
+templateUrl: './setting.html',
+styles: [
+=======
 	template:`
 
   <div style = "padding: 20px 20px" *ngIf="child">
@@ -21,14 +31,17 @@ import { Child } from './people'
    <br/>
     <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{child.img}}>
      
-   <md-input-container >
+<md-input-container >
    <input mdInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="child.name" >
+   </md-input-container >
+   <md-input-container >
     <input mdInput style = "padding: 10px 0 0 0 " placeholder="Gender" [(ngModel)]="child.gender">
+    </md-input-container >
           
-      
+      <md-input-container >
       <input mdInput style = "padding: 10px 0 0 0" placeholder="Age" [(ngModel)]="child.age">
-     
-  </md-input-container>
+     </md-input-container >
+
   
       
 
@@ -48,8 +61,11 @@ import { Child } from './people'
       <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{parent.img}}>
  <md-input-container >
       <input mdInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="parent.name">
+          </md-input-container>
+          <md-input-container >
      <input mdInput style = "padding: 10px 0 0 0"   placeholder="Email" [(ngModel)]="parent.email">
-    </md-input-container>
+     </md-input-container >
+
   
       
           
@@ -71,13 +87,8 @@ import { Child } from './people'
 
 	`,
 	styles: [
+>>>>>>> origin/master
 	`
-	cardstyle {
-
-		margin: 10px 10px;
-		padding: 10px 10px;
-	}
-
 	`],
   //providers: [ParentService]
 
@@ -96,36 +107,55 @@ export class SettingComponent {
   public childinfo;
   public childinfoquery: FirebaseListObservable<any[]>;
   public parentinfoquery: FirebaseListObservable<any[]>;
+  public user: firebase.User;
+
+  color = 'primary';
+  checked = true;
+  disabled = false;
+
+  genders = [
+    {value: 'male', viewValue: 'Male'},
+    {value: 'female', viewValue: 'Female'}
+  ];
+
+  ages = [
+    {value: 2},
+    {value: 3},
+    {value: 4},
+    {value: 5}
+  ];
 
   constructor(
-    public af: AngularFire,
+        public af: AngularFireDatabase,
+        public afAuth: AngularFireAuth,
+        public snackBar: MdSnackBar  
 
 
     ) {
 
-    af.auth.subscribe(auth => {
-      console.log(auth);
-      this.userID = auth.uid;
+    this.user = afAuth.auth.currentUser;
 
-    });
+    console.log(afAuth.auth.currentUser.email);
+    this.userID = this.afAuth.auth.currentUser.uid;
 
+    console.log(afAuth.auth.currentUser.uid);
 
-    this.userAccount = af.database.list('/userList',{
+    this.userAccount = af.list('/userList',{
       query: {
         orderByChild: 'userID',
-        equalTo: this.userID
+        equalTo: this.afAuth.auth.currentUser.uid
       }
     });
 
     this.userAccount.subscribe(queriedItems => {
       this.key = queriedItems[0].$key;
-      this.childinfoquery = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
+      this.childinfoquery = af.list('/userList/'+queriedItems[0].$key+'/account',{
       query: {
         orderByChild: 'type',
         equalTo: "child"
        }
      });
-      this.parentinfoquery = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
+      this.parentinfoquery = af.list('/userList/'+queriedItems[0].$key+'/account',{
       query: {
         orderByChild: 'type',
         equalTo: "parent"
@@ -135,6 +165,7 @@ export class SettingComponent {
 
     this.childinfoquery.subscribe(queriedItems => {
       this.child = queriedItems[0];
+      // console.log("child:", this.child.img)
 
     });
     this.parentinfoquery.subscribe(queriedItems => {
@@ -154,30 +185,75 @@ export class SettingComponent {
 
 
 public save() {
-   let list = this.af.database.list('/userList/'+this.key+'/account');
+   let list = this.af.list('/userList/'+this.key+'/account');
+
+   this.child.img = "../../assets/images/childprofile.jpg"
+   this.parent.img = "../../assets/images/parentprofile.jpg"
 
    list.update('child', { name: this.child.name, age:this.child.age, gender: this.child.gender, img: this.child.img });
    list.update('parent', { name: this.parent.name, email:this.parent.email, img: this.parent.img });
+
+   this.snackBar.openFromComponent(SnackBarComponent, {
+      duration: 500,
+    });
 
 
 }
 
  
-  // parent: Parent = {
-  //   name: "Sarah",
-  //   img: "../../assets/images/parentprofile.jpg",
-  //   email: "sarah@gmail.com"
-    
-  // };
-
-
-  // child: Child = {
-  //   name: "George",
-  //   img: "../../assets/images/childprofile.jpg",
-  //   gender: "male",
-  //   age: 3,
-  // };
-  //public child: Child;
+ 
 
 }
+
+@Component({
+  selector: 'snack-bar-component-example-snack',
+  templateUrl: 'snackbar.html'
+  // styleUrls: ['snack-bar-component-example-snack.css'],
+})
+
+export class SnackBarComponent {
+
+
+  // public child: any;
+  // public parent: any;
+  // public userID: any;
+  // public userChecklist: FirebaseListObservable<any[]>;
+
+  // public userAccount: FirebaseListObservable<any[]>;
+  // public key:any;
+
+  // public childinfo;
+  // public childinfoquery: FirebaseListObservable<any[]>;
+  // public parentinfoquery: FirebaseListObservable<any[]>;
+  // public user: firebase.User;
+
+  // constructor(
+  //   public snackBar: MdSnackBar,
+  //   public af: AngularFireDatabase,
+  //   public afAuth: AngularFireAuth,
+ 
+  //   ) {}
+
+  // openSnackBar() {
+
+  //   let list = this.af.list('/userList/'+this.key+'/account');
+
+  //  this.child.img = "../../assets/images/childprofile.jpg"
+  //  this.parent.img = "../../assets/images/parentprofile.jpg"
+
+  //  list.update('child', { name: this.child.name, age:this.child.age, gender: this.child.gender, img: this.child.img });
+  //  list.update('parent', { name: this.parent.name, email:this.parent.email, img: this.parent.img });
+
+  //  this.snackBar.openFromComponent(SettingComponent, {
+  //     duration: 500,
+  //   });
+
+  //   this.snackBar.openFromComponent(SettingComponent, {
+  //     duration: 500,
+  //   });
+  // }
+}
+
+
+
 

@@ -12,12 +12,12 @@
 
 
 
-    <md-card-content>I feel that George is ...</md-card-content>
+    <md-card-content>I feel that George has achieved...</md-card-content>
     
      
 
   <md-card-content>
-       <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
+      <!--  <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
        (onHover)="clickOn($event)"  
        [titles]="['one','two','three']"> 
        </rating> 
@@ -25,8 +25,31 @@
        <span class="label"
        [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
        [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">  {{percent}}% 
-       </span> 
-       towards this milestone! </md-card-content>
+       </span>  -->
+
+       <md-slider 
+        [disabled]="disabled"
+        [invert]="invert"
+        [max]="max2"
+        [min]="min"
+        [step]="step"
+        [thumb-label]="thumbLabel"
+        [vertical]="vertical"
+        [(ngModel)]="value"
+        [tick-interval]="tickInterval"
+        (slideend) = "slideOn(value)"
+      
+        style = "width: 180px; " >
+    </md-slider>
+
+  
+
+     <span >
+     {{percent}}%  of this milestone!
+
+   </span>
+   
+        </md-card-content>
 
 
  <md-card-content>
@@ -46,14 +69,14 @@
  
  
 
-<section *ngIf="milestone.id == 6">
-          <md-checkbox #checkbox1   [checked]="milestone.checkbox1">Happy</md-checkbox>
+<section *ngIf="milestone.submilestone">
+          <md-checkbox  [checked]="milestone.submilestone.checkbox1.state" [(ngModel)]="milestone.submilestone.checkbox1.state">{{milestone.submilestone.checkbox1.name}}</md-checkbox>
          
-           <md-checkbox #checkbox2  [checked]="milestone.checkbox2">Angry</md-checkbox>
+           <md-checkbox  [checked]="milestone.submilestone.checkbox2.state" [(ngModel)]="milestone.submilestone.checkbox2.state">{{milestone.submilestone.checkbox2.name}}</md-checkbox>
            
-            <md-checkbox #checkbox3  [checked]="milestone.checkbox3">Sad</md-checkbox>
+            <md-checkbox  [checked]="milestone.submilestone.checkbox3.state" [(ngModel)]="milestone.submilestone.checkbox3.state">{{milestone.submilestone.checkbox3.name}}</md-checkbox>
            
-           <md-checkbox #checkbox4  [checked]="milestone.checkbox4">Anxious</md-checkbox>
+           <md-checkbox [checked]="milestone.submilestone.checkbox4.state" [(ngModel)]="milestone.submilestone.checkbox4.state">{{milestone.submilestone.checkbox4.name}}</md-checkbox>
 </section>
 
 
@@ -61,22 +84,25 @@
 </md-card-content>
 
 
-<!-- <md-input-container style="width: 100%">
+<md-input-container style="width: 100%">
       <textarea mdInput placeholder="Notes"  [(ngModel)]="milestone.notes"  (click) = "updateNote()"></textarea>
-</md-input-container> -->
+</md-input-container>
        
-         <input mdInput style = "width: 100%" placeholder="Notes"  [(ngModel)]="milestone.notes"  (click) = "updateNote()">
+        <!--  <input mdInput style = "width: 100%" placeholder="Notes"  [(ngModel)]="milestone.notes"  (click) = "updateNote()"> -->
        <!--  <input type="text"  class="form-control"  [(ngModel)]="milestone.notes"  (click) = "updateNote()" /> -->
 
 
-
+ 
 
 <md-card-actions>
     <button md-button (click)="dialogRef.close(true)">SAVE</button>
     <button md-button (click)="dialogRef.close()">CANCEL</button>
+
+
   </md-card-actions>
 
 </md-card>
+
 
 
 <!-- <button type="button" md-raised-button 
@@ -90,7 +116,7 @@
 
 
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script> 
 
 
 

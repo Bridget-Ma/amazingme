@@ -18,11 +18,20 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css"
+        "styles.css",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css"
       ],
-      "scripts": [],
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+     
+>>>>>>> origin/master
+=======
+     
+>>>>>>> origin/master
+      "scripts": [ "../node_modules/jspdf/dist/jspdf.min.js" ],
+      "environmentSource": "environments/environment.ts",
       "environments": {
-        "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
@@ -56,4 +65,5 @@
       "service": true
     }
   }
+  
 }

@@ -1,7 +1,9 @@
 import { Page } from './page';
 import { PAGES } from './pagelist';
 import { Injectable } from '@angular/core';
-import {AngularFire, FirebaseObjectObservable, FirebaseListObservable} from 'angularfire2';
+import { AngularFireModule} from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class PageService {
@@ -10,10 +12,10 @@ export class PageService {
   public pages: FirebaseListObservable<Page[]>;
 
   constructor(
-    af: AngularFire,
+    af: AngularFireDatabase,
     ) {
 
-    this.pages= af.database.list('/Pagelist');
+    this.pages= af.list('/Pagelist');
  
   };
 
