@@ -42,12 +42,7 @@ import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
-import {ShareButtonsModule} from "ng2-sharebuttons";
-<<<<<<< HEAD
 
-// import {ShareButtonsModule} from "ng2-sharebuttons";
-=======
->>>>>>> origin/master
 
 @NgModule({
   imports: [
@@ -59,23 +54,15 @@ import {ShareButtonsModule} from "ng2-sharebuttons";
     RatingModule,
     ModalModule,
     FormsModule,
-<<<<<<< HEAD
-<<<<<<< HEAD
     ShareButtonsModule.forRoot(),
     ShareModule,
     NgbModule,
     // AngularFireDatabase, // imports firebase/database, only needed for database features
     // AngularFireAuth, // imports firebase/auth, only needed for auth features
-=======
-    ShareButtonsModule,
+
     ShareModule,
     MaterialModule
->>>>>>> origin/master
-=======
-    ShareButtonsModule,
-    ShareModule,
-    MaterialModule
->>>>>>> origin/master
+
   ],
   declarations: [
     AccountComponent,
@@ -90,28 +77,13 @@ import {ShareButtonsModule} from "ng2-sharebuttons";
     shareConfirmDialog,
     AchDialog,
     TestDirective
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
-=======
-
->>>>>>> origin/master
   ],
   entryComponents: [
     //MilestoneDetailComponent,
     ConfirmDialog,
     shareConfirmDialog,
-<<<<<<< HEAD
-<<<<<<< HEAD
     AchDialog,
     SnackBarComponent
-=======
-=======
->>>>>>> origin/master
-    AchDialog
->>>>>>> origin/master
   ],
   providers: [ 
   PageService, 

@@ -3,23 +3,20 @@ import { Component, Input,ViewChild} from '@angular/core';
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
 import { FormControl, FormGroup } from '@angular/forms';
-<<<<<<< HEAD
-<<<<<<< HEAD
 import {MdCheckbox} from '@angular/material'
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-=======
 // import {MdCheckbox} from '@angular/material'
-import { Injectable, ViewContainerRef } from '@angular/core';
-import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
->>>>>>> origin/master
-=======
+
+
+
+
 // import {MdCheckbox} from '@angular/material'
-import { Injectable, ViewContainerRef } from '@angular/core';
-import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
->>>>>>> origin/master
+
+
+
 import {Subject} from 'rxjs/Subject';
 import { DialogsService} from './dialog.service';
 import {ShareButtonsModule} from "ng2-sharebuttons";

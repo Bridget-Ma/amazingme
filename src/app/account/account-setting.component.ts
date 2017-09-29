@@ -15,79 +15,10 @@ import {MdSnackBar} from '@angular/material';
 
 @Component ({
 
-<<<<<<< HEAD
+
 templateUrl: './setting.html',
-styles: [
-=======
-	template:`
-
-  <div style = "padding: 20px 20px" *ngIf="child">
-
-
-
-   <md-card class="app-input-section" >
-  
-   <md-card-title>Child's Profile</md-card-title>
-   <br/>
-    <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{child.img}}>
-     
-<md-input-container >
-   <input mdInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="child.name" >
-   </md-input-container >
-   <md-input-container >
-    <input mdInput style = "padding: 10px 0 0 0 " placeholder="Gender" [(ngModel)]="child.gender">
-    </md-input-container >
-          
-      <md-input-container >
-      <input mdInput style = "padding: 10px 0 0 0" placeholder="Age" [(ngModel)]="child.age">
-     </md-input-container >
-
-  
-      
-
-   
-
-    </md-card>
-    </div> 
-
-
-
-<div style = "padding: 30px 20px" *ngIf="parent" >
-
-     <md-card  class="app-input-section">
-   
-     <md-card-title>Parent's Profile</md-card-title>
-     <br/>
-      <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{parent.img}}>
- <md-input-container >
-      <input mdInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="parent.name">
-          </md-input-container>
-          <md-input-container >
-     <input mdInput style = "padding: 10px 0 0 0"   placeholder="Email" [(ngModel)]="parent.email">
-     </md-input-container >
-
-  
-      
-          
-         
-
-    </md-card>
-
-</div>
-
-<div align = "right" style="margin-right: 30px"><button type="button" md-raised-button 
-(click)="save()">Save</button>
-</div>
-
-<div style="height: 200px">
-  <br />
-
-  </div>
-
-
-	`,
 	styles: [
->>>>>>> origin/master
+
 	`
 	`],
   //providers: [ParentService]

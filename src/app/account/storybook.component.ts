@@ -99,6 +99,9 @@ export class StorybookComponent implements OnInit {
 
   public tempTimeOnPage: Date;
 
+  public childInfo: any;
+  public parentInfo:any;
+
 
   
 
@@ -169,29 +172,17 @@ export class StorybookComponent implements OnInit {
         }
       });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
      var child = af.list('/userList/'+queriedItems[0].$key+'/account',{
-=======
-     var child = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
->>>>>>> origin/master
-=======
-     var child = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
->>>>>>> origin/master
       query: {
         orderByChild: 'type',
         equalTo: "child"
        }
      });
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       var parent = af.list('/userList/'+queriedItems[0].$key+'/account',{
-=======
-      var parent = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
->>>>>>> origin/master
-=======
-      var parent = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
->>>>>>> origin/master
+
+
       query: {
         orderByChild: 'type',
         equalTo: "parent"
@@ -269,15 +260,8 @@ export class StorybookComponent implements OnInit {
 
 
   public queryChecklist()  {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     this.userAccount = this.af.list('/userList',{
-=======
-    this.userAccount = this.af.database.list('/userList',{
->>>>>>> origin/master
-=======
-    this.userAccount = this.af.database.list('/userList',{
->>>>>>> origin/master
       query: {
         orderByChild: 'userID',
         equalTo: this.userID
@@ -286,15 +270,8 @@ export class StorybookComponent implements OnInit {
 
     this.userAccount.subscribe(queriedItems => {
       this.key = queriedItems[0].$key;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       var templist1 = this.af.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
-=======
-      var templist1 = this.af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
->>>>>>> origin/master
-=======
-      var templist1 = this.af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
->>>>>>> origin/master
       query: {
         orderByChild: 'progress',
         equalTo: 0
@@ -302,15 +279,7 @@ export class StorybookComponent implements OnInit {
     });
     templist1.subscribe(queriedItems => {this.tempReport.numRecord = 34- queriedItems.length});
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     var templist2 = this.af.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
-=======
-    var templist2 = this.af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
->>>>>>> origin/master
-=======
-    var templist2 = this.af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
->>>>>>> origin/master
       query: {
         orderByChild: 'progress',
         equalTo: 100
@@ -346,23 +315,12 @@ export class StorybookComponent implements OnInit {
 
     this.setPage(1);
     this.queryChecklist();
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     if (this.tempReport.numRecord != 0) { 
       this.openAch(this.tempReport);
-
-    }
-
-
-   
-=======
-    this.openAch(this.tempReport);
->>>>>>> origin/master
-=======
-    this.openAch(this.tempReport);
->>>>>>> origin/master
    
   }
+}
 
 
   public setPage(pageNo:number):void {
@@ -500,51 +458,22 @@ export class StorybookComponent implements OnInit {
 
   public () {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
    console.log(this.afAuth.authState);
    this.userID = this.afAuth.authState;
-
-
-
 
 
    this.userAccount = this.af.list('/userList',{
      query: {
        orderByChild: 'userID',
        equalTo: this.userID.uid
-=======
-=======
->>>>>>> origin/master
-  this.af.auth.subscribe(auth => {
-     console.log(auth);
-     this.userID = auth.uid;
-
-   });
-
-
-   this.userAccount = this.af.database.list('/userList',{
-     query: {
-       orderByChild: 'userID',
-       equalTo: this.userID
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
      }
    });
 
+
    this.userAccount.subscribe(queriedItems => {
      this.key = queriedItems[0].$key;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
      var child= this.af.list('/userList/'+queriedItems[0].$key+'/account/child',{
-=======
-     var child= this.af.database.list('/userList/'+queriedItems[0].$key+'/account/child',{
->>>>>>> origin/master
-=======
-     var child= this.af.database.list('/userList/'+queriedItems[0].$key+'/account/child',{
->>>>>>> origin/master
      query: {
        orderByChild: 'name',
       
@@ -556,15 +485,8 @@ export class StorybookComponent implements OnInit {
 
    });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
      var parent = this.af.list('/userList/'+queriedItems[0].$key+'/account/parent',{
-=======
-     var parent = this.af.database.list('/userList/'+queriedItems[0].$key+'/account/parent',{
->>>>>>> origin/master
-=======
-     var parent = this.af.database.list('/userList/'+queriedItems[0].$key+'/account/parent',{
->>>>>>> origin/master
      query: {
        orderByChild: 'name',
       
@@ -599,8 +521,8 @@ export class StorybookComponent implements OnInit {
   
 // public child : FirebaseListObservable<any[]>;
 // public parent : FirebaseListObservable<any[]>;
-public childInfo: any;
-public parentInfo:any;
+// public childInfo: any;
+// public parentInfo:any;
 
   public refreshPage(res:any) {
     if (res == true){

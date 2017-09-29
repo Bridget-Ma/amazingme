@@ -107,7 +107,7 @@ npm manifest:
       "ts-helpers": "^1.1.1"
      
     },
-    
+  
   }
 
 yarn manifest: 
@@ -120,7 +120,7 @@ Lockfile:
   No lockfile
 
 Trace: 
-  SyntaxError: /Users/myr/Github/amazing-me/package.json: Unexpected token } in JSON at position 2906
+  SyntaxError: /Users/myr/Github/amazing-me/package.json: Unexpected token } in JSON at position 2904
       at Object.parse (native)
       at /usr/local/Cellar/yarn/0.16.1/libexec/lib/node_modules/yarn/lib/util/fs.js:271:57
       at next (native)

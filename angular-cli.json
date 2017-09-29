@@ -21,14 +21,6 @@
         "styles.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css"
       ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-     
->>>>>>> origin/master
-=======
-     
->>>>>>> origin/master
       "scripts": [ "../node_modules/jspdf/dist/jspdf.min.js" ],
       "environmentSource": "environments/environment.ts",
       "environments": {

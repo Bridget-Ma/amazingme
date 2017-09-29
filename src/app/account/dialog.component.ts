@@ -5,16 +5,12 @@ import { MilestoneService } from './milestones.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import {MdCheckbox} from '@angular/material'
 import { Injectable, ViewContainerRef } from '@angular/core';
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-=======
-=======
->>>>>>> origin/master
-import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
->>>>>>> origin/master
+
+
 import {Subject} from 'rxjs/Subject';
 import { DialogsService} from './dialog.service';
 
@@ -29,8 +25,6 @@ export class ConfirmDialog{
     // public title: string;
     // public message: string;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
   autoTicks = false;
   tickInterval = 1;
@@ -45,10 +39,6 @@ export class ConfirmDialog{
   public value: number = 0;
   vertical = false;
 
-=======
->>>>>>> origin/master
-=======
->>>>>>> origin/master
       
   public milestone: any;
   public af:AngularFireDatabase;

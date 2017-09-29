@@ -22,10 +22,8 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { DialogService }        from './dialog.service';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 
 
 // export const myFirebaseConfig = {
@@ -35,13 +33,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 //     databaseURL: "https://amazing-me-ac8b6.firebaseio.com",
 //     storageBucket: "amazing-me-ac8b6.appspot.com",
 //     messagingSenderId: "582459982323"
-=======
-import {MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardModule, MdDialogModule, MdSidenavModule} from '@angular/material';
-
-=======
-import {MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardModule, MdDialogModule, MdSidenavModule} from '@angular/material';
-
->>>>>>> origin/master
 import 'hammerjs';
 
 
@@ -52,8 +43,8 @@ export const myFirebaseConfig = {
     databaseURL: "https://amazing-me-ac8b6.firebaseio.com",
     storageBucket: "amazing-me-ac8b6.appspot.com",
     messagingSenderId: "582459982323"
->>>>>>> origin/master
- 
+
+ };
 // };
 
 // export const environment = {
@@ -85,22 +76,12 @@ export const myFirebaseConfig = {
     LoginRoutingModule,
     AppRoutingModule,
     MaterialModule,
-<<<<<<< HEAD
-<<<<<<< HEAD
     ShareButtonsModule.forRoot(),
     NgbModule.forRoot(),
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-=======
-    MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardModule, MdDialogModule, MdSidenavModule,
-    BrowserAnimationsModule
->>>>>>> origin/master
-=======
-    MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardModule, MdDialogModule, MdSidenavModule,
-    BrowserAnimationsModule
->>>>>>> origin/master
   ],
   declarations: [
     AppComponent,
