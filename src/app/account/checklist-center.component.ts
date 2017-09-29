@@ -31,6 +31,7 @@ import * as jsPDF from 'jspdf';
     <h2>&nbsp; Milestone Checklist </h2> 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <div style= "margin-left: 20px"><button  md-raised-button 
     (click)="download()">
     Download Report
@@ -39,11 +40,16 @@ import * as jsPDF from 'jspdf';
 =======
 =======
 >>>>>>> origin/master
+=======
+>>>>>>> origin/master
 <button  md-raised-button 
     (click)="download()">
     download
 </button>
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 =======
 >>>>>>> origin/master
@@ -210,6 +216,7 @@ public openDialog(milestone:Milestone, noteUpdate:boolean) {
           lastUpdate: day.toDateString() });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         // if(milestone.submilestone.checkbox1) {
         //    this.userChecklist.update('Milestone'+milestone.id, {submilestone: {checkbox1: {state:milestone.submilestone.checkbox1.state,name:milestone.submilestone.checkbox1.name},checkbox2: {state:milestone.submilestone.checkbox2.state,name:milestone.submilestone.checkbox2.name},
         //   checkbox3: {state:milestone.submilestone.checkbox3.state,name:milestone.submilestone.checkbox3.name},checkbox4: {state:milestone.submilestone.checkbox4.state,name:milestone.submilestone.checkbox4.name}}});
@@ -218,6 +225,8 @@ public openDialog(milestone:Milestone, noteUpdate:boolean) {
 
          let list = this.af.list('/userList/'+this.key+'/userLogs'+'/recordProgress');
 =======
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
         if(milestone.submilestone.checkbox1) {
@@ -242,7 +251,11 @@ public openDialog(milestone:Milestone, noteUpdate:boolean) {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
        let list = this.af.list('/userList/'+this.key+'/userLogs'+'/openDialog');
+=======
+       let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openDialog');
+>>>>>>> origin/master
 =======
        let list = this.af.database.list('/userList/'+this.key+'/userLogs'+'/openDialog');
 >>>>>>> origin/master
@@ -278,9 +291,12 @@ public openDialog(milestone:Milestone, noteUpdate:boolean) {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   public childInfo: any;
   public parentInfo:any;
 
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 =======
@@ -364,7 +380,11 @@ public queryChecklist()  {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     this.userAccount = this.af.list('/userList',{
+=======
+    this.userAccount = this.af.database.list('/userList',{
+>>>>>>> origin/master
 =======
     this.userAccount = this.af.database.list('/userList',{
 >>>>>>> origin/master
@@ -390,7 +410,11 @@ public queryChecklist()  {
   
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     var templist1 = this.af.list('/userList/'+res+'/Checklist/', {
+=======
+    var templist1 = this.af.database.list('/userList/'+res+'/Checklist/', {
+>>>>>>> origin/master
 =======
     var templist1 = this.af.database.list('/userList/'+res+'/Checklist/', {
 >>>>>>> origin/master
@@ -406,7 +430,11 @@ public queryChecklist()  {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     var templist2 = this.af.list('/userList/'+res+'/Checklist/', {
+=======
+    var templist2 = this.af.database.list('/userList/'+res+'/Checklist/', {
+>>>>>>> origin/master
 =======
     var templist2 = this.af.database.list('/userList/'+res+'/Checklist/', {
 >>>>>>> origin/master
@@ -451,6 +479,7 @@ ngOnInit(): void {
   
   
   public generateReport() {
+<<<<<<< HEAD
 
     const key1 = new Promise((resolve, reject) => {
 
@@ -736,6 +765,110 @@ ngOnInit(): void {
 
 
 =======
+=======
+
+    const key1 = new Promise((resolve, reject) => {
+
+    this.userAccount = this.af.database.list('/userList',{
+      query: {
+        orderByChild: 'userID',
+        equalTo: this.userID
+      }
+    });
+    this.userAccount.subscribe(queriedItems => {
+      this.key = queriedItems[0].$key;
+      resolve(queriedItems[0].$key);
+      console.log("keyGR",queriedItems[0].$key);
+    })
+  });
+
+    // key1.then((res) =>{
+
+    //   console.log("generate Report");
+
+    // var templist1 = this.af.database.list('/userList/'+res+'/Checklist/', {
+    //   query: {
+    //     orderByChild: 'progress',
+    //     equalTo: 0
+        
+    //   }
+    // });
+    // templist1.subscribe(queriedItems => {
+    //   this.tempReport.numRecord = 34-queriedItems.length;
+    //   for (var i = this.tempReport.numAchieved; i <this.tempReport.numRecord; i++) {
+    //     this.progressingArray[i] = (i+1).toString() + queriedItems[i].name;
+    //     console.log("progressing",i);
+    //   }
+    // });
+
+    // var templist2 = this.af.database.list('/userList/'+res+'/Checklist/', {
+    //   query: {
+    //     orderByChild: 'progress',
+    //     equalTo: 100
+    //   }
+    // });
+    // templist2.subscribe(queriedItems => {
+    //   this.tempReport.numAchieved = queriedItems.length;
+    //   for (var i = 0; i <queriedItems.length; i++) {
+    //     this.progressingArray[i] = (i+1).toString() + queriedItems[i].name;
+    //   }
+    // });
+      
+    // });
+    
+
+    
+  }
+
+  public generatePDF() {
+
+    var array:any[];
+
+    var met = 45;
+    var inProgress = met+ 10;
+    
+
+
+    const key1 = new Promise((resolve, reject) => {
+
+      this.userAccount = this.af.database.list('/userList',{
+        query: {
+          orderByChild: 'userID',
+          equalTo: this.userID
+        }
+      });
+      this.userAccount.subscribe(queriedItems => {
+        this.key = queriedItems[0].$key;
+        resolve(queriedItems[0].$key);
+        console.log("key",queriedItems[0].$key);
+      })
+    });
+
+    key1.then((res) =>{
+
+      var templist1 = this.af.database.list('/userList/'+res+'/Checklist/', {
+        query: {
+          orderByChild: 'progress',
+          limitToLast:34
+
+        }
+      });
+      templist1.subscribe(queriedItems => {
+        var doc = new jsPDF();   
+        doc.setFontSize(16);
+        doc.text(20, 20, 'Milestone summary  4/7/2017');
+        doc.line(20, 25, 200, 25);
+
+        doc.setFontSize(16);
+        doc.text(20, 35, 'George has progress in '+ this.tempReport.numRecord +'milestones!');
+
+       
+        // doc.text(20, 55, 'Milestones acchieved:');
+        // doc.line(20, 57, 60, 57);
+        doc.setFontSize(12);
+        for (var i = queriedItems.length-1; i >0; i--) {
+          if (queriedItems[i].progress>0) {
+>>>>>>> origin/master
           var string1 = '#'+(queriedItems[i]).id +'  '+ queriedItems[i].name ;
           var string2 = "Confidence Level: "+ ' '+ (queriedItems[i].progress).toString() +'%' +'  '+queriedItems[i].lastUpdate;
           
@@ -751,6 +884,9 @@ ngOnInit(): void {
         doc.save('Test.pdf');
       });
 
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
     });
 
@@ -780,11 +916,14 @@ ngOnInit(): void {
     
         this.generatePDF();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
   }
 
 =======
+=======
+>>>>>>> origin/master
 
    
 
@@ -794,6 +933,9 @@ ngOnInit(): void {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 =======
 >>>>>>> origin/master

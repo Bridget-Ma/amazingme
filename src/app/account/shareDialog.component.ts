@@ -5,11 +5,17 @@ import { MilestoneService } from './milestones.service';
 import { FormControl, FormGroup } from '@angular/forms';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {MdCheckbox} from '@angular/material'
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+=======
+// import {MdCheckbox} from '@angular/material'
+import { Injectable, ViewContainerRef } from '@angular/core';
+import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
+>>>>>>> origin/master
 =======
 // import {MdCheckbox} from '@angular/material'
 import { Injectable, ViewContainerRef } from '@angular/core';

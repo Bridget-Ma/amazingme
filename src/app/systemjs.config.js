@@ -11,6 +11,7 @@
     'rxjs':                       'node_modules/rxjs',
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     'ngx-sharebuttons': 'node_modules/ngx-sharebuttons/bundles/ngx-sharebuttons.umd.js',
     '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
     '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
@@ -18,6 +19,11 @@
     // CDK individual packages
     '@angular/cdk/platform': 'npm:@angular/cdk/bundles/cdk-platform.umd.js',
     '@angular/cdk/a11y': 'npm:@angular/cdk/bundles/cdk-a11y.umd.js',
+=======
+    "jspdf": "node_modules/jspdf/dist/jspdf.min.js",
+    '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
+
+>>>>>>> origin/master
 =======
     "jspdf": "node_modules/jspdf/dist/jspdf.min.js",
     '@angular/material': 'npm:@angular/material/bundles/material.umd.js',

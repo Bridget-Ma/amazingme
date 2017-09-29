@@ -27,7 +27,9 @@ import {ShareButtonsModule} from 'ngx-sharebuttons';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+import {MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardModule, MdDialogModule, MdSidenavModule} from '@angular/material';
 
+<<<<<<< HEAD
 // export const myFirebaseConfig = {
 
 //   apiKey: "AIzaSyCleNPTW1m0VsF2V_sSuYJQ1pm5E356Ra8",
@@ -41,6 +43,8 @@ import {MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardMod
 =======
 import {MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardModule, MdDialogModule, MdSidenavModule} from '@angular/material';
 
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 import 'hammerjs';
 
@@ -87,12 +91,17 @@ export const myFirebaseConfig = {
     MaterialModule,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     ShareButtonsModule.forRoot(),
     NgbModule.forRoot(),
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+=======
+    MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardModule, MdDialogModule, MdSidenavModule,
+    BrowserAnimationsModule
+>>>>>>> origin/master
 =======
     MdButtonModule, MdCheckboxModule, MdInputModule, MdListModule, MdCardModule, MdDialogModule, MdSidenavModule,
     BrowserAnimationsModule

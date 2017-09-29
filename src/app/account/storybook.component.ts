@@ -171,7 +171,11 @@ export class StorybookComponent implements OnInit {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
      var child = af.list('/userList/'+queriedItems[0].$key+'/account',{
+=======
+     var child = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
+>>>>>>> origin/master
 =======
      var child = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
 >>>>>>> origin/master
@@ -185,7 +189,11 @@ export class StorybookComponent implements OnInit {
      });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       var parent = af.list('/userList/'+queriedItems[0].$key+'/account',{
+=======
+      var parent = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
+>>>>>>> origin/master
 =======
       var parent = af.database.list('/userList/'+queriedItems[0].$key+'/account',{
 >>>>>>> origin/master
@@ -271,7 +279,11 @@ export class StorybookComponent implements OnInit {
   public queryChecklist()  {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     this.userAccount = this.af.list('/userList',{
+=======
+    this.userAccount = this.af.database.list('/userList',{
+>>>>>>> origin/master
 =======
     this.userAccount = this.af.database.list('/userList',{
 >>>>>>> origin/master
@@ -288,7 +300,11 @@ export class StorybookComponent implements OnInit {
       this.key = queriedItems[0].$key;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       var templist1 = this.af.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
+=======
+      var templist1 = this.af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
+>>>>>>> origin/master
 =======
       var templist1 = this.af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
 >>>>>>> origin/master
@@ -304,7 +320,11 @@ export class StorybookComponent implements OnInit {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     var templist2 = this.af.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
+=======
+    var templist2 = this.af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
+>>>>>>> origin/master
 =======
     var templist2 = this.af.database.list('/userList/'+queriedItems[0].$key+'/Checklist/', {
 >>>>>>> origin/master
@@ -348,6 +368,7 @@ export class StorybookComponent implements OnInit {
     this.queryChecklist();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (this.tempReport.numRecord != 0) { 
       this.openAch(this.tempReport);
 
@@ -355,6 +376,9 @@ export class StorybookComponent implements OnInit {
 
 
    
+=======
+    this.openAch(this.tempReport);
+>>>>>>> origin/master
 =======
     this.openAch(this.tempReport);
 >>>>>>> origin/master
@@ -502,6 +526,7 @@ export class StorybookComponent implements OnInit {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
    console.log(this.afAuth.authState);
    this.userID = this.afAuth.authState;
 
@@ -516,6 +541,8 @@ export class StorybookComponent implements OnInit {
 =======
 =======
 >>>>>>> origin/master
+=======
+>>>>>>> origin/master
   this.af.auth.subscribe(auth => {
      console.log(auth);
      this.userID = auth.uid;
@@ -528,6 +555,9 @@ export class StorybookComponent implements OnInit {
        orderByChild: 'userID',
        equalTo: this.userID
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 =======
 >>>>>>> origin/master
@@ -538,7 +568,11 @@ export class StorybookComponent implements OnInit {
      this.key = queriedItems[0].$key;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
      var child= this.af.list('/userList/'+queriedItems[0].$key+'/account/child',{
+=======
+     var child= this.af.database.list('/userList/'+queriedItems[0].$key+'/account/child',{
+>>>>>>> origin/master
 =======
      var child= this.af.database.list('/userList/'+queriedItems[0].$key+'/account/child',{
 >>>>>>> origin/master
@@ -558,7 +592,11 @@ export class StorybookComponent implements OnInit {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
      var parent = this.af.list('/userList/'+queriedItems[0].$key+'/account/parent',{
+=======
+     var parent = this.af.database.list('/userList/'+queriedItems[0].$key+'/account/parent',{
+>>>>>>> origin/master
 =======
      var parent = this.af.database.list('/userList/'+queriedItems[0].$key+'/account/parent',{
 >>>>>>> origin/master

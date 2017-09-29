@@ -44,8 +44,11 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import {ShareButtonsModule} from "ng2-sharebuttons";
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 // import {ShareButtonsModule} from "ng2-sharebuttons";
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 
@@ -61,11 +64,17 @@ import {ShareButtonsModule} from "ng2-sharebuttons";
     FormsModule,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     ShareButtonsModule.forRoot(),
     ShareModule,
     NgbModule,
     // AngularFireDatabase, // imports firebase/database, only needed for database features
     // AngularFireAuth, // imports firebase/auth, only needed for auth features
+=======
+    ShareButtonsModule,
+    ShareModule,
+    MaterialModule
+>>>>>>> origin/master
 =======
     ShareButtonsModule,
     ShareModule,
@@ -92,6 +101,10 @@ import {ShareButtonsModule} from "ng2-sharebuttons";
     TestDirective
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 =======
 
 >>>>>>> origin/master
@@ -105,9 +118,12 @@ import {ShareButtonsModule} from "ng2-sharebuttons";
     shareConfirmDialog,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     AchDialog,
     SnackBarComponent
 =======
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
     AchDialog
