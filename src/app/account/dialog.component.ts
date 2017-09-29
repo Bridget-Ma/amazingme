@@ -7,13 +7,10 @@ import {MdCheckbox} from '@angular/material'
 import { Injectable, ViewContainerRef } from '@angular/core';
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 =======
-=======
->>>>>>> origin/master
 =======
 >>>>>>> origin/master
 import {AngularFire, FirebaseObjectObservable, FirebaseListObservable,AuthProviders, AuthMethods} from 'angularfire2';
@@ -34,7 +31,6 @@ export class ConfirmDialog{
 
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
 
   autoTicks = false;
   tickInterval = 1;
@@ -49,8 +45,6 @@ export class ConfirmDialog{
   public value: number = 0;
   vertical = false;
 
-=======
->>>>>>> origin/master
 =======
 >>>>>>> origin/master
 =======

@@ -1,12 +1,9 @@
 {
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
   "globalDependencies": {
     "jspdf": "registry:dt/jspdf#1.1.135+20160921164505"
 =======
-=======
->>>>>>> origin/master
 =======
 >>>>>>> origin/master
   "dependencies": {
@@ -16,9 +13,6 @@
     "jspdf": "registry:dt/jspdf#1.1.135+20160921164505",
     "mocha": "registry:dt/mocha#2.2.5+20170311011848"
 <<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
 >>>>>>> origin/master
 =======
 >>>>>>> origin/master
