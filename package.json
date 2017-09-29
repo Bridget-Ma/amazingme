@@ -13,8 +13,6 @@
   },
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
     "@angular/animations": "^4.3.6",
     "@angular/cdk": "^2.0.0-beta.10",
     "@angular/common": "^4.3.6",
@@ -64,8 +62,7 @@
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.3.2",
-    "typescript": "~2.3.3"
-=======
+    "typescript": "~2.3.3",
     "@angular/animations": "^4.0.3",
     "@angular/common": "~4.0.0-rc.2",
     "@angular/compiler": "~4.0.0-rc.2",
@@ -98,7 +95,6 @@
     "@angular/cli": "^1.0.0-rc.4",
     "@angular/compiler-cli": "^4.0.0",
     "@types/jasmine": "2.5.38",
-=======
     "@angular/animations": "^4.0.3",
     "@angular/common": "~4.0.0-rc.2",
     "@angular/compiler": "~4.0.0-rc.2",
@@ -131,7 +127,6 @@
     "@angular/cli": "^1.0.0-rc.4",
     "@angular/compiler-cli": "^4.0.0",
     "@types/jasmine": "2.5.38",
->>>>>>> origin/master
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",
     "jasmine-core": "~2.5.2",
@@ -146,9 +141,6 @@
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.2.0"
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
+
   }
 }

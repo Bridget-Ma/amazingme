@@ -36,42 +36,20 @@
   <img md-card-image  *ngIf = "milestone.video != true"  src={{milestone.img}} style="margin-top: 5px">
 <p *ngIf = "milestone.video == true">  {{ milestone.detail }} </p>
  
- 
-
-<md-card-actions>
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-<!-- <share-container
-=======
-<share-container
->>>>>>> origin/master
-=======
-<share-container
->>>>>>> origin/master
-                        direction="horizontal"
-                        addedText="this achievement"
-                        [expandable]="false"
-                        [textEnabled]="false"
-                        [platforms]="['twitter','facebook','mail']" (click)="dialogRef.close(true)">
-<<<<<<< HEAD
-<<<<<<< HEAD
-    </share-container> -->
-
-    <div>
+     <div>
    <share-buttons  
       [facebook]="false"  [stumbleUpOn]="false" [linkedIn] = "false" [pinterest] = "false" [reddit] = "false"
      ></share-buttons>
    </div>
-=======
-    </share-container>
-   
->>>>>>> origin/master
-=======
-    </share-container>
-   
->>>>>>> origin/master
+
+<md-card-actions>
+
+
+
+
+
+
+
     <button md-button (click)="dialogRef.close()">CANCEL</button>
 
 

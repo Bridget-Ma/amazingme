@@ -29,8 +29,6 @@ npm manifest:
     },
     "private": true,
     "dependencies": {
-<<<<<<< HEAD
-  <<<<<<< HEAD
       "@angular/animations": "^4.3.6",
       "@angular/cdk": "^2.0.0-beta.10",
       "@angular/common": "^4.3.6",
@@ -80,8 +78,7 @@ npm manifest:
       "protractor": "~5.1.2",
       "ts-node": "~3.2.0",
       "tslint": "~5.3.2",
-      "typescript": "~2.3.3"
-  =======
+      "typescript": "~2.3.3",
       "@angular/animations": "^4.0.3",
       "@angular/common": "~4.0.0-rc.2",
       "@angular/compiler": "~4.0.0-rc.2",
@@ -110,63 +107,7 @@ npm manifest:
       "ts-helpers": "^1.1.1"
      
     },
-    "devDependencies": {
-      "@angular/cli": "^1.0.0-rc.4",
-      "@angular/compiler-cli": "^4.0.0",
-      "@types/jasmine": "2.5.38",
-=======
-      "@angular/animations": "^4.0.3",
-      "@angular/common": "~4.0.0-rc.2",
-      "@angular/compiler": "~4.0.0-rc.2",
-      "@angular/core": "~4.0.0-rc.2",
-      "@angular/forms": "~4.0.0-rc.2",
-      "@angular/http": "~4.0.0-rc.2",
-      "@angular/material": "^2.0.0-beta.3",
-      "@angular/platform-browser": "~4.0.0-rc.2",
-      "@angular/platform-browser-dynamic": "~4.0.0-rc.2",
-      "@angular/router": "^4.0.0",
-      "core-js": "^2.4.1",
-      "rxjs": "^5.1.0",
-      "zone.js": "^0.8.4",
-      "@types/jspdf": "^1.1.31",
-      "angularfire2": "^2.0.0-beta.8",
-      "firebase": "^3.7.1",
-      "hammerjs": "^2.0.8",
-      "jspdf": "^1.3.3",
-      "mongodb": "^2.2.21",
-      "mongoose": "^4.5.8",
-      "ng2-bootstrap": "^1.6.3",
-      "ng2-sharebuttons": "^2.1.0",
-      "ng2-social-share": "0.0.10",
-      "ng2share": "^1.3.6",
-      "ngx-bootstrap": "^1.6.6",
-      "ts-helpers": "^1.1.1",
-     
-    },
-    "devDependencies": {
-      "@angular/cli": "^1.0.0-rc.4",
-      "@angular/compiler-cli": "^4.0.0",
-      "@types/jasmine": "2.5.38",
->>>>>>> origin/master
-      "@types/node": "~6.0.60",
-      "codelyzer": "~2.0.0",
-      "jasmine-core": "~2.5.2",
-      "jasmine-spec-reporter": "~3.2.0",
-      "karma": "~1.4.1",
-      "karma-chrome-launcher": "~2.0.0",
-      "karma-cli": "~1.0.1",
-      "karma-jasmine": "~1.1.0",
-      "karma-jasmine-html-reporter": "^0.2.2",
-      "karma-coverage-istanbul-reporter": "^0.2.0",
-      "protractor": "~5.1.0",
-      "ts-node": "~2.0.0",
-      "tslint": "~4.5.0",
-      "typescript": "~2.2.0"
-<<<<<<< HEAD
-  >>>>>>> origin/master
-=======
->>>>>>> origin/master
-    }
+    
   }
 
 yarn manifest: 
@@ -179,11 +120,7 @@ Lockfile:
   No lockfile
 
 Trace: 
-<<<<<<< HEAD
-  SyntaxError: /Users/myr/Github/amazing-me/package.json: Unexpected token < in JSON at position 457
-=======
-  SyntaxError: /Users/myr/Developing/amazingme/package.json: Unexpected token } in JSON at position 1317
->>>>>>> origin/master
+  SyntaxError: /Users/myr/Github/amazing-me/package.json: Unexpected token } in JSON at position 2906
       at Object.parse (native)
       at /usr/local/Cellar/yarn/0.16.1/libexec/lib/node_modules/yarn/lib/util/fs.js:271:57
       at next (native)
