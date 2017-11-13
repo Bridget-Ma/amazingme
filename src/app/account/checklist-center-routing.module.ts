@@ -6,7 +6,7 @@ import { ChecklistCenterComponent }     from './checklist-center.component';
 // import { ChecklistComponent }       from './checklist.component';
 //import { ChecklistCenterHomeComponent } from './checklist-center-home.component';
 // import { MilestoneDetailComponent }     from './milestone-detail.component';
-import { MaterialModule } from '@angular/material';
+// import { MaterialModule } from '@angular/material';
 
 import { CanDeactivateGuard }    from './can-deactivate-guard.service';
 
@@ -16,7 +16,7 @@ import { CanDeactivateGuard }    from './can-deactivate-guard.service';
 
 @NgModule({
   imports: [
-    MaterialModule,
+    // MaterialModule,
     RouterModule.forChild([
       {
         path: '',

@@ -1,7 +1,6 @@
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
 // import { MaterialModule } from '@angular/material';
-import { MdDialog, MdDialogRef} from '@angular/material';
 import { AccountComponent }           from './account.component';
 import { AccountDashboardComponent }  from './account-dashboard.component';
 import { StorybookComponent }    from './storybook.component';
@@ -17,9 +16,9 @@ import { AccountRoutingModule }       from './account-routing.module';
 //import { StorybookRoutingModule }       from './storybook-routing.module';
 //import { MilestoneDetailComponent} from './checklist-center.component';
 //
-import { MaterialModule } from '@angular/material';
-import { ConfirmDialog} from './dialog.component';
-import { shareConfirmDialog} from './shareDialog.component';
+// import { MaterialModule } from '@angular/material';
+import { Confirmdialog} from './dialog.component';
+import { shareConfirmdialog} from './shareDialog.component';
 import { AchDialog} from './achDialog.component';
 import { DialogsService } from './dialog.service';
 import { achDialogsService } from './achDialog.service';
@@ -41,6 +40,14 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDatepickerModule,MatNativeDateModule,MatDatepicker} from '@angular/material';
+
+import { MatDialogModule, MatCheckboxModule,MatSelectModule, MatInputModule,MatButtonToggleModule} from '@angular/material';
+import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule,  MatProgressSpinnerModule,
+    MatTableModule, MatExpansionModule,  MatTooltipModule, MatChipsModule, MatListModule, MatSidenavModule, MatTabsModule, MatProgressBarModule,
+        MatSliderModule,MatGridListModule
+} from '@angular/material';
 
 
 
@@ -57,11 +64,23 @@ import { AngularFireAuth } from 'angularfire2/auth';
     ShareButtonsModule.forRoot(),
     ShareModule,
     NgbModule,
-    // AngularFireDatabase, // imports firebase/database, only needed for database features
-    // AngularFireAuth, // imports firebase/auth, only needed for auth features
-
     ShareModule,
-    MaterialModule
+    // MaterialModule,
+    MatDatepickerModule, 
+    MatNativeDateModule,
+    MatDialogModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule,  MatProgressSpinnerModule,
+    MatTableModule, MatExpansionModule,  MatTooltipModule, MatChipsModule, MatListModule, MatSidenavModule, MatTabsModule, MatProgressBarModule,
+    MatButtonToggleModule,
+    MatSliderModule,
+    MatGridListModule
+
+
+
 
   ],
   declarations: [
@@ -73,15 +92,15 @@ import { AngularFireAuth } from 'angularfire2/auth';
     //StorybookPageComponent,
     ChecklistCenterComponent,
     //MilestoneDetailComponent,
-    ConfirmDialog,
-    shareConfirmDialog,
+    Confirmdialog,
+    shareConfirmdialog,
     AchDialog,
     TestDirective
   ],
   entryComponents: [
     //MilestoneDetailComponent,
-    ConfirmDialog,
-    shareConfirmDialog,
+    Confirmdialog,
+    shareConfirmdialog,
     AchDialog,
     SnackBarComponent
   ],

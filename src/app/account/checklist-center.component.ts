@@ -6,7 +6,7 @@ import { MilestoneService } from './milestones.service';
 
 import { AchReport } from './report';
 import { Report } from './report';
-// import {MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
+// import {matDialog, matDialogRef, matDialogConfig} from '@angular/material';
 import { RatingModule } from 'ngx-bootstrap';
 
 import {DialogsService} from './dialog.service';
@@ -28,38 +28,40 @@ import * as jsPDF from 'jspdf';
   // selector: 'pizza-component',
   template:  `
 
-    <h2>&nbsp; Milestone Checklist </h2> 
-
-<div style= "margin-left: 20px"><button  md-raised-button 
+   <div style="font-size:18px;  padding-top: 20px; padding-left: 20px">Milestone Checklist <span style="font-size:15px;padding-right: 20px; margin-left:20px "  ><button  mat-raised-button 
     (click)="download()">
     Download Report
 </button>
-</div>
+</span></div>
 
-   <md-list>
 
-   <md-list-item *ngFor="let item of checklist | async"  (click)="openDialog(item,noteUpdate)">
+
+
+   <mat-list>
+
+   <mat-list-item *ngFor="let item of checklist | async"  (click)="openDialog(item,noteUpdate)">
    
 
-<span ><img src={{item.icon}} ></span> &nbsp; &nbsp; 
+<span style="width:85%"><img src={{item.icon}} > &nbsp; &nbsp; 
     
       {{item.name}} 
    &nbsp; &nbsp; 
-
-<span *ngIf="item.progress>0">
+ </span>
+<span *ngIf="item.progress>0" style="width:15%" align="right">
      <span class="label"   
-       [ngClass]="{'label-warning': item.progress<30, 'label-info': item.progress>=30 && item.progress<70, 'label-success': item.progress>=70}">
+       [ngClass]="{'label-warning': item.progress<50, 'label-info': item.progress>=50 && item.progress<100, 'label-success': item.progress>=100}">
          {{item.progress}}% confidence level
+    
      </span>
      </span>
 
 
    
         
-    </md-list-item>
+    </mat-list-item>
 
    
-    </md-list>
+    </mat-list>
 
     <router-outlet></router-outlet>
   `
@@ -188,12 +190,49 @@ export class ChecklistCenterComponent {
 
   }
 
+
+// public saveDialog(milestone:Milestone) {
+    
+//    console.log("saveDialog",this.afAuth.auth);
+//       this.userID = this.afAuth.auth.currentUser.uid;
+//     this.userAccount = this.af.list('/userList',{
+//       query: {
+//         orderByChild: 'userID',
+//         equalTo: this.afAuth.auth.currentUser.uid
+//       }
+//     });
+
+//     this.userAccount.subscribe(queriedItems => {
+//       this.key = queriedItems[0].$key;
+
+//       this.userChecklist = this.af.list('/userList/'+queriedItems[0].$key+'/Checklist/',{
+//         query: {
+//           orderByChild: 'progress',
+//         }
+//       });
+//      });
+
+//    var date = new Date();
+//    let list = this.af.list('/userList/'+this.key+'/account');
+
+//    milestone.notes = date.toDateString() + milestone.notes + '\n';
+//    this.userChecklist.update('Milestone'+ milestone.id, { notes: milestone.notes});
+
+  
+
+// }
+
+
 public openDialog(milestone:Milestone, noteUpdate:boolean) {
    var day = new Date();
     this.dialogsService
       .confirm(milestone, this.viewContainerRef)
       .subscribe(res => {
         this.result = res;
+
+       
+
+
         this.userChecklist.update('Milestone'+ milestone.id, { progress: milestone.progress,notes: milestone.notes, 
           lastUpdate: day.toDateString() });
 
@@ -216,6 +255,7 @@ public openDialog(milestone:Milestone, noteUpdate:boolean) {
         
         if (noteUpdate == true) {
           console.log("noteUpdated");
+          // this.saveDialog(milestone);//Update notes
           let list2 = this.af.list('/userList/'+this.key+'/userLogs'+'/noteUpdate');
           list2.push({ time: Date(), name: milestone.name, progress: milestone.progress, updatedNotes: milestone.notes,location: "checklist"});
         }
@@ -230,7 +270,7 @@ public openDialog(milestone:Milestone, noteUpdate:boolean) {
 
 
   // checklist = CHECKLIST;
-  //dialogRef: MdDialogRef<MilestoneDetailComponent>;
+  //dialogRef: matDialogRef<MilestoneDetailComponent>;
   //lastCloseResult: string;
   // public selectedMilestone: Milestone;
 
@@ -386,7 +426,7 @@ ngOnInit(): void {
   }
 
   // public openDialog(milestone:Milestone) {
-  //   let config = new MdDialogConfig();
+  //   let config = new matDialogConfig();
   //   config.viewContainerRef = this.viewContainerRef;
   //   this.dialogRef = this.dialog.open(MilestoneDetailComponent, config);
   //   this.dialogRef.afterClosed().subscribe(result => {
@@ -423,7 +463,8 @@ ngOnInit(): void {
     
   }
 
-  public generatePDF() {
+  public generatePDF () {
+
 
     var array:any[];
 
@@ -442,12 +483,16 @@ ngOnInit(): void {
           equalTo: this.userID
         }
       });
+
       this.userAccount.subscribe(queriedItems => {
         this.key = queriedItems[0].$key;
         resolve(queriedItems[0].$key);
         console.log("key",queriedItems[0].$key);
       })
     });
+
+
+
 
     key1.then((res) =>{
 
@@ -460,19 +505,32 @@ ngOnInit(): void {
         }
       }).take(1);
 
+      var img = new Image;
+      img.crossOrigin = "";  // for demo as we are at different origin than image
+      img.src = "../../assets/images/milestone1.jpg";  // some random imgur image
+
+
+
       templist1.subscribe(queriedItems => {
+        
+
+          console.log("ret",res);
+
         var doc = new jsPDF();   
         var date = new Date();
+        // var imgData = ""
         doc.setFontSize(15);
         doc.text(20, 20, 'Milestone summary ' +' | ' + date.toDateString());
         doc.line(20, 25, 200, 25);
+
+        // doc.addImage(imgData1, 'JPEG', 10, 10, 50, 50);
 
 
         doc.setFontSize(16);
         doc.setFontType('italic');
         doc.text(20, 35, this.childInfo.name + ' has progressed in '+ this.tempReport.numRecord +' milestones!');
 
-                doc.setFontSize(12);
+        doc.setFontSize(12);
         for (var i = queriedItems.length-1; i >0; i--) {
           if (queriedItems[i].progress>0) {
 
@@ -488,8 +546,27 @@ ngOnInit(): void {
           met +=16;
           }
         }
+
+        doc.save('Report'+ date.toDateString()+'.pdf');
+        // var string = doc.output('datauristring');
+        // var iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>"
+        // var x = window.open();
+        // x.document.open();
+        // x.document.write(iframe);
+        // x.document.close();
         console.log("a pdf is generated");
-        doc.save('Test.pdf');
+       
+        
+
+        // img.onload = function() {
+        //   doc.addImage(this, 10, 10);
+        //   doc.save('Report'+ date.toDateString()+'.pdf');
+        //    console.log("a pdf is generated");
+
+
+  
+        //   }
+        
 
       });
       
@@ -506,15 +583,37 @@ ngOnInit(): void {
   }
 
 
+  public getImageFromUrl () {
+    var img = new Image, data, ret={data: null, pending: true};
+  
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      document.body.appendChild(canvas);
+      canvas.width = img.width;
+      canvas.height = img.height;
 
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      // Grab the image as a jpeg encoded in base64, but only the data
+      data = canvas.toDataURL('image/jpeg').slice('data:image/jpeg;base64,'.length);
+      // Convert the data to binary form
+      data = atob(data)
+      document.body.removeChild(canvas);
+
+      ret['data'] = data;
+      ret['pending'] = false;
+    }
+    img.src = '../../assets/homepage.jpeg';
+    console.log("ret:",ret);
+
+    return ret;
+  }
 
   public download() {
 
-    
+    // this.getImageFromUrl('../../assets/homepage.jpg', this.generatePDF);
+
         this.generatePDF();
-
-     
-
 }
 
 }
@@ -534,7 +633,7 @@ ngOnInit(): void {
 //   `
 // })
 // export class MilestoneDetailComponent {
-//   constructor(public dialogRef: MdDialogRef<MilestoneDetailComponent>) { }
+//   constructor(public dialogRef: matDialogRef<MilestoneDetailComponent>) { }
 // }
 
 

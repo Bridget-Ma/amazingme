@@ -1,4 +1,4 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { Component, OnInit, Input} from '@angular/core';
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
@@ -23,6 +23,6 @@ export class AchDialog{
  
   public tempReport: Report;
   
-  constructor(public dialogRef: MdDialogRef<AchDialog>) {
+  constructor(public dialogRef: MatDialogRef<AchDialog>) {
   }
 }

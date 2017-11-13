@@ -1,7 +1,7 @@
 import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
-import { MaterialModule } from '@angular/material';
+// import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 // import { AngularFireModule } from 'angularfire2';
@@ -22,7 +22,19 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { DialogService }        from './dialog.service';
 import {ShareButtonsModule} from 'ngx-sharebuttons';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap'; 
+
+import { RouterModule, Routes } from '@angular/router';
+
+import { AccountComponent }           from './account/account.component';
+
+
+import { MatDatepickerModule,MatNativeDateModule,MatDialogModule,  MatCheckboxModule,MatSelectModule,MatInputModule,MatButtonToggleModule} from '@angular/material';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
+import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule,  MatProgressSpinnerModule,
+    MatTableModule, MatExpansionModule,  MatTooltipModule, MatChipsModule, MatListModule, MatSidenavModule, MatTabsModule, MatProgressBarModule,MatSliderModule,MatGridListModule
+} from '@angular/material';
 
 
 
@@ -75,18 +87,32 @@ export const myFirebaseConfig = {
     HomepageRoutingModule,
     LoginRoutingModule,
     AppRoutingModule,
-    MaterialModule,
+    // MaterialModule,
     ShareButtonsModule.forRoot(),
     NgbModule.forRoot(),
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonToggleModule,
+    MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule,  MatProgressSpinnerModule,
+    MatTableModule, MatExpansionModule,  MatTooltipModule, MatChipsModule, MatListModule, MatSidenavModule, MatTabsModule, MatProgressBarModule,
+    MatSliderModule,
+    MatGridListModule
   ],
   declarations: [
     AppComponent,
     LoginComponent,
     HomepageComponent,
+    // AccountComponent
 
   ],
   

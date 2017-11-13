@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Rx';
-import { ConfirmDialog } from './dialog.component';
-import { shareConfirmDialog } from './shareDialog.component';
-import { MdDialogRef, MdDialog, MdDialogConfig } from '@angular/material';
+import { Confirmdialog } from './dialog.component';
+import { shareConfirmdialog } from './shareDialog.component';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
@@ -10,8 +10,8 @@ import { MilestoneService } from './milestones.service';
 export class DialogsService {
 
     constructor(
-        private dialog: MdDialog,
-        private shareDialog: MdDialog,
+        private dialog: MatDialog,
+        private shareDialog: MatDialog,
         private milestoneService: MilestoneService,  
         ) { }
 
@@ -19,14 +19,14 @@ export class DialogsService {
 
     public confirm(milestone: Milestone, viewContainerRef: ViewContainerRef): Observable<boolean> {
 
-        let dialogRef: MdDialogRef<ConfirmDialog>;
-        let config = new MdDialogConfig();
+        let dialogRef: MatDialogRef<Confirmdialog>;
+        let config = new MatDialogConfig();
         config.viewContainerRef = viewContainerRef;
         // config.width = "70%";
         
 
 
-        dialogRef = this.dialog.open(ConfirmDialog, config);
+        dialogRef = this.dialog.open(Confirmdialog, config);
 
         dialogRef.componentInstance.milestone = milestone;
         //dialogRef.componentInstance.message = message;
@@ -37,14 +37,14 @@ export class DialogsService {
 
      public shareConfirm(milestone: Milestone,parentInfo,childInfo, viewContainerRef: ViewContainerRef): Observable<boolean> {
 
-        let dialogRef: MdDialogRef<shareConfirmDialog>;
-        let config = new MdDialogConfig();
+        let dialogRef: MatDialogRef<shareConfirmdialog>;
+        let config = new MatDialogConfig();
         config.viewContainerRef = viewContainerRef;
         // config.width = "70%";
         
 
 
-        dialogRef = this.shareDialog.open(shareConfirmDialog, config);
+        dialogRef = this.shareDialog.open(shareConfirmdialog, config);
         dialogRef.componentInstance.parentInfo = parentInfo;
         dialogRef.componentInstance.childInfo = childInfo;
 

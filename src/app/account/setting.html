@@ -2,78 +2,92 @@
 
 
 
-   <md-card class="app-input-section" >
-  
-   <md-card-title>Child's Profile</md-card-title>
+ <mat-card class="app-input-section" >
+
+   <mat-card-title>Child's Profile</mat-card-title>
    <br/>
-    <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{child.img}}>
-     
-<md-input-container >
-   <input mdInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="child.name" >
-   </md-input-container >
+   <img mat-card-sm-image style="margin:0px 25px 10px 0px" src={{child.img}}>
 
-          
+   <mat-input-container >
+     <input matInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="child.name" >
+      </mat-input-container >
 
-      <md-select placeholder="Gender" [(ngModel)]="child.gender" name="gender">
-    <md-option *ngFor="let gender of genders" [value]="gender.value">
+ <mat-input-container >
+     <mat-select placeholder="Gender" [(ngModel)]="child.gender" name="gender">
+    <mat-option *ngFor="let gender of genders" [value]="gender.value">
       {{gender.viewValue}}
-    </md-option>
-      </md-select>
+    </mat-option>
+  </mat-select>
+     </mat-input-container >
 
 
-
-      <md-select placeholder="Age" [(ngModel)]="child.age" name="gender">
-    <md-option *ngFor="let age of ages" [value]="age.value">
+<!--  <mat-input-container >
+  <mat-select placeholder="Age" [(ngModel)]="child.age" name="gender">
+    <mat-option *ngFor="let age of ages" [value]="age.value">
       {{age.value}}
-    </md-option>
-      </md-select>
- 
+    </mat-option>
+  </mat-select>
+    </mat-input-container > -->
+
+    
+ <mat-input-container >
+  
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Birthday" [(ngModel)]="child.age">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker  [startAt]="startDate"></mat-datepicker>
+  
+   </mat-input-container >
+
+
+
+   
+
 
   
 
-    </md-card>
-    </div> 
+</mat-card>
+</div> 
 
 
 
 <div style = "padding: 10px 20px" *ngIf="parent" >
 
-     <md-card  class="app-input-section">
+     <mat-card  class="app-input-section">
    
-     <md-card-title>Parent's Profile</md-card-title>
+     <mat-card-title>Parent's Profile</mat-card-title>
      <br/>
-      <img md-card-sm-image style="margin:0px 25px 10px 0px" src={{parent.img}}>
- <md-input-container >
-      <input mdInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="parent.name">
-          </md-input-container>
-          <md-input-container >
-     <input mdInput style = "padding: 10px 0 0 0"   placeholder="Email" [(ngModel)]="parent.email">
-     </md-input-container >
+      <img mat-card-sm-image style="margin:0px 25px 10px 0px" src={{parent.img}}>
+ <mat-input-container >
+      <input matInput style = "padding: 10px 0 0 0" placeholder="Name" [(ngModel)]="parent.name">
+          </mat-input-container>
+          <mat-input-container >
+     <input matInput style = "padding: 10px 0 0 0"   placeholder="Email" [(ngModel)]="parent.email">
+     </mat-input-container >
 
   
       
           
          
 
-    </md-card>
+    </mat-card>
 </div>
 
 
 <div style = "padding: 10px 20px" >
 
 
-  <p>Reading mode</p>
+<!--   <p>Reading mode</p>
 
    
-  <md-button-toggle-group #group="mdButtonToggleGroup" >
-  <md-button-toggle value="on" checked>
+  <mat-button-toggle-group #group="matButtonToggleGroup">
+  <mat-button-toggle value="on" checked>
     On
-  </md-button-toggle>
-  <md-button-toggle value="off">
+  </mat-button-toggle>
+  <mat-button-toggle value="off">
     Off
-  </md-button-toggle>
+  </mat-button-toggle>
   
-</md-button-toggle-group>
+</mat-button-toggle-group>
 
 </div>
 
@@ -83,32 +97,32 @@
  <p> Reading voice </p>
 
    
-  <md-button-toggle-group #group="mdButtonToggleGroup" >
-  <md-button-toggle value="male">
+  <mat-button-toggle-group #group="matButtonToggleGroup" >
+  <mat-button-toggle value="male">
    Male
-  </md-button-toggle>
-  <md-button-toggle value="female" checked>
+  </mat-button-toggle>
+  <mat-button-toggle value="female" checked>
     Female
-  </md-button-toggle>
+  </mat-button-toggle>
   
-</md-button-toggle-group>
+</mat-button-toggle-group> -->
 
 </div>
 <!-- 
-<md-card >
-  <md-card-content>
+<mat-card >
+  <mat-card-content>
 
     <section>
-      <md-slide-toggle
+      <mat-slide-toggle
           [color]="color" 
           [disabled]="disabled">
         Reading Mode
-      </md-slide-toggle>
+      </mat-slide-toggle>
     </section>
-  </md-card-content>
-</md-card> -->
+  </mat-card-content>
+</mat-card> -->
 
-<div align = "right" style="margin-right: 20px;margin-top: 10px"><button type="button" md-raised-button 
+<div align = "right" style="margin-right: 20px;margin-top: 10px"><button type="button" mat-raised-button 
 (click)="save()">Save</button>
 </div>
 

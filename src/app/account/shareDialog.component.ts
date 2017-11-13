@@ -1,19 +1,22 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { Component, Input,ViewChild} from '@angular/core';
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import {MdCheckbox} from '@angular/material'
+import {MatCheckbox} from '@angular/material'
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-// import {MdCheckbox} from '@angular/material'
+import * as firebase from 'firebase/app';
+
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+// import {matCheckbox} from '@angular/material'
 
 
 
 
-// import {MdCheckbox} from '@angular/material'
+// import {matCheckbox} from '@angular/material'
 
 
 
@@ -28,99 +31,18 @@ import {ShareButtonsModule} from "ng2-sharebuttons";
 
 })
 
-export class shareConfirmDialog{
+export class shareConfirmdialog{
 
-    // public title: string;
-    // public message: string;
+  public user: firebase.User;
+  public userID: any;
 
-  // public userID: any;
-  // public userAccount: FirebaseListObservable<any[]>;
-
- 
-  // public key:any;
-  // public noteUpdate: boolean = false;
-
-  // public userChecklist: FirebaseListObservable<any[]>;
-  //   /*slider*/
-
- 
-  // public rate:number;
-  // public isReadonly:boolean = false;
-  // public max:number = 10;
-  // public overStar:number;
-  // public percent:number;
-
-
-
-  // public onCheckboxChange1(checkbox:MdCheckbox) {
    
 
-  //   if (checkbox.checked === true) {
-  //     // this.rate = this.rate +2;
-
-  //     // this.overStar = this.overStar + 2;
-  //     // this.percent = this.percent + 20;
-  //     // this.milestone.progress = this.milestone.progress + 20;
-  //     this.milestone.checkbox1 = true;
-
-
-  //   }
-  //   else if (checkbox.checked === false) {
-
-  //     // this.rate = this.rate -2;
-
-  //     // this.overStar = this.overStar - 2;
-  //     // this.percent = this.percent - 20;
-  //     // this.milestone.progress = this.milestone.progress - 20;
-  //     this.milestone.checkbox1 = false;
-
-  //   }
-
-
-  // }
-
-  // public onCheckboxChange2(checkbox:MdCheckbox) {
-
-  //   if (checkbox.checked === true) {
-  //     this.milestone.checkbox2 = true;
-  //   }
-  //   else if (checkbox.checked === false) {
-  //     this.milestone.checkbox2 = false;
-  //   }
-  // }
-  //   public onCheckboxChange3(checkbox:MdCheckbox) {
-
-  //   if (checkbox.checked === true) {
-  //     this.milestone.checkbox3 = true;
-  //   }
-  //   else if (checkbox.checked === false) {
-  //     this.milestone.checkbox3 = false;
-  //   }
-  // }
-  //   public onCheckboxChange4(checkbox:MdCheckbox) {
-
-  //   if (checkbox.checked === true) {
-  //     this.milestone.checkbox4 = true;
-  //   }
-  //   else if (checkbox.checked === false) {
-  //     this.milestone.checkbox4 = false;
-  //   }
-  // }
-
-  // public updateNote(): void{
-
-  //   this.noteUpdate  = true;
-  //    console.log("noteUpdate = true")
-
-  // }
-
-  // public onOpenDialog(): void {
-  //     this.rate = this.milestone.progress/10;
-  //     this.overStar = this.milestone.progress/10;
-  //     this.percent = this.milestone.progress;
-  // }
-
   ngOnInit(): void {
+
+    // this.userID = this.route.paramMap
+    // .switchMap((params: ParamMap) =>
+    //   this.service.getHero(params.get('id')));
 
   }
 
@@ -194,9 +116,19 @@ public childInfo: any;
 public parentInfo:any;
     
  constructor(
-   
-   public dialogRef: MdDialogRef<shareConfirmDialog>
 
-   ) {}
+   public af: AngularFireDatabase,
+   public afAuth: AngularFireAuth,
+   
+   public dialogRef: MatDialogRef<shareConfirmdialog>,
+   private route: ActivatedRoute,
+   private router: Router,
+
+   ) {
+
+    this.userID = this.afAuth.auth.currentUser.uid;
+
+    console.log(afAuth.auth.currentUser.uid);
+ }
 
 }

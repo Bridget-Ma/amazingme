@@ -3,7 +3,7 @@ import { ActivatedRoute }       from '@angular/router';
 import { Observable }           from 'rxjs/Observable';
 import { PreloadSelectedModules } from '../selective-preload-strategy';
 
-import { MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
+// import { MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material';
 import { achDialogsService} from './achDialog.service';
 
 import { AchReport } from './report';

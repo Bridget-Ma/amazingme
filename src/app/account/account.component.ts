@@ -1,7 +1,7 @@
 import { Component,OnInit,ViewChild } from '@angular/core';
 
 import { Milestone } from './milestone';
-import { MilestoneService } from './milestones.service';
+// import { MilestoneService } from './milestones.service';
 // import { CHECKLIST } from './checklist';
 
 import { AchReport } from './report';
@@ -14,7 +14,7 @@ import {AngularFireModule} from 'angularfire2';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
-import {MdSidenav} from "@angular/material";
+import {MatSidenav} from "@angular/material";
 
 import { Directive, ElementRef, HostListener, Input , Output, EventEmitter} from '@angular/core';
 
@@ -23,45 +23,45 @@ import { Directive, ElementRef, HostListener, Input , Output, EventEmitter} from
   //   </nav>
   //   <router-outlet></router-outlet>
 
-  //   <button md-button>FLAT</button>
+  //   <button mat-button>FLAT</button>
   // `,
   template:  `
 
  
 
-<md-sidenav-container >
+<mat-sidenav-container >
 
 
-  <md-sidenav #sidenav mode="side" class="app-sidenav" style="background: #EEEEEE;
+  <mat-sidenav #sidenav mode="side" class="app-sidenav" style="background: #EEEEEE;
   color: black" >
 
-    <div align = "right" style="padding-top:5px"><button  md-icon-button  (click)="onCloseSideNav()"><i class="material-icons" >close</i></button>
+    <div align = "right" style="padding-top:5px"><button  mat-icon-button  (click)="onCloseSideNav()"><i class="material-icons" >close</i></button>
   </div>
 
-  <md-nav-list >
+  <mat-nav-list >
   
-    <md-divider></md-divider>
-    <md-list-item routerLink="./checklist" routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }" (click)="openChecklist()">Checklist</md-list-item>
-    <md-divider></md-divider>
-    <md-list-item routerLink="./story" routerLinkActive="active" (click)="openStory()">Storybook</md-list-item>
-    <md-divider></md-divider>
-    <md-list-item routerLink="./settings" routerLinkActive="active"
-    [routerLinkActiveOptions]="{exact: true}" (click)="openSetting()">Settings</md-list-item>
-    <md-divider></md-divider>
-  </md-nav-list>
-</md-sidenav>
+    <mat-divider></mat-divider>
+    <mat-list-item routerLink="./checklist" routerLinkActive="active"
+     (click)="openChecklist()">Checklist</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item routerLink="./story" routerLinkActive="active" (click)="openStory()">Storybook</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item routerLink="./settings" routerLinkActive="active"
+    [routerLinkActiveOptions]="{exact: true}" (click)="openSetting()">Settings</mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-nav-list>
+</mat-sidenav>
 
-<md-toolbar style="background:#4A90E2; color:#FFFFFF">
+<mat-toolbar style="background:#FFFFFF;" >
 
-  <button  md-icon-button (click)="onOpenSideNav()"><i class="material-icons" style="color:#FFFFFF">menu</i></button>
+  <button  mat-icon-button (click)="onOpenSideNav()" style="color:black"><i class="material-icons" style="color:#4A90E2">menu</i></button>
 
   &nbsp; Amazing Me
 
   <span class="app-toolbar-filler"></span>
  
-  <button md-button align = "right" style="margin-left:10px" (click)="logout()"  >Logout</button>
-</md-toolbar>
+  <button mat-button align = "right" style="margin-left:10px; color:#4A90E2" (click)="logout()"  >Logout</button>
+</mat-toolbar>
 
 <div style="background:white">
 
@@ -71,7 +71,7 @@ import { Directive, ElementRef, HostListener, Input , Output, EventEmitter} from
   <router-outlet></router-outlet>
 </div>
 
-</md-sidenav-container>
+</mat-sidenav-container>
 
 
   `,
@@ -83,10 +83,12 @@ export class AccountComponent {
    public userID: any;
   public userAccount: FirebaseListObservable<any[]>;
   public key:any;
+  public bgcolor:any = "#FFFFFF";
+  public color:any = "black";
 
 
   constructor( 
-    private milestoneService: MilestoneService,  
+    // private milestoneService: MilestoneService,  
     public af: AngularFireDatabase, 
     public authService: AuthService, 
     public router: Router,
@@ -113,7 +115,7 @@ export class AccountComponent {
     // this.af.auth.subscribe(auth => console.log(auth));
   }
 
- @ViewChild('sidenav') sidenav: MdSidenav;
+ @ViewChild('sidenav') sidenav: MatSidenav;
 
  @HostListener('window:resize', ['$event'])
     onOpenSideNav() {
@@ -136,7 +138,7 @@ export class AccountComponent {
     }
 
     openChecklist(){
-      this.sidenav.close();
+      // this.sidenav.close();
        /*Log Navigation*/
         let list = this.af.list('/userList/'+this.key+'/userLogs'+'/openChecklist');
         list.push({ time: Date() });
@@ -145,7 +147,7 @@ export class AccountComponent {
 
     }
     openStory(){
-    this.sidenav.close();
+    // this.sidenav.close();
      console.log("Here1:",this.key);
      /*Log Navigation*/
       let list = this.af.list('/userList/'+this.key+'/userLogs'+'/openStory');
@@ -156,7 +158,7 @@ export class AccountComponent {
 
     }
     openSetting(){
-    this.sidenav.close();
+    // this.sidenav.close();
      /*Log Navigation*/
       let list = this.af.list('/userList/'+this.key+'/userLogs'+'/openSetting');
       list.push({ time: Date() });
@@ -188,7 +190,7 @@ export class AccountComponent {
 
 
   // checklist = CHECKLIST;
-  //dialogRef: MdDialogRef<MilestoneDetailComponent>;
+  //dialogRef: matDialogRef<MilestoneDetailComponent>;
   //lastCloseResult: string;
   public selectedMilestone: Milestone;
   public result: any;

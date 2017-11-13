@@ -18,7 +18,7 @@ import { MilestoneService } from './milestones.service';
 import { AchReport } from './report';
 import { Report } from './report';
 
-// import { MdDialog, MdDialogRef, MdDialogConfig} from '@angular/material';
+// import { matDialog, matDialogRef, matDialogConfig} from '@angular/material';
 import { DialogsService} from './dialog.service';
 import { achDialogsService} from './achDialog.service';
 
@@ -36,6 +36,12 @@ import * as jsPDF from 'jspdf';
 
 import { Parent } from './people';
 import { Child } from './people'
+
+import * as webshot from 'webshot';
+
+// import { angularscreenshot } from "angular-screenshot";
+
+// var webshot = require('webshot');
 
 
 
@@ -181,8 +187,6 @@ export class StorybookComponent implements OnInit {
      });
 
       var parent = af.list('/userList/'+queriedItems[0].$key+'/account',{
-
-
       query: {
         orderByChild: 'type',
         equalTo: "parent"
@@ -456,57 +460,57 @@ export class StorybookComponent implements OnInit {
       .subscribe(res => this.directPage(res));
   }
 
-  public () {
+ //  public () {
 
-   console.log(this.afAuth.authState);
-   this.userID = this.afAuth.authState;
-
-
-   this.userAccount = this.af.list('/userList',{
-     query: {
-       orderByChild: 'userID',
-       equalTo: this.userID.uid
-     }
-   });
+ //   console.log(this.afAuth.authState);
+ //   this.userID = this.afAuth.authState;
 
 
-   this.userAccount.subscribe(queriedItems => {
-     this.key = queriedItems[0].$key;
+ //   this.userAccount = this.af.list('/userList',{
+ //     query: {
+ //       orderByChild: 'userID',
+ //       equalTo: this.userID.uid
+ //     }
+ //   });
 
-     var child= this.af.list('/userList/'+queriedItems[0].$key+'/account/child',{
-     query: {
-       orderByChild: 'name',
+
+ //   this.userAccount.subscribe(queriedItems => {
+ //     this.key = queriedItems[0].$key;
+
+ //     var child= this.af.list('/userList/'+queriedItems[0].$key+'/account/child',{
+ //     query: {
+ //       orderByChild: 'name',
       
-     }
-   });
-     child.subscribe(queriedItems => {
-     this.childInfo = queriedItems[0];
-     console.log( queriedItems[0].name);
+ //     }
+ //   });
+ //     child.subscribe(queriedItems => {
+ //     this.childInfo = queriedItems[0];
+ //     console.log( queriedItems[0].name);
 
-   });
+ //   });
 
 
-     var parent = this.af.list('/userList/'+queriedItems[0].$key+'/account/parent',{
-     query: {
-       orderByChild: 'name',
+ //     var parent = this.af.list('/userList/'+queriedItems[0].$key+'/account/parent',{
+ //     query: {
+ //       orderByChild: 'name',
       
-     }
-   });
-      parent.subscribe(queriedItems => {
-     this.parentInfo = queriedItems[0];
-          console.log(queriedItems[0].name);
+ //     }
+ //   });
+ //      parent.subscribe(queriedItems => {
+ //     this.parentInfo = queriedItems[0];
+ //          console.log(queriedItems[0].name);
 
-   })
+ //   })
 
 
    
 
-   });
+ //   });
 
    
 
 
- }
+ // }
 
 
 
@@ -630,6 +634,119 @@ export class StorybookComponent implements OnInit {
     
   };
 
+  public generatePDF (milestone:any) {
+
+    console.log("generate",milestone.id);
+
+
+    var array:any[];
+    var met = 45;
+    var inProgress = met+ 10;
+    
+    const key1 = new Promise((resolve, reject) => {
+
+      this.userAccount = this.af.list('/userList',{
+
+        query: {
+          orderByChild: 'userID',
+          equalTo: this.userID
+        }
+      });
+
+      this.userAccount.subscribe(queriedItems => {
+        this.key = queriedItems[0].$key;
+        resolve(queriedItems[0].$key);
+        console.log("key",queriedItems[0].$key);
+      })
+    });
+
+
+
+
+    key1.then((res) =>{
+
+
+      // var templist1 = this.af.list('/userList/'+res+'/Checklist/', {
+
+      //   query: {
+      //     orderByChild: 'progress',
+      //     limitToLast:34
+      //   }
+      // }).take(1);
+
+      var imgParent = new Image;
+      imgParent.crossOrigin = "";  // for demo as we are at different origin than image
+      imgParent.src = "../../assets/images/parentprofile.jpg";  // some random imgur image
+
+
+        console.log("start");
+        
+
+        var doc = new jsPDF();   
+        var date = new Date();
+        // var imgData = ""
+        doc.setFontSize(12);
+        doc.text(20, 20, 'Milestone progress ' +' | ' + date.toDateString());
+        doc.line(20, 24, 200, 25);
+        // doc.addImage(imgData1, 'JPEG', 10, 10, 50, 50);
+        doc.setFontSize(16);
+        // doc.text(20, 35, this.childInfo.name + ' has progressed in '+ this.tempReport.numRecord +' milestones!');
+        doc.text(20, 30, this.parentInfo.name + ' wants to share ' + this.childInfo.name + "'s milestone with you");
+        doc.setFontSize(20);
+        doc.text(20, 42, this.childInfo.name  + ' is ' + this.selectedMilestone.progress + "% towards this milestone!");
+         doc.setFontSize(16);
+        doc.text(20, 52, "#"+ milestone.id + " " + milestone.name);
+        doc.setFontSize(10);
+        doc.text(20, 60, milestone.notes);
+
+        // doc.text(20, 68, "Milestone detail");
+
+        imgParent.onload = function() {
+          // doc.addImage(this, 10, 55);
+          console.log("parentimage");
+          if (milestone.video != true) {
+            var imgMilestone = new Image;
+            imgMilestone.crossOrigin = "";  // for demo as we are at different origin than image
+            imgMilestone.src = milestone.img;  // some random imgur image
+
+
+           imgMilestone.onload = function() {
+             console.log("milestoneimage");
+              doc.addImage(this, 20, 68);
+              // var string = doc.output('datauristring');
+              // var iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>"
+              // var x = window.open();
+              // x.document.open();
+              // x.document.write(iframe);
+              // x.document.close();
+              console.log("novideo");
+              doc.save('Milestone progress'+ "|" + date.toDateString()+'.pdf');
+              // doc.save('Report'+ date.toDateString()+'.pdf');
+            }
+          }
+          else {
+            console.log("video");
+            doc.text(20, 68, milestone.url);
+            doc.save('Milestone progress'+ "|" + date.toDateString()+'.pdf');
+              // var string = doc.output('datauristring');
+              // var iframe = "<iframe width='60%' height='100%' src='" + string + "'></iframe>"
+              // var x = window.open();
+              // x.document.open();
+              // x.document.write(iframe);
+              // x.document.close();
+
+          }
+        }
+
+
+
+      });
+
+    
+
+    
+  }
+
 
 
   /*record update*/
@@ -660,7 +777,7 @@ public linkToShare = 'https://bridget-ma.com';
   // ngAfterViewInit() {
   //    this.rd.invokeElementMethod(this.el.nativeElement,'load');
   // }
- 
+
   
 }
 

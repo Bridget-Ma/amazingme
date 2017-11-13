@@ -1,5 +1,5 @@
 import { NgModule }       from '@angular/core';
-import { RouterModule }   from '@angular/router';
+import { RouterModule, Route }   from '@angular/router';
 import { AuthGuard }      from './auth-guard.service';
 
 import { AuthService }    from './auth.service';
@@ -14,9 +14,17 @@ import { LoginComponent } from './login.component';
 
 @NgModule({
   imports: [
+
+
     
     
     RouterModule.forChild([
+
+      // {
+      //   path: 'account',
+      //   loadChildren: 'app/account/account.module#AccountModule',
+      //   canLoad: [AuthGuard]
+      // },
       { path: 'login', component: LoginComponent }
     ])
   ],

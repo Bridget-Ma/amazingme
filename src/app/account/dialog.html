@@ -1,33 +1,16 @@
-<md-card style="width: 450px;" >
+<mat-card style="width: 780px;" >
 
 
-    
-    <md-card-title>Milestone {{ milestone.id }} </md-card-title>
-    <md-card-subtitle>{{ milestone.name }}</md-card-subtitle>
+<!--     
+    <mat-card-title>Milestone {{ milestone.id }} </mat-card-title>
+    <mat-card-subtitle>{{ milestone.name }}</mat-card-subtitle>
+
+    <mat-card-content>I feel that George has achieved...</mat-card-content>
 
 
- 
+  <mat-card-content>
 
-
-
-
-
-    <md-card-content>I feel that George has achieved...</md-card-content>
-    
-     
-
-  <md-card-content>
-      <!--  <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
-       (onHover)="clickOn($event)"  
-       [titles]="['one','two','three']"> 
-       </rating> 
-      
-       <span class="label"
-       [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
-       [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}">  {{percent}}% 
-       </span>  -->
-
-       <md-slider 
+       <mat-slider 
         [disabled]="disabled"
         [invert]="invert"
         [max]="max2"
@@ -37,11 +20,11 @@
         [vertical]="vertical"
         [(ngModel)]="value"
         [tick-interval]="tickInterval"
-        (slideend) = "slideOn(value)"
+        (change) = "slideOn(value)"
       
         style = "width: 180px; " >
-    </md-slider>
-
+    </mat-slider>
+            
   
 
      <span >
@@ -49,65 +32,136 @@
 
    </span>
    
-        </md-card-content>
+        </mat-card-content>
 
 
- <md-card-content>
-
-
-   
-<!-- 
-    <div style="height: 170px; width: 200px; background-color: #F4F4F4;" *ngIf = "milestone.video == true" align="center"> <a target="_blank" href="http://{{milestone.link}}"   >click to see video clip</a>
-    </div> -->
+ <mat-card-content>
 
   <a target="_blank" href="http://{{milestone.link}}"  *ngIf = "milestone.video == true"  >click to watch video clip</a>
 
-  <img md-card-image  *ngIf = "milestone.video != true"  src={{milestone.img}} style="margin-top: 5px">
+  <img mat-card-image  *ngIf = "milestone.video != true"  src={{milestone.img}} style="margin-top: 5px">
 <p *ngIf = "milestone.video == true">  {{ milestone.detail }} </p>
 
-  
- 
- 
-
 <section *ngIf="milestone.submilestone">
-          <md-checkbox  [checked]="milestone.submilestone.checkbox1.state" [(ngModel)]="milestone.submilestone.checkbox1.state">{{milestone.submilestone.checkbox1.name}}</md-checkbox>
+          <mat-checkbox  [checked]="milestone.submilestone.checkbox1.state" [(ngModel)]="milestone.submilestone.checkbox1.state">{{milestone.submilestone.checkbox1.name}}</mat-checkbox>
          
-           <md-checkbox  [checked]="milestone.submilestone.checkbox2.state" [(ngModel)]="milestone.submilestone.checkbox2.state">{{milestone.submilestone.checkbox2.name}}</md-checkbox>
+           <mat-checkbox  [checked]="milestone.submilestone.checkbox2.state" [(ngModel)]="milestone.submilestone.checkbox2.state">{{milestone.submilestone.checkbox2.name}}</mat-checkbox>
            
-            <md-checkbox  [checked]="milestone.submilestone.checkbox3.state" [(ngModel)]="milestone.submilestone.checkbox3.state">{{milestone.submilestone.checkbox3.name}}</md-checkbox>
+            <mat-checkbox  [checked]="milestone.submilestone.checkbox3.state" [(ngModel)]="milestone.submilestone.checkbox3.state">{{milestone.submilestone.checkbox3.name}}</mat-checkbox>
            
-           <md-checkbox [checked]="milestone.submilestone.checkbox4.state" [(ngModel)]="milestone.submilestone.checkbox4.state">{{milestone.submilestone.checkbox4.name}}</md-checkbox>
+           <mat-checkbox [checked]="milestone.submilestone.checkbox4.state" [(ngModel)]="milestone.submilestone.checkbox4.state">{{milestone.submilestone.checkbox4.name}}</mat-checkbox>
 </section>
 
 
-  
-</md-card-content>
+</mat-card-content>
 
 
-<md-input-container style="width: 100%">
-      <textarea mdInput placeholder="Notes"  [(ngModel)]="milestone.notes"  (click) = "updateNote()"></textarea>
-</md-input-container>
+<mat-input-container style="width: 100%">
+      <textarea matInput placeholder="Notes"  [(ngModel)]="milestone.notes"  (click) = "updateNote()"></textarea>
+</mat-input-container>
        
-        <!--  <input mdInput style = "width: 100%" placeholder="Notes"  [(ngModel)]="milestone.notes"  (click) = "updateNote()"> -->
-       <!--  <input type="text"  class="form-control"  [(ngModel)]="milestone.notes"  (click) = "updateNote()" /> -->
 
+ -->
+       
+       
 
- 
+    <mat-card-title>Milestone {{ milestone.id }} </mat-card-title>
 
-<md-card-actions>
-    <button md-button (click)="dialogRef.close(true)">SAVE</button>
-    <button md-button (click)="dialogRef.close()">CANCEL</button>
-
-
-  </md-card-actions>
-
-</md-card>
+   <mat-card-subtitle>{{ milestone.name }}</mat-card-subtitle>
 
 
 
-<!-- <button type="button" md-raised-button 
+ <mat-grid-list cols="8" rowHeight="30px" gutterSize="10px" style="margin-top: 30px">
+
+
+      <mat-grid-tile [colspan]="4" [rowspan]="8">
+
+           <a target="_blank" href="http://{{milestone.link}}"  *ngIf = "milestone.video == true"  >click to watch video clip</a>
+
+  <img mat-card-image  *ngIf = "milestone.video != true"  src={{milestone.img}} style="margin-top: 5px">
+<p *ngIf = "milestone.video == true">  {{ milestone.detail }} </p>
+          
+        </mat-grid-tile>
+
+<!-- 
+    <mat-grid-tile [colspan]="4" [rowspan]="1">
+     <mat-card-title>Milestone {{ milestone.id }} </mat-card-title>
+       </mat-grid-tile>
+
+
+    <mat-grid-tile [colspan]="4" [rowspan]="2">
+   <mat-card-subtitle>{{ milestone.name }}</mat-card-subtitle>
+     </mat-grid-tile> -->
+
+   <mat-grid-tile [colspan]="4" [rowspan]="1">
+
+<mat-card-content style="font-size: 18px">I feel that George has achieved...</mat-card-content>
+    </mat-grid-tile>
+
+   <mat-grid-tile [colspan]="4" [rowspan]="1" >
+       <mat-slider 
+        [disabled]="disabled"
+        [invert]="invert"
+        [max]="max2"
+        [min]="min"
+        [step]="step"
+        [thumb-label]="thumbLabel"
+        [vertical]="vertical"
+        [(ngModel)]="value"
+        [tick-interval]="tickInterval"
+        (change) = "slideOn(value)"
+      
+        style = "width: 200px; " >
+    </mat-slider>
+            
+     <span style="font-size: 15px">
+     {{percent}}%  of this milestone!
+
+   </span>
+   </mat-grid-tile>
+   
+
+
+
+
+<mat-grid-tile [colspan]="4" [rowspan]="2">
+          <section *ngIf="milestone.submilestone">
+            <mat-checkbox  [checked]="milestone.submilestone.checkbox1.state" [(ngModel)]="milestone.submilestone.checkbox1.state">{{milestone.submilestone.checkbox1.name}}</mat-checkbox>
+
+            <mat-checkbox  [checked]="milestone.submilestone.checkbox2.state" [(ngModel)]="milestone.submilestone.checkbox2.state">{{milestone.submilestone.checkbox2.name}}</mat-checkbox>
+
+            <mat-checkbox  [checked]="milestone.submilestone.checkbox3.state" [(ngModel)]="milestone.submilestone.checkbox3.state">{{milestone.submilestone.checkbox3.name}}</mat-checkbox>
+
+            <mat-checkbox [checked]="milestone.submilestone.checkbox4.state" [(ngModel)]="milestone.submilestone.checkbox4.state">{{milestone.submilestone.checkbox4.name}}</mat-checkbox>
+          </section>
+        </mat-grid-tile>
+
+<mat-grid-tile [colspan]="4" [rowspan]="3">
+        <mat-input-container style="width: 100%">
+            <textarea matInput placeholder="Notes"  matTextareaAutosize matAutosizeMinRows="1"
+            matAutosizeMaxRows="5" [(ngModel)]="milestone.notes"  (focus) = "updateNote()"></textarea>
+          </mat-input-container>
+        </mat-grid-tile>
+
+       
+   </mat-grid-list>
+<mat-card-actions>
+    <button mat-button (click)="dialogRef.close(true)">SAVE</button>
+    <button mat-button (click)="dialogRef.close()">CANCEL</button>
+
+
+  </mat-card-actions>
+
+
+
+</mat-card>
+
+
+
+
+<!-- <button type="button" mat-raised-button 
 (click)="dialogRef.close(true)">Save</button>
-<button type="button" md-button 
+<button type="button" mat-button 
 (click)="dialogRef.close()">Cancel</button> -->
 
 

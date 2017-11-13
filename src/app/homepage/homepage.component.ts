@@ -12,7 +12,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 	<br />
   <div style="margin-top: 60px">
-	 <button md-raised-button style="backgroundcolor:white" routerLink="/login" routerLinkActive="active">Start Journey</button>
+	 <button mat-raised-button style="backgroundcolor:white" routerLink="/login" routerLinkActive="active">Start Journey</button>
 	</div>
 	</div>
 

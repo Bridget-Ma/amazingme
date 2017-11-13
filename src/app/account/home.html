@@ -1,17 +1,17 @@
-<md-sidenav-layout [class.m2app-dark]="isDarkTheme">
+<mat-sidenav-layout [class.m2app-dark]="isDarkTheme">
 
-  <md-sidenav #sidenav mode="side" class="app-sidenav">
-    <md-nav-list>
-      <a md-list-item routerLink="./" routerLinkActive="active"
+  <mat-sidenav #sidenav mode="side" class="app-sidenav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="./" routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
-      <a md-list-item routerLink="./checklist" routerLinkActive="active"
+      <a mat-list-item routerLink="./checklist" routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }">Checklist</a>
-      <a md-list-item routerLink="./story" routerLinkActive="active">Storybook</a>
-    </md-nav-list>
-  </md-sidenav>
+      <a mat-list-item routerLink="./story" routerLinkActive="active">Storybook</a>
+    </mat-nav-list>
+  </mat-sidenav>
 
 
-  <md-toolbar color="primary">
+  <mat-toolbar color="primary">
     <button class="app-icon-button" (click)="sidenav.toggle()">
       <i class="material-icons app-toolbar-menu">menu</i>
     </button>
@@ -20,7 +20,7 @@
 
     <span class="app-toolbar-filler"></span>
     
-  </md-toolbar>
+  </mat-toolbar>
 
 
   
@@ -29,4 +29,4 @@
   
   <router-outlet></router-outlet>
 
-</md-sidenav-layout>
+</mat-sidenav-layout>

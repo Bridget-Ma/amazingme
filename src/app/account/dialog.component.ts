@@ -1,14 +1,20 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { Component, Input,ViewChild} from '@angular/core';
 import { Milestone } from './milestone';
 import { MilestoneService } from './milestones.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import {MdCheckbox} from '@angular/material'
+import {MatCheckbox} from '@angular/material'
 import { Injectable, ViewContainerRef } from '@angular/core';
 
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+
+// import { AngularFireDatabaseModule } from 'angularfire2/database';
+
+// import { AngularFireList } from 'angularfire2/database';
+// import { Observable } from 'rxjs/Observable';
+
 
 
 import {Subject} from 'rxjs/Subject';
@@ -20,10 +26,14 @@ import { DialogsService} from './dialog.service';
 
 })
 
-export class ConfirmDialog{
+export class Confirmdialog{
+
+  // private milestoneService: MilestoneService;
 
     // public title: string;
     // public message: string;
+
+  public userID: any;
 
 
   autoTicks = false;
@@ -41,11 +51,11 @@ export class ConfirmDialog{
 
       
   public milestone: any;
-  public af:AngularFireDatabase;
+  // public af:AngularFireDatabase;
   public key:any;
   public noteUpdate: boolean = false;
 
-  public userChecklist: FirebaseListObservable<any[]>;
+
     /*slider*/
 
  
@@ -79,10 +89,11 @@ export class ConfirmDialog{
 
   };
 
+
   
 
 
-  // public onCheckboxChange1(checkbox:MdCheckbox) {
+  // public onCheckboxChange1(checkbox:matCheckbox) {
    
 
   //   if (checkbox.checked === true) {
@@ -109,7 +120,7 @@ export class ConfirmDialog{
 
   // }
 
-  // public onCheckboxChange2(checkbox:MdCheckbox) {
+  // public onCheckboxChange2(checkbox:matCheckbox) {
 
   //   if (checkbox.checked === true) {
   //     this.milestone.checkbox2 = true;
@@ -118,7 +129,7 @@ export class ConfirmDialog{
   //     this.milestone.checkbox2 = false;
   //   }
   // }
-  //   public onCheckboxChange3(checkbox:MdCheckbox) {
+  //   public onCheckboxChange3(checkbox:matCheckbox) {
 
   //   if (checkbox.checked === true) {
   //     this.milestone.checkbox3 = true;
@@ -127,7 +138,7 @@ export class ConfirmDialog{
   //     this.milestone.checkbox3 = false;
   //   }
   // }
-  //   public onCheckboxChange4(checkbox:MdCheckbox) {
+  //   public onCheckboxChange4(checkbox:matCheckbox) {
 
   //   if (checkbox.checked === true) {
   //     this.milestone.checkbox4 = true;
@@ -140,7 +151,13 @@ export class ConfirmDialog{
   public updateNote(): void{
 
     this.noteUpdate  = true;
-     console.log("noteUpdate = true")
+     console.log("noteUpdate = true");
+
+   var date = new Date();
+
+   this.milestone.notes =  this.milestone.notes + '\n' + date.toDateString() + ' :';
+
+
 
   }
 
@@ -168,15 +185,21 @@ export class ConfirmDialog{
   
 
     //public rate: number = this.milestone.progress*10;
- //<img md-card-lg-image style="margin:5px 25px 10px 0px" src={{milestone.img}}>
+ //<img mat-card-lg-image style="margin:5px 25px 10px 0px" src={{milestone.img}}>
   constructor(
-    public dialogRef: MdDialogRef<ConfirmDialog>,
-    // private dialogsService: DialogsService,
-    // private milestoneService: MilestoneService,  
-    // private viewContainerRef: ViewContainerRef,
+    public dialogRef: MatDialogRef<Confirmdialog>,
+    public af:AngularFireDatabase,
+    public afAuth: AngularFireAuth,
 
-    // public af: AngularFire,
+  // public afAuth: AngularFireAuth;
+ 
+
+
     ) {
+
+
+     
+
 
 
 

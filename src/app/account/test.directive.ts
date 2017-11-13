@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener, EventEmitter, Input,Output } from '@angular/core';
 
 @Directive({
-  selector: 'md-sidenav'
+  selector: 'mat-sidenav'
 })
 export class TestDirective {
 

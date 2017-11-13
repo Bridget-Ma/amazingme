@@ -11,6 +11,8 @@ import * as firebase from 'firebase/app';
 import {map} from 'rxjs/operator/map';
 import { Observable } from 'rxjs/Observable';
 
+import {MatButton} from '@angular/material';
+
 
 
 
@@ -48,7 +50,7 @@ export class LoginComponent {
         "id" : 1,
         "img" : "../../assets/images/milestone1.jpg",
         "name" : "Copies adults and friends (like running when other children run)",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "video" : false,
         "submilestone" : {
@@ -77,7 +79,7 @@ export class LoginComponent {
         "id" : 10,
         "img" : "../../assets/images/milestone10.jpg",
         "name" : "Follows instructions with 2 or 3 steps",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "video" : true,
         "submilestone" : {
@@ -107,7 +109,7 @@ export class LoginComponent {
         "id" : 11,
         "img" : "../../assets/images/milestone11.jpg",
         "name" : "Can name most familiar things",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
              "checkbox1" : {
@@ -136,7 +138,7 @@ export class LoginComponent {
         "id" : 12,
         "img" : "../../assets/images/milestone12.jpg",
         "name" : "Understands words like 'in', 'on' and 'under'",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
              "checkbox1" : {
@@ -163,7 +165,7 @@ export class LoginComponent {
         "id" : 13,
         "img" : "../../assets/images/milestone13.jpg",
         "name" : "Says first name, age, and sex",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "video" : false,
         "submilestone" : {
@@ -193,7 +195,7 @@ export class LoginComponent {
         "id" : 14,
         "img" : "../../assets/images/milestone14.jpg",
         "name" : "Names a friend",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone15" : {
@@ -204,7 +206,7 @@ export class LoginComponent {
         "id" : 15,
         "img" : "../../assets/images/milestone15.jpg",
         "name" : "Says works like 'I', 'me', 'we' and 'you' and some plurals (cars, dogs, cats)",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
              "checkbox1" : {
@@ -233,7 +235,7 @@ export class LoginComponent {
         "id" : 16,
         "img" : "../../assets/images/milestone16.jpg",
         "name" : "Talks well enough for strangers to understand most of the time",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone17" : {
@@ -244,7 +246,7 @@ export class LoginComponent {
         "id" : 17,
         "img" : "../../assets/images/milestone17.jpg",
         "name" : "Carries on a conversation using 2 to 3 sentences",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
              "checkbox1" : {
@@ -272,7 +274,7 @@ export class LoginComponent {
         "id" : 18,
         "img" : "../../assets/images/milestone18.jpg",
         "name" : "Can work toys with buttons, levers, and moving parts",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
              "checkbox1" : {
@@ -300,7 +302,7 @@ export class LoginComponent {
         "id" : 19,
         "img" : "../../assets/images/milestone19.jpg",
         "name" : "Plays make-believe with dolls, animals, and people",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
              "checkbox1" : {
@@ -328,7 +330,7 @@ export class LoginComponent {
         "id" : 2,
         "img" : "../../assets/images/milestone2.jpg",
         "name" : "Shows affection for friends without prompting",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone20" : {
@@ -338,7 +340,7 @@ export class LoginComponent {
         "id" : 20,
         "img" : "../../assets/images/milestone20.jpg",
         "name" : "Does puzzles with 3 or 4 pieces",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
              "checkbox1" : {
@@ -367,7 +369,7 @@ export class LoginComponent {
         "id" : 21,
         "img" : "../../assets/images/milestone21.jpg",
         "name" : "Understands what 'two' means",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone22" : {
@@ -377,7 +379,7 @@ export class LoginComponent {
         "id" : 22,
         "img" : "../../assets/images/milestone22.jpg",
         "name" : "Copies a circle with a pencil or crayon",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone23" : {
@@ -387,7 +389,7 @@ export class LoginComponent {
         "id" : 23,
         "img" : "../../assets/images/milestone23.jpg",
         "name" : "Turns book pages one at a time",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone24" : {
@@ -397,7 +399,7 @@ export class LoginComponent {
         "id" : 24,
         "img" : "../../assets/images/milestone24.jpg",
         "name" : "Builds towers of more than 6 blocks",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
          "submilestone" : {
              "checkbox1" : {
@@ -426,7 +428,7 @@ export class LoginComponent {
         "id" : 25,
         "img" : "../../assets/images/milestone25.jpg",
         "name" : "Screws and unscrews jar lids or turns door handle",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
              "checkbox1" : {
@@ -454,7 +456,7 @@ export class LoginComponent {
         "id" : 26,
         "img" : "../../assets/images/milestone26.jpg",
         "name" : "Climbs well",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone27" : {
@@ -465,7 +467,7 @@ export class LoginComponent {
         "id" : 27,
         "img" : "../../assets/images/milestone27.jpg",
         "name" : "Runs easily",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone28" : {
@@ -475,7 +477,7 @@ export class LoginComponent {
         "id" : 28,
         "img" : "../../assets/images/milestone28.jpg",
         "name" : "Pedals a tricycle (3-wheeled bike)",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone29" : {
@@ -485,7 +487,7 @@ export class LoginComponent {
         "id" : 29,
         "img" : "../../assets/images/milestone29.jpg",
         "name" : "Walks up and down stairs, one foot on each step",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
             "checkbox1" : {
@@ -514,7 +516,7 @@ export class LoginComponent {
         "id" : 3,
         "img" : "../../assets/images/milestone3.jpg",
         "name" : "Takes turns in games",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone30" : {
@@ -524,7 +526,7 @@ export class LoginComponent {
         "id" : 30,
         "img" : "../../assets/images/milestone30.jpg",
         "name" : "Points to show others something interesting (age 18-month milestone)",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone31" : {
@@ -535,7 +537,7 @@ export class LoginComponent {
         "id" : 31,
         "img" : "../../assets/images/milestone31.jpg",
         "name" : "Plays well with two or three children in a group (age 4 milestone)",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
          "submilestone" : {
             "checkbox1" : {
@@ -563,7 +565,7 @@ export class LoginComponent {
         "id" : 32,
         "img" : "../../assets/images/milestone32.jpg",
         "name" : "Practices using safety scissors (age 4 milestone) at school",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone33" : {
@@ -574,7 +576,7 @@ export class LoginComponent {
         "id" : 33,
         "img" : "../../assets/images/milestone33.jpg",
         "name" : "Tells a story (age 4 milestone) while pretending to read",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         
         
@@ -586,7 +588,7 @@ export class LoginComponent {
         "id" : 34,
         "img" : "../../assets/images/milestone34.jpg",
         "name" : "Shows independence (age 2 milestone) by trying to brush his own teeth",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone4" : {
@@ -596,7 +598,7 @@ export class LoginComponent {
         "id" : 4,
         "img" : "../../assets/images/milestone4.jpg",
         "name" : "Shows concern for a crying friend",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone5" : {
@@ -606,7 +608,7 @@ export class LoginComponent {
         "id" : 5,
         "img" : "../../assets/images/milestone5.jpg",
         "name" : "Understands the idea of 'mine' and 'his' or 'hers'",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
          "submilestone" : {
             "checkbox1" : {
@@ -634,7 +636,7 @@ export class LoginComponent {
         "id" : 6,
         "img" : "../../assets/images/milestone6.jpg",
         "name" : "Shows a wide range of emotions",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
             "checkbox1" : {
@@ -662,7 +664,7 @@ export class LoginComponent {
         "id" : 7,
         "img" : "../../assets/images/milestone7.jpg",
         "name" : "Separates easily  from mom and dad",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0
       },
       "Milestone8" : {
@@ -672,7 +674,7 @@ export class LoginComponent {
         "id" : 8,
         "img" : "../../assets/images/milestone8.jpg",
         "name" : "May get upset with major changes in routine",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
             "checkbox1" : {
@@ -700,7 +702,7 @@ export class LoginComponent {
         "id" : 9,
         "img" : "../../assets/images/milestone9.jpg",
         "name" : "Dresses and undresses self ",
-        "notes" : "This is the note for this milestone",
+        "notes" : "",
         "progress" : 0,
         "submilestone" : {
             "checkbox1" : {
@@ -837,7 +839,7 @@ export class LoginComponent {
         this.updateUser(this.key);
         console.log("updateUser,", this.key);
 
-        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'account';
+        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '1/account';
         // let redirect = 'account';
         let navigationExtras: NavigationExtras = {
               preserveQueryParams: true,
@@ -882,7 +884,7 @@ export class LoginComponent {
         this.updateUser(this.key);
         console.log("updateUser,", this.key);
 
-        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'account';
+        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '1/account';
         // let redirect = 'account';
         let navigationExtras: NavigationExtras = {
               preserveQueryParams: true,

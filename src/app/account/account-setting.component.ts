@@ -9,7 +9,8 @@ import {Subject} from 'rxjs/Subject';
 
 import { Parent } from './people';
 import { Child } from './people'
-import {MdSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
+import {MatDatepicker} from '@angular/material';
 //import { ParentService } from './parent.service';
 //import { PageService } from './page.service';
 
@@ -29,7 +30,7 @@ export class SettingComponent {
 
   public child: any;
   public parent: any;
-  public userID: any;
+
   public userChecklist: FirebaseListObservable<any[]>;
 
   public userAccount: FirebaseListObservable<any[]>;
@@ -39,6 +40,9 @@ export class SettingComponent {
   public childinfoquery: FirebaseListObservable<any[]>;
   public parentinfoquery: FirebaseListObservable<any[]>;
   public user: firebase.User;
+  public userID: any;
+
+
 
   color = 'primary';
   checked = true;
@@ -56,10 +60,16 @@ export class SettingComponent {
     {value: 5}
   ];
 
+
+  minDate = new Date(2013, 0, 1);
+  maxDate = new Date(2017, 0, 1);
+
+  startDate = new Date(2013, 0, 1);
+
   constructor(
         public af: AngularFireDatabase,
         public afAuth: AngularFireAuth,
-        public snackBar: MdSnackBar  
+        public snackBar: MatSnackBar  
 
 
     ) {
@@ -159,7 +169,7 @@ export class SnackBarComponent {
   // public user: firebase.User;
 
   // constructor(
-  //   public snackBar: MdSnackBar,
+  //   public snackBar: matSnackBar,
   //   public af: AngularFireDatabase,
   //   public afAuth: AngularFireAuth,
  
